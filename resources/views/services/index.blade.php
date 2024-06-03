@@ -193,41 +193,38 @@
             <div class="text-center mb-35">
                 <h3 class="heading-with-underline">Testimonials</h3>
             </div>
-            <h2>What Our Client Says</h2>
+            <h1>What Our Client Says</h1>
 
             <div class="slider">
                 <div class="testimonial">
-                    <p>Testimonial 1 content goes here.</p>
-                    <p><strong>John Doe</strong></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo                    </p>
+                    <p class="user-name">Alannah Humphrey</p>
+                    <p class="user-role">Businessman</p>
                 </div>
                 <div class="testimonial">
                     <p>Testimonial 2 content goes here.</p>
-                    <p><strong>Jane Smith</strong></p>
+                    <p class="user-name">Alannah Humphrey</p>
+                    <p class="user-role">Businessman</p>
                 </div>
-            </div>            
+            </div>
         </div>
     </section>
-
-    <x-include-plugins slickSlider></x-include-plugins>
 @endsection
 
 @section('script')
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor/slick-slider/slick.min.css') }}"/>
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor/slick-slider/slick-theme.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor/slick-slider/slick.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor/slick-slider/slick-theme.min.css') }}" />
 
-
-<script src="{{ asset('assets/js/vendor/slick-slider/slick.min.js') }}"></script>
-
-
-   <script>
-    $(document).ready(function(){
-        $('.slider').slick({
-            autoplay: true,
-            autoplaySpeed: 3000,
-            dots: true,
-            arrows: false,
-            pauseOnHover: true
+    <script src="{{ asset('assets/js/vendor/slick-slider/slick.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.slider').slick({
+                autoplay: true,
+                autoplaySpeed: 3000,
+                dots: false,
+                arrows: false,
+                pauseOnHover: true
+            });
         });
-    });
-    </script> 
+    </script>
 @endsection
