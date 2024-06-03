@@ -94,14 +94,17 @@
                             <div class="col-lg-4">
                                 <div class="cart__summary border-radius-10">
                                     <div class="coupon__code mb-30">
-                                        <h3 class="coupon__code--title">Coupon</h3>
-                                        <p class="coupon__code--desc">Enter your coupon code if you have one.</p>
-                                        <div class="coupon__code--field d-flex">
-                                            <label>
-                                                <input class="coupon__code--field__input border-radius-5" placeholder="Coupon code" type="text">
-                                            </label>
-                                            <button class="coupon__code--field__btn primary__btn" type="submit">Apply Coupon</button>
-                                        </div>
+                                        <form action="" method="post">
+                                            <h3 class="coupon__code--title">Coupon</h3>
+                                            <p class="coupon__code--desc">Enter your coupon code if you have one.</p>
+                                            <div class="coupon__code--field d-flex">
+                                                <label>
+                                                    <input class="coupon__code--field__input border-radius-5" name="coupon-code" id="coupon-code" placeholder="Coupon code" type="text" @isset(session('cart')['applied_coupons'][0]['coupon_code']) value=" {{ session('cart')['applied_coupons'][0]['coupon_code'] }}"  @endisset>
+                                                <div class="error-message text-danger"></div>
+                                                </label>
+                                                    <button class="coupon__code--field__btn primary__btn coupon-code" type="button"  @isset(session('cart')['applied_coupons'][0]['coupon_code'])disabled @endisset>Apply Coupon</button>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="cart__note mb-20">
                                         <h3 class="cart__note--title">Note</h3>
@@ -117,8 +120,12 @@
                                                     <td class="cart__summary--amount text-right totalAmount"> @isset(session('cart')['formatted_sub_total']) {{ session('cart')['formatted_sub_total'] }} @endisset</td>
                                                 </tr>
                                                 <tr class="cart__summary--total__list">
+                                                    <td class="cart__summary--total__title text-left">DISCOUNT</td>
+                                                    <td class="cart__summary--amount text-right discountAmount"> @isset(session('cart')['discount_amount']) {{ session('cart')['discount_amount'] }} @endisset </td>
+                                                </tr>
+                                                <tr class="cart__summary--total__list">
                                                     <td class="cart__summary--total__title text-left">GRAND TOTAL</td>
-                                                    <td class="cart__summary--amount text-right totalAmount"> @isset(session('cart')['formatted_sub_total']) {{ session('cart')['formatted_sub_total'] }} @endisset</td>
+                                                    <td class="cart__summary--amount text-right grandTotal"> @isset(session('cart')['formatted_grand_total']) {{ session('cart')['formatted_grand_total'] }} @endisset</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -739,6 +746,12 @@
                         let amount = '<b>' + cart + '</b>';
                         $('.totalAmount').html(amount);
 
+                        let discountAmount = response.cart.discount_amount;
+                        $('.discountAmount').html(discountAmount);
+
+                        let grandTotal = response.cart.formatted_grand_total;
+                        $('.grandTotal').html(grandTotal);
+
                         let totalProductAmount = 0;
                         response.cart.products.forEach(function(product, index) {
                             totalProductAmount = parseFloat(product['product_total_amount']);
@@ -784,6 +797,32 @@
                 }
             }
         });
+    });
+
+    $('.coupon-code').click(function() {
+        var couponCode = $('#coupon-code').val();
+        if(!couponCode) {
+           $('.error-message').html('Please enter a coupon code.');
+           return false;
+        } else {
+            $('.error-message').html('');
+            $.ajax({
+            url: '{{ route('coupon-code') }}',
+            type: 'POST',
+            data: { 
+                _token: '{{ csrf_token() }}',
+                coupon_code: couponCode 
+            },
+            success: function(response) {
+                if(response.success) {
+                    let grandTotal = response.cart.formatted_grand_total;
+                    let discountAmount = response.cart.discount_amount;
+                    $('.discountAmount').html(discountAmount);
+                    $('.grandTotal').html(grandTotal);
+                }
+            },
+        });
+        }
     });
 </script>
  @endsection

@@ -57,4 +57,6 @@ Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-c
 Route::post('update-cart', [CartController::class, 'update'])->name('update-cart');
 Route::post('remove-from-cart', [CartController::class, 'remove'])->name('remove-from-cart'); 
 Route::post('clear-cart', [CartController::class, 'clearCart'])->name('clear-cart');
+Route::post('coupon-code', [CartController::class, 'couponCode'])->name('coupon-code');
+
 
