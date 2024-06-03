@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Coupon;
 
 class CartController extends Controller
 {
@@ -12,13 +13,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('products', compact('products'));
-    }
-
-    public function cart()
-    {
-        return view('cart');
+        return view('cart.index');
     }
 
     /**
@@ -40,6 +35,7 @@ class CartController extends Controller
         foreach ($cart['products'] ?? [] as $key => $product) {
             if ($product['id'] == $request->product_id) {
                 $cart['products'][$key]['quantity'] += $request->quantity;
+                $cart['products'][$key]['product_total_amount'] = $product['quantity'] * $product['price'];
                 $productExists = true;
                 break;
             }
@@ -53,6 +49,7 @@ class CartController extends Controller
                 "product_code" => $productDetail->product_code,
                 "name" => $productDetail->product_name,
                 "price" => $productDetail->cost_price,
+                "product_total_amount" => $productDetail->cost_price *  $request->quantity,
                 "image" => $productImage ? $productImage->images : null
             ];
         }
@@ -72,9 +69,18 @@ class CartController extends Controller
         
         $applied_coupons = $cart['applied_coupons'] ?? [];
         $cart['applied_coupons'] = $applied_coupons;
+
+        if($cart['applied_coupons']) {
+            $sub_total -= $cart['discount_amount'];
+            $cart['grand_total'] =  $sub_total;
+            $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
+            $cart['discount_amount'] = $cart['discount_amount'];
+        } else {
+            $cart['grand_total'] = $sub_total;
+            $cart['formatted_grand_total'] = '$'.(number_format($sub_total ,2));
+            $cart['discount_amount'] = '$'. 0.00;
+        }
         
-        $cart['grand_total'] = $sub_total;
-        $cart['formatted_grand_total'] = '$'.(number_format($sub_total ,2));
         $cart['count']  = count($cart['products']);
         session()->put('cart', $cart);     
 
@@ -109,15 +115,18 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+
+     public function update(Request $request)
     {
         if ($request->product_id && $request->qty) {
             $cart = session()->get('cart');
-
-            // Validate product ID
+            // Check if the product already exists in the cart
             $productExists = false;
-            foreach ($cart['products'] as &$product) {
+            foreach ($cart['products'] ?? [] as $key => $product) {
+                $cart['products'][$key]['product_total_amount'] = $product['quantity'] * $product['price'];
                 if ($product['id'] == $request->product_id) {
+                    $cart['products'][$key]['quantity'] = $request->qty;
+                    $cart['products'][$key]['product_total_amount'] = $request->qty * $product['price'];
                     $productExists = true;
                     break;
                 }
@@ -129,82 +138,97 @@ class CartController extends Controller
                     'message' => 'Product not found in the cart.'
                 ]);
             }
-        
-            // Update quantity of the specified product
-            foreach ($cart['products'] ?? [] as $key => $product) {
-                if ($product['id'] == $request->product_id) {
-                    $cart['products'][$key]['quantity'] += $request->qty;
-                    $productExists = true;
-                    break;
-                }
-            }
-            
-            // Recalculate cart subtotal and total quantity
-            $sub_total = 0;
+
+            // Recalculate cart totals
             $cart_quantity = 0;
+            $sub_total = 0;
             foreach ($cart['products'] as $product) {
-                // Assuming price is a property of product
-                $sub_total += $product['price'] * $product['quantity'];
                 $cart_quantity += $product['quantity'];
+                $sub_total += $product['quantity'] * $product['price'];
             }
-        
-            // Update cart object
+
+            // Update cart totals
             $cart['quantity'] = $cart_quantity;
             $cart['sub_total'] = $sub_total;
             $cart['formatted_sub_total'] = '$'.(number_format($sub_total ,2));
-            
-            $cart['grand_total'] = $sub_total;
-            $cart['formatted_grand_total'] = '$'.(number_format($sub_total ,2));
-            
-            print_r($cart);
-            die();
+
+            $applied_coupons = $cart['applied_coupons'] ?? [];
+            $cart['applied_coupons'] = $applied_coupons;
+
+            if($cart['applied_coupons']) {
+                $sub_total -= $cart['discount_amount'];
+                $cart['grand_total'] =  $sub_total;
+                $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
+                $cart['discount_amount'] = $cart['discount_amount'];
+            } else {
+                $cart['grand_total'] = $sub_total;
+                $cart['formatted_grand_total'] = '$'.(number_format($sub_total ,2));
+                $cart['discount_amount'] = '$'. 0.00;
+            }
+            $cart['count']  = count($cart['products']);
             session()->put('cart', $cart);
-        
+
             return response()->json([
                 'success' => true,
                 'cart' => $cart,
-                'message' => 'Cart updated successfully.'
+                'message' => 'Cart quantity updated successfully.'
             ]);
         } else {
             return response()->json([
                 'success' => false,
                 'message' => 'Product ID and quantity are required.'
             ]);
-        }        
+        }
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      */
     public function remove(Request $request)
     {
-        if($request->product_id) {
+        if ($request->product_id) {
             $cart = session()->get('cart');
 
-            if(isset($cart['products'][$request->product_id])) {
-                // Remove the product from the cart
-                unset($cart['products'][$request->product_id]);
+            foreach ($cart['products'] ?? [] as $key => $product) {
+                if ($product['id'] == $request->product_id) {
+                    unset($cart['products'][$key]); // Unset the product from the cart
+                    break; // Exit the loop once product is found and removed
+                }
+            }
 
+            // if (isset($cart['products'][$request->product_id])) {
                 // Recalculate cart total quantity
                 $cart_quantity = 0;
                 foreach ($cart['products'] as $product) {
                     $cart_quantity += $product['quantity'];
                 }
-                $cart['quantity'] = $cart_quantity;
-
                 // Recalculate cart total amount
-                $amount = 0;
-                foreach($cart['products'] as $product) {
-                    // Assuming price is a property of product
-                    $amount += $product['product']->price * $product['quantity'];
+                $sub_total = 0;
+                foreach ($cart['products'] as $product) {
+                    $sub_total += $product['price'] * $product['quantity']; // Corrected accessing price
                 }
-            }
+            // }
 
             // Update cart object
-            $cart['sub_total'] = $amount;
-            $cart['grand_total'] = $amount; // Assuming no discounts or taxes applied
+            $cart['quantity'] = $cart_quantity;
+            $cart['sub_total'] = $sub_total;
+            $cart['formatted_sub_total'] = '$' . number_format($sub_total, 2);
+
+            $applied_coupons = $cart['applied_coupons'] ?? [];
+            $cart['applied_coupons'] = $applied_coupons;
+
+            if($cart['applied_coupons']) {
+                $sub_total -= $cart['discount_amount'];
+                $cart['grand_total'] =  $sub_total;
+                $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
+                $cart['discount_amount'] = $cart['discount_amount'];
+            } else {
+                $cart['grand_total'] = $sub_total;
+                $cart['formatted_grand_total'] = '$'.(number_format($sub_total ,2));
+                $cart['discount_amount'] = '$'. 0.00;
+            }
+
+            $cart['count'] = count($cart['products']);
 
             session()->put('cart', $cart);
 
@@ -215,4 +239,93 @@ class CartController extends Controller
             ]);
         }
     }
+
+    public function clearCart(Request $request)
+    {
+        $request->session()->flush();
+
+        return redirect()->back()->with('success', 'All Products removed from cart');
+    }
+
+    // public function couponCode(Request $request)
+    // {
+    //     $couponExists = Coupon::where('coupon_code', $request->coupon_code)
+    //                             ->whereDate('start_date', '<=', now())
+    //                             ->whereDate('end_date', '>=', now())
+    //                             ->where('status', 'Active')
+    //                             ->first();
+    //     if($couponExists) {
+    //         $cart = session()->get('cart');
+    //         $cart['applied_coupons'][] = [
+    //             'id'              => $couponExists->id,
+    //             'coupon_code'     => $couponExists->coupon_code,
+    //             'discount_type'   => $couponExists->discount_type,
+    //             'discount_amount' => $couponExists->discount_amount,
+    //             'use_limit'       => $couponExists->use_limit
+
+    //         ];
+
+    //         $grandTotal = $cart['grand_total'];
+    //         echo"<pre>"; print_R($grandTotal); die();
+
+
+    //         session()->put('cart', $cart);
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'data'    => $cart,
+    //             'message' => 'Coupon code applied'
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Coupon code not exist'
+    //         ]);
+    //     }
+    // }
+
+    public function couponCode(Request $request)
+{
+    $couponExists = Coupon::where('coupon_code', $request->coupon_code)
+                            ->whereDate('start_date', '<=', now())
+                            ->whereDate('end_date', '>=', now())
+                            ->where('status', 'Active')
+                            ->first();
+
+    if($couponExists) {
+        $cart = session()->get('cart');
+
+        $discountAmount = 0;
+        if ($couponExists->discount_type === 'percentage') {
+            $discountAmount = ($couponExists->discount_amount / 100) * $cart['sub_total'];
+        } else if ($couponExists->discount_type === 'fixed') {
+            $discountAmount = $couponExists->discount_amount;
+        }
+
+        $cart['grand_total'] -= $discountAmount;
+        $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
+        $cart['discount_amount'] = $discountAmount;
+
+        $cart['applied_coupons'][] = [
+            'id'              => $couponExists->id,
+            'coupon_code'     => $couponExists->coupon_code,
+            'discount_type'   => $couponExists->discount_type,
+            'discount_amount' => $couponExists->discount_amount,
+            'use_limit'       => $couponExists->use_limit
+        ];
+
+        session()->put('cart', $cart);
+        return response()->json([
+            'success' => true,
+            'cart'    => $cart,
+            'message' => 'Coupon code applied'
+        ]);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Coupon code does not exist or is not valid'
+        ]);
+    }
+}
+
 }

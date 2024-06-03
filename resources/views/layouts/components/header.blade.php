@@ -91,7 +91,7 @@
                     <nav class="header__menu--navigation">
                         <ul class="header__menu--wrapper d-flex">
                             <li class="header__menu--items">
-                                <a @class(['header__menu--link', 'active' => Route::is('home')]) href="{{ route('home') }}">Home</a>
+                                <a @class(['header__menu--link', 'active' => Route::is('index')]) href="{{ route('index') }}">Home</a>
                             </li>
                             <li class="header__menu--items">
                                 <a @class(['header__menu--link', 'active' => Route::is('products')]) href="{{ route('products.index') }}">Products</a>
@@ -298,7 +298,7 @@
                     </div>
                     <div @class([
                         'dropdown__categories--menu border-radius-5 collapse',
-                        'show active' => Route::is('home'),
+                        'show active' => Route::is('index'),
                     ]) id="categoriesAccordion">
                         <ul class="d-none d-lg-block">
                             <li class="categories__menu--items">
@@ -960,7 +960,7 @@
                             <ul class="header__menu--wrapper d-flex">
                                 <li class="header__menu--items">
                                     <a class="header__menu--link text-white {{ Request::segment(1) == '' ? 'active' : '' }}"
-                                        href="{{ route('home') }}">Home </a>
+                                        href="{{ route('index') }}">Home </a>
                                 </li>
                                 <li class="header__menu--items">
                                     <a class="header__menu--link text-white {{ Request::segment(1) == 'products' ? 'active' : '' }}"
@@ -1003,7 +1003,7 @@
     <div class="offcanvas__header">
         <div class="offcanvas__inner">
             <div class="offcanvas__logo">
-                <a class="offcanvas__logo_link" href="{{ route('home') }}">
+                <a class="offcanvas__logo_link" href="{{ route('index') }}">
                     <img src="{{ asset('assets/images/logo/nav-log.webp') }}" alt="Grocee Logo" width="158"
                         height="36">
                 </a>
@@ -1012,17 +1012,17 @@
             <nav class="offcanvas__menu">
                 <ul class="offcanvas__menu_ul">
                     <li class="offcanvas__menu_li">
-                        <a class="offcanvas__menu_item" href="{{ route('home') }}">Home</a>
+                        <a class="offcanvas__menu_item" href="{{ route('index') }}">Home</a>
                         <ul class="offcanvas__sub_menu">
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home One</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Two</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Three</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Four</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Five</a></li>
                         </ul>
                     </li>
@@ -1225,11 +1225,13 @@
                                     </label>
                                     <button type="button" class="quantity__value increase" data-id = {{ $product['id'] }} aria-label="quantity value" value="Increase Value">+</button>
                                 </div>
-                                <button class="minicart__product--remove" type="button">Remove</button>
+                                <button class="minicart__product--remove remove-from-cart" type="button" data-id="{{ $product['id'] }}">Remove</button>
                             </div>
                         </div>
                     </div>
                 @endforeach
+            @else
+                <h3 class="font-bold text-center mt-5">{{__('Cart is empty')}}</h3>
             @endif
         </div>
         
@@ -1251,7 +1253,7 @@
         </div>
         @endisset
         <div class="minicart__button d-flex justify-content-center">
-            <a class="primary__btn minicart__button--link" href="#">View cart</a>
+            <a class="primary__btn minicart__button--link" href="{{ route('cart')}}">View cart</a>
             <a class="primary__btn minicart__button--link" href="#">Checkout</a>
         </div>
     </div>
@@ -1299,10 +1301,16 @@
                 method: "post",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    id: id
+                    product_id: id
                 },
                 success: function(response) {
-                    window.location.reload();
+                    console.log(response);
+                    if (response.success) {
+                        window.location.reload();
+                        // let cart = response.cart.formatted_sub_total;
+                        // let amount = '<b>' + cart + '</b>';
+                        // $('.totalAmount').html(amount);
+                    }
                 }
             });
         }
@@ -1324,8 +1332,13 @@
             },
             success: function(response) {
                 if (response.success) {
-                    let amount = '<b>' + formattedNumber + '</b>';
-                    $('.totalAmount').html(amount);
+                    if (quantity > 0) {
+                        let cart = response.cart.formatted_sub_total;
+                        let amount = '<b>' + cart + '</b>';
+                        $('.totalAmount').html(amount);
+                    } else {
+                        window.location.reload();
+                    }
                 }
             }
         });
@@ -1339,31 +1352,12 @@
         updateQuantity(productId, qty);
     });
 
-    // $('.decrease').click(function() {
-    //     var productId = $(this).attr("data-id");
-    //     var quantityInput = $(this).parent().find('.quantity__number');
-    //     var currentValue = parseInt(quantityInput.val());
-    //     var qty = currentValue - 1;
-    //     updateQuantity(productId, qty);
-
-    //     $.ajax({
-    //         url: href,
-    //         method: "post",
-    //         data: {
-    //             _token: '{{ csrf_token() }}',
-    //             id: id,
-    //             qty: qty
-    //         },
-    //         success: function(response) {
-    //             if (response.success) {
-    //                 var formattedNumber = new Intl.NumberFormat('en-US', {
-    //                     style: 'currency',
-    //                     currency: 'USD'
-    //                 }).format(response.data);
-    //                 var amount = '<b>' + formattedNumber + '</b>';
-    //                 $('.totalAmount').html(amount);
-    //             }
-    //         }
-    //     });
-    // });
+    $('.decrease').click(function() {
+        var productId = $(this).attr("data-id");
+        console.log(productId);
+        var quantityInput = $(this).parent().find('.quantity__number');
+        var currentValue = parseInt(quantityInput.val());
+        var qty = currentValue - 1;
+        updateQuantity(productId, qty);
+    });
 </script>
