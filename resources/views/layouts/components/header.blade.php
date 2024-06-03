@@ -298,7 +298,7 @@
                     </div>
                     <div @class([
                         'dropdown__categories--menu border-radius-5 collapse',
-                        'show active' => Route::is('home'),
+                        'show active' => Route::is('index'),
                     ]) id="categoriesAccordion">
                         <ul class="d-none d-lg-block">
                             <li class="categories__menu--items">
