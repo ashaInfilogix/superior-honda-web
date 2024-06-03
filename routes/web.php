@@ -18,8 +18,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::get('/', function (){
-    return view('home');
-})->name('home');
+    return view('index');
+})->name('index');
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::resources([
@@ -52,9 +52,9 @@ Route::post('get-vehicle-model', [ VehicleController::class, 'getVehicleModel'])
 Route::post('get-vehicle-model-variant', [VehicleController::class, 'getVehicleModelVariant']); //get vehicle model variant through model.
 
 /*******  Add To Cart  **********/
-Route::get('add', [CartController::class, 'index'])->name('add');  
-Route::get('cart', [CartController::class, 'cart'])->name('cart');
+Route::get('cart', [CartController::class, 'index'])->name('cart');  
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 Route::post('update-cart', [CartController::class, 'update'])->name('update-cart');
 Route::post('remove-from-cart', [CartController::class, 'remove'])->name('remove-from-cart'); 
+Route::post('clear-cart', [CartController::class, 'clearCart'])->name('clear-cart');
 

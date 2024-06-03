@@ -91,7 +91,7 @@
                     <nav class="header__menu--navigation">
                         <ul class="header__menu--wrapper d-flex">
                             <li class="header__menu--items">
-                                <a @class(['header__menu--link', 'active' => Route::is('home')]) href="{{ route('home') }}">Home</a>
+                                <a @class(['header__menu--link', 'active' => Route::is('index')]) href="{{ route('index') }}">Home</a>
                             </li>
                             <li class="header__menu--items">
                                 <a @class(['header__menu--link', 'active' => Route::is('products')]) href="{{ route('products.index') }}">Products</a>
@@ -960,7 +960,7 @@
                             <ul class="header__menu--wrapper d-flex">
                                 <li class="header__menu--items">
                                     <a class="header__menu--link text-white {{ Request::segment(1) == '' ? 'active' : '' }}"
-                                        href="{{ route('home') }}">Home </a>
+                                        href="{{ route('index') }}">Home </a>
                                 </li>
                                 <li class="header__menu--items">
                                     <a class="header__menu--link text-white {{ Request::segment(1) == 'products' ? 'active' : '' }}"
@@ -1003,7 +1003,7 @@
     <div class="offcanvas__header">
         <div class="offcanvas__inner">
             <div class="offcanvas__logo">
-                <a class="offcanvas__logo_link" href="{{ route('home') }}">
+                <a class="offcanvas__logo_link" href="{{ route('index') }}">
                     <img src="{{ asset('assets/images/logo/nav-log.webp') }}" alt="Grocee Logo" width="158"
                         height="36">
                 </a>
@@ -1012,17 +1012,17 @@
             <nav class="offcanvas__menu">
                 <ul class="offcanvas__menu_ul">
                     <li class="offcanvas__menu_li">
-                        <a class="offcanvas__menu_item" href="{{ route('home') }}">Home</a>
+                        <a class="offcanvas__menu_item" href="{{ route('index') }}">Home</a>
                         <ul class="offcanvas__sub_menu">
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home One</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Two</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Three</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Four</a></li>
-                            <li class="offcanvas__sub_menu_li"><a href="{{ route('home') }}"
+                            <li class="offcanvas__sub_menu_li"><a href="{{ route('index') }}"
                                     class="offcanvas__sub_menu_item">Home Five</a></li>
                         </ul>
                     </li>
@@ -1230,6 +1230,8 @@
                         </div>
                     </div>
                 @endforeach
+            @else
+                <h3 class="font-bold text-center mt-5">{{__('Cart is empty')}}</h3>
             @endif
         </div>
         
@@ -1251,7 +1253,7 @@
         </div>
         @endisset
         <div class="minicart__button d-flex justify-content-center">
-            <a class="primary__btn minicart__button--link" href="#">View cart</a>
+            <a class="primary__btn minicart__button--link" href="{{ route('cart')}}">View cart</a>
             <a class="primary__btn minicart__button--link" href="#">Checkout</a>
         </div>
     </div>

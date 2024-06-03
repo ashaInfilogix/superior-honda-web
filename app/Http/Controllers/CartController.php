@@ -12,13 +12,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('products', compact('products'));
-    }
-
-    public function cart()
-    {
-        return view('cart');
+        return view('cart.index');
     }
 
     /**
@@ -40,6 +34,7 @@ class CartController extends Controller
         foreach ($cart['products'] ?? [] as $key => $product) {
             if ($product['id'] == $request->product_id) {
                 $cart['products'][$key]['quantity'] += $request->quantity;
+                $cart['products'][$key]['product_total_amount'] = $product['quantity'] * $product['price'];
                 $productExists = true;
                 break;
             }
@@ -53,6 +48,7 @@ class CartController extends Controller
                 "product_code" => $productDetail->product_code,
                 "name" => $productDetail->product_name,
                 "price" => $productDetail->cost_price,
+                "product_total_amount" => $productDetail->cost_price *  $request->quantity,
                 "image" => $productImage ? $productImage->images : null
             ];
         }
@@ -117,8 +113,10 @@ class CartController extends Controller
             // Check if the product already exists in the cart
             $productExists = false;
             foreach ($cart['products'] ?? [] as $key => $product) {
+                $cart['products'][$key]['product_total_amount'] = $product['quantity'] * $product['price'];
                 if ($product['id'] == $request->product_id) {
                     $cart['products'][$key]['quantity'] = $request->qty;
+                    $cart['products'][$key]['product_total_amount'] = $request->qty * $product['price'];
                     $productExists = true;
                     break;
                 }
@@ -212,5 +210,13 @@ class CartController extends Controller
                 'message' => 'Product is successfully removed from cart.'
             ]);
         }
+    }
+
+    public function clearCart(Request $request)
+    {
+        $request->session()->flush();
+
+        // Redirect back or to any other route
+        return redirect()->back()->with('success', 'All Products removed from cart');
     }
 }
