@@ -1225,7 +1225,7 @@
                                     </label>
                                     <button type="button" class="quantity__value increase" data-id = {{ $product['id'] }} aria-label="quantity value" value="Increase Value">+</button>
                                 </div>
-                                <button class="minicart__product--remove" type="button">Remove</button>
+                                <button class="minicart__product--remove remove-from-cart" type="button" data-id="{{ $product['id'] }}">Remove</button>
                             </div>
                         </div>
                     </div>
@@ -1299,10 +1299,16 @@
                 method: "post",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    id: id
+                    product_id: id
                 },
                 success: function(response) {
-                    window.location.reload();
+                    console.log(response);
+                    if (response.success) {
+                        window.location.reload();
+                        // let cart = response.cart.formatted_sub_total;
+                        // let amount = '<b>' + cart + '</b>';
+                        // $('.totalAmount').html(amount);
+                    }
                 }
             });
         }
@@ -1324,8 +1330,13 @@
             },
             success: function(response) {
                 if (response.success) {
-                    let amount = '<b>' + formattedNumber + '</b>';
-                    $('.totalAmount').html(amount);
+                    if (quantity > 0) {
+                        let cart = response.cart.formatted_sub_total;
+                        let amount = '<b>' + cart + '</b>';
+                        $('.totalAmount').html(amount);
+                    } else {
+                        window.location.reload();
+                    }
                 }
             }
         });
@@ -1339,31 +1350,12 @@
         updateQuantity(productId, qty);
     });
 
-    // $('.decrease').click(function() {
-    //     var productId = $(this).attr("data-id");
-    //     var quantityInput = $(this).parent().find('.quantity__number');
-    //     var currentValue = parseInt(quantityInput.val());
-    //     var qty = currentValue - 1;
-    //     updateQuantity(productId, qty);
-
-    //     $.ajax({
-    //         url: href,
-    //         method: "post",
-    //         data: {
-    //             _token: '{{ csrf_token() }}',
-    //             id: id,
-    //             qty: qty
-    //         },
-    //         success: function(response) {
-    //             if (response.success) {
-    //                 var formattedNumber = new Intl.NumberFormat('en-US', {
-    //                     style: 'currency',
-    //                     currency: 'USD'
-    //                 }).format(response.data);
-    //                 var amount = '<b>' + formattedNumber + '</b>';
-    //                 $('.totalAmount').html(amount);
-    //             }
-    //         }
-    //     });
-    // });
+    $('.decrease').click(function() {
+        var productId = $(this).attr("data-id");
+        console.log(productId);
+        var quantityInput = $(this).parent().find('.quantity__number');
+        var currentValue = parseInt(quantityInput.val());
+        var qty = currentValue - 1;
+        updateQuantity(productId, qty);
+    });
 </script>

@@ -109,15 +109,16 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+
+     public function update(Request $request)
     {
         if ($request->product_id && $request->qty) {
             $cart = session()->get('cart');
-
-            // Validate product ID
+            // Check if the product already exists in the cart
             $productExists = false;
-            foreach ($cart['products'] as &$product) {
+            foreach ($cart['products'] ?? [] as $key => $product) {
                 if ($product['id'] == $request->product_id) {
+                    $cart['products'][$key]['quantity'] = $request->qty;
                     $productExists = true;
                     break;
                 }
@@ -129,82 +130,79 @@ class CartController extends Controller
                     'message' => 'Product not found in the cart.'
                 ]);
             }
-        
-            // Update quantity of the specified product
-            foreach ($cart['products'] ?? [] as $key => $product) {
-                if ($product['id'] == $request->product_id) {
-                    $cart['products'][$key]['quantity'] += $request->qty;
-                    $productExists = true;
-                    break;
-                }
-            }
-            
-            // Recalculate cart subtotal and total quantity
-            $sub_total = 0;
+
+            // Recalculate cart totals
             $cart_quantity = 0;
+            $sub_total = 0;
             foreach ($cart['products'] as $product) {
-                // Assuming price is a property of product
-                $sub_total += $product['price'] * $product['quantity'];
                 $cart_quantity += $product['quantity'];
+                $sub_total += $product['quantity'] * $product['price'];
             }
-        
-            // Update cart object
+
+            // Update cart totals
             $cart['quantity'] = $cart_quantity;
             $cart['sub_total'] = $sub_total;
             $cart['formatted_sub_total'] = '$'.(number_format($sub_total ,2));
-            
+
+            $applied_coupons = $cart['applied_coupons'] ?? [];
+            $cart['applied_coupons'] = $applied_coupons;
+
             $cart['grand_total'] = $sub_total;
             $cart['formatted_grand_total'] = '$'.(number_format($sub_total ,2));
-            
-            print_r($cart);
-            die();
+            $cart['count']  = count($cart['products']);
             session()->put('cart', $cart);
-        
             return response()->json([
                 'success' => true,
                 'cart' => $cart,
-                'message' => 'Cart updated successfully.'
+                'message' => 'Cart quantity updated successfully.'
             ]);
         } else {
             return response()->json([
                 'success' => false,
                 'message' => 'Product ID and quantity are required.'
             ]);
-        }        
+        }
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      */
     public function remove(Request $request)
     {
-        if($request->product_id) {
+        if ($request->product_id) {
             $cart = session()->get('cart');
 
-            if(isset($cart['products'][$request->product_id])) {
-                // Remove the product from the cart
-                unset($cart['products'][$request->product_id]);
+            foreach ($cart['products'] ?? [] as $key => $product) {
+                if ($product['id'] == $request->product_id) {
+                    unset($cart['products'][$key]); // Unset the product from the cart
+                    break; // Exit the loop once product is found and removed
+                }
+            }
 
+            // if (isset($cart['products'][$request->product_id])) {
                 // Recalculate cart total quantity
                 $cart_quantity = 0;
                 foreach ($cart['products'] as $product) {
                     $cart_quantity += $product['quantity'];
                 }
-                $cart['quantity'] = $cart_quantity;
-
                 // Recalculate cart total amount
-                $amount = 0;
-                foreach($cart['products'] as $product) {
-                    // Assuming price is a property of product
-                    $amount += $product['product']->price * $product['quantity'];
+                $sub_total = 0;
+                foreach ($cart['products'] as $product) {
+                    $sub_total += $product['price'] * $product['quantity']; // Corrected accessing price
                 }
-            }
+            // }
 
             // Update cart object
-            $cart['sub_total'] = $amount;
-            $cart['grand_total'] = $amount; // Assuming no discounts or taxes applied
+            $cart['quantity'] = $cart_quantity;
+            $cart['sub_total'] = $sub_total;
+            $cart['formatted_sub_total'] = '$' . number_format($sub_total, 2);
+
+            $applied_coupons = $cart['applied_coupons'] ?? [];
+            $cart['applied_coupons'] = $applied_coupons;
+
+            $cart['grand_total'] = $sub_total;
+            $cart['formatted_grand_total'] = '$' . number_format($sub_total, 2);
+            $cart['count'] = count($cart['products']);
 
             session()->put('cart', $cart);
 
