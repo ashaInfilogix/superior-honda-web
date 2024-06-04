@@ -59,4 +59,7 @@ Route::post('remove-from-cart', [CartController::class, 'remove'])->name('remove
 Route::post('clear-cart', [CartController::class, 'clearCart'])->name('clear-cart');
 Route::post('coupon-code', [CartController::class, 'couponCode'])->name('coupon-code');
 
+Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('order', [CartController::class, 'order'])->name('order');
+
 

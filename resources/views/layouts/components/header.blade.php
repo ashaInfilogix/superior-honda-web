@@ -1254,8 +1254,12 @@
         @endisset
         <div class="minicart__button d-flex justify-content-center">
             <a class="primary__btn minicart__button--link" href="{{ route('cart')}}">View cart</a>
-            <a class="primary__btn minicart__button--link" href="#">Checkout</a>
-        </div>
+            @if (session('cart') && isset(session('cart')['products']))
+                <a class="primary__btn minicart__button--link" href="{{ route('checkout') }}">Checkout</a>
+            @else
+                <a class="primary__btn minicart__button--link" href="{{ route('index') }}">Checkout</a>
+            @endif
+         </div>
     </div>
     <!-- End offCanvas minicart -->
 

@@ -102,7 +102,7 @@
                                                     <input class="coupon__code--field__input border-radius-5" name="coupon-code" id="coupon-code" placeholder="Coupon code" type="text" @isset(session('cart')['applied_coupons'][0]['coupon_code']) value=" {{ session('cart')['applied_coupons'][0]['coupon_code'] }}"  @endisset>
                                                 <div class="error-message text-danger"></div>
                                                 </label>
-                                                    <button class="coupon__code--field__btn primary__btn coupon-code" type="button"  @isset(session('cart')['applied_coupons'][0]['coupon_code'])disabled @endisset>Apply Coupon</button>
+                                                    <button class="coupon__code--field__btn primary__btn coupon-code" type="button">Apply Coupon</button>
                                             </div>
                                         </form>
                                     </div>
@@ -134,7 +134,13 @@
                                         <p class="cart__summary--footer__desc">Shipping & taxes calculated at checkout</p>
                                         <ul class="d-flex justify-content-between">
                                             {{-- <li><button class="cart__summary--footer__btn primary__btn cart" type="submit">Update Cart</button></li> --}}
-                                            <li><a class="cart__summary--footer__btn primary__btn checkout" href="checkout.html">Check Out</a></li>
+
+                                            <li>
+                                                @if (session('cart') && isset(session('cart')['products']))
+                                                    <a class="cart__summary--footer__btn primary__btn checkout" href="{{ route('checkout')}}">Check Out</a></li>
+                                                @else
+                                                    <a class="cart__summary--footer__btn primary__btn checkout" href="{{ route('index')}}">Check Out</a></li>
+                                                @endif
                                         </ul>
                                     </div>
                                 </div> 
