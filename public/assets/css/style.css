@@ -11455,3 +11455,7 @@ img.product__card--thumbnail__img.product__secondary--img {
 .page-link {
   color: black !important;
   }
+
+  a.added {
+    color: #ed1d24;
+}

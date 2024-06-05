@@ -385,7 +385,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="product__card--action__list">
-                                                            <a class="product__card--action__btn wishlist-btn toggle-Wishlist" title="Wishlist" data-id="{{ $product->id }}"
+                                                            <a @class(["wishlist-btn toggle-Wishlist product__card--action__btn", 'added'=> optional($product->wishlist)->product_id]) title="Wishlist" data-id="{{ $product->id }}" id="wishlist-btn{{$product->id}}"
                                                                 data-href="{{ route('wishlist')}}">
                                                                 <svg class="product__card--action__btn--svg"
                                                                     width="18" height="18"
@@ -536,7 +536,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="product__card--action__list">
-                                                            <a class="product__card--action__btn wishlist-btn toggle-Wishlist" title="Wishlist" data-id="{{ $product->id }}"
+                                                            <a class="product__card--action__btn wishlist-btn{{$product->id}} toggle-Wishlist" title="Wishlist" data-id="{{ $product->id }}"
                                                                 data-href="{{ route('wishlist')}}">
                                                                 <svg class="product__card--action__btn--svg"
                                                                     width="18" height="18"
@@ -763,6 +763,7 @@
             $('.toggle-Wishlist').click(function() {
                 let productId = $(this).data('id');
                 let href = $(this).data('href');
+
                 $.ajax({
                     url: href,
                     method: 'post',
@@ -770,7 +771,11 @@
                         '_token': '{{ csrf_token() }}',
                         product_id: productId,
                     },success: function(response) {
-                        console.log(response.success);
+                        if(response.data == 1) {
+                            $('#wishlist-btn'+productId).addClass('added');
+                        } else{
+                            $('#wishlist-btn'+productId).removeClass('added');
+                        }
                     }
                 });
             });

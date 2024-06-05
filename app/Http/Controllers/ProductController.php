@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('productImages')->latest()->paginate(9);
+        $products = Product::with('productImages','wishlist')->latest()->paginate(9);
         $productCategories = ProductCategory::with('products')->latest()->limit(8)->get();
         $brands = VehicleBrand::latest()->limit(8)->get();
         foreach($productCategories as $key=>$product)
