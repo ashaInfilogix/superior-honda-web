@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
@@ -63,17 +65,30 @@ class WishlistController extends Controller
         //
     }
 
-    public function wishlistAddRemove($productId)
+    public function wishlistAddRemove(Request $request)
     {
-        if(Auth::user()) {
-            Wishlist::create([
-                'user_id' => Auth::id(),
-                'product_id' => $productId
-            ]);
-            return redirect()->back();
+        if(auth()->check()) {
+            $wishlist = Wishlist::where('product_id', $request->product_id)
+                                ->where('user_id', auth()->id())
+                                ->first();
+            if($wishlist) {
+                $wishlist->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product removed from wishlist successfully',
+                ]);
+            } else {
+                Wishlist::create([
+                    'user_id' => auth()->id(),
+                    'product_id' => $request->product_id
+                ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product added to wishlist successfully',
+                ]);
+            }
         } else {
             return redirect()->route('login');
         }
-
     }
 }

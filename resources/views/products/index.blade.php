@@ -385,8 +385,8 @@
                                                             </a>
                                                         </li>
                                                         <li class="product__card--action__list">
-                                                            <a class="product__card--action__btn wishlist-btn" title="Wishlist" data-id="{{ $product->id }}"
-                                                                href="{{ route('wishlist', $product->id)}}">
+                                                            <a class="product__card--action__btn wishlist-btn toggle-Wishlist" title="Wishlist" data-id="{{ $product->id }}"
+                                                                data-href="{{ route('wishlist')}}">
                                                                 <svg class="product__card--action__btn--svg"
                                                                     width="18" height="18"
                                                                     viewBox="0 0 16 13" fill="none"
@@ -536,8 +536,8 @@
                                                             </a>
                                                         </li>
                                                         <li class="product__card--action__list">
-                                                            <a class="product__card--action__btn wishlist-btn" title="Wishlist" data-id="{{ $product->id }}"
-                                                                href="{{ route('wishlist', $product->id)}}">
+                                                            <a class="product__card--action__btn wishlist-btn toggle-Wishlist" title="Wishlist" data-id="{{ $product->id }}"
+                                                                data-href="{{ route('wishlist')}}">
                                                                 <svg class="product__card--action__btn--svg"
                                                                     width="18" height="18"
                                                                     viewBox="0 0 16 13" fill="none"
@@ -758,5 +758,22 @@
             </div>
         </section>
         <!-- End shipping section -->
-
-    @endsection
+    <script>
+         $(function() {   
+            $('.toggle-Wishlist').click(function() {
+                let productId = $(this).data('id');
+                let href = $(this).data('href');
+                $.ajax({
+                    url: href,
+                    method: 'post',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        product_id: productId,
+                    },success: function(response) {
+                        console.log(response.success);
+                    }
+                });
+            });
+        })
+    </script>
+@endsection
