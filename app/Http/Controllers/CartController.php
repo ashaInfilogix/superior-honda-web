@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Coupon;
+use App\Models\Country;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -86,35 +89,6 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
 
      public function update(Request $request)
     {
@@ -247,85 +221,109 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'All Products removed from cart');
     }
 
-    // public function couponCode(Request $request)
-    // {
-    //     $couponExists = Coupon::where('coupon_code', $request->coupon_code)
-    //                             ->whereDate('start_date', '<=', now())
-    //                             ->whereDate('end_date', '>=', now())
-    //                             ->where('status', 'Active')
-    //                             ->first();
-    //     if($couponExists) {
-    //         $cart = session()->get('cart');
-    //         $cart['applied_coupons'][] = [
-    //             'id'              => $couponExists->id,
-    //             'coupon_code'     => $couponExists->coupon_code,
-    //             'discount_type'   => $couponExists->discount_type,
-    //             'discount_amount' => $couponExists->discount_amount,
-    //             'use_limit'       => $couponExists->use_limit
-
-    //         ];
-
-    //         $grandTotal = $cart['grand_total'];
-    //         echo"<pre>"; print_R($grandTotal); die();
-
-
-    //         session()->put('cart', $cart);
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'data'    => $cart,
-    //             'message' => 'Coupon code applied'
-    //         ]);
-    //     } else {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Coupon code not exist'
-    //         ]);
-    //     }
-    // }
-
     public function couponCode(Request $request)
-{
-    $couponExists = Coupon::where('coupon_code', $request->coupon_code)
-                            ->whereDate('start_date', '<=', now())
-                            ->whereDate('end_date', '>=', now())
-                            ->where('status', 'Active')
-                            ->first();
+    {
+        $couponExists = Coupon::where('coupon_code', $request->coupon_code)
+                                ->whereDate('start_date', '<=', now())
+                                ->whereDate('end_date', '>=', now())
+                                ->where('status', 'Active')
+                                ->first();
 
-    if($couponExists) {
-        $cart = session()->get('cart');
+        if($couponExists) {
+            $cart = session()->get('cart');
 
-        $discountAmount = 0;
-        if ($couponExists->discount_type === 'percentage') {
-            $discountAmount = ($couponExists->discount_amount / 100) * $cart['sub_total'];
-        } else if ($couponExists->discount_type === 'fixed') {
-            $discountAmount = $couponExists->discount_amount;
+            $discountAmount = 0;
+            if ($couponExists->discount_type === 'percentage') {
+                $discountAmount = ($couponExists->discount_amount / 100) * $cart['sub_total'];
+            } else if ($couponExists->discount_type === 'fixed') {
+                $discountAmount = $couponExists->discount_amount;
+            }
+
+            $cart['grand_total'] -= $discountAmount;
+            $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
+            $cart['discount_amount'] = $discountAmount;
+
+            $cart['applied_coupons'][] = [
+                'id'              => $couponExists->id,
+                'coupon_code'     => $couponExists->coupon_code,
+                'discount_type'   => $couponExists->discount_type,
+                'discount_amount' => $couponExists->discount_amount,
+                'use_limit'       => $couponExists->use_limit
+            ];
+
+            session()->put('cart', $cart);
+            return response()->json([
+                'success' => true,
+                'cart'    => $cart,
+                'message' => 'Coupon code applied'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Coupon code does not exist or is not valid'
+            ]);
+        }
+    }
+
+    public function checkout()
+    {
+        $countries = Country::all();
+        return view('cart.checkout', compact('countries'));
+    }
+
+    public function order(Request $request)
+    {
+        if (session('cart') && isset(session('cart')['products'])) {
+            $phone = NULL;
+            $email = NULL;
+            $order['billing_address'] = [
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'company_name' => $request->company_name,
+                'address' => $request->address,
+                'apartment' => $request->apartment,
+                'city' => $request->city,
+                'country_id' => $request->country_id,
+                'state_id' => $request->state_id,
+                'postal_code' => $request->postal_code,
+            ];
+
+            $order['shipping_address'] = [
+                'first_name' => $request->shipping_first_name,
+                'last_name' => $request->shipping_last_name,
+                'company_name' => $request->shipping_company_name,
+                'address' => $request->shipping_address,
+                'apartment' => $request->shipping_apartment,
+                'city' => $request->shipping_city,
+                'country_id' => $request->shipping_country_id,
+                'state_id' => $request->shipping_state_id,
+                'postal_code' => $request->shipping_postal_code,
+            ];
+
+            $field = filter_var($request->input('email_or_phone'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
+            if($field == 'email' ) {
+                $email = $request->email_or_phone;
+            } else {
+                $phone = $request->email_or_phone;
+            }
+
+            Order::create([
+                'user_id'         => Auth::id() ?? NULL,
+                'email'           =>  $email,
+                'phone_number'    => $phone,
+                'billing_address' => json_encode($order['billing_address']),
+                'shipping_address'=> json_encode($order['shipping_address']) ?? json_encode($order['billing_address']),
+                'cart_items'      => json_encode(session('cart')),
+                'order_notes'     => $request->order_notes,
+                'payment_details' => Null
+            ]);
+
+            $request->session()->flush();
+
+            return redirect()->back();
+        } else {
+            return redirect()->route('checkout')->with('error', 'Cart is empty.');
         }
 
-        $cart['grand_total'] -= $discountAmount;
-        $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
-        $cart['discount_amount'] = $discountAmount;
-
-        $cart['applied_coupons'][] = [
-            'id'              => $couponExists->id,
-            'coupon_code'     => $couponExists->coupon_code,
-            'discount_type'   => $couponExists->discount_type,
-            'discount_amount' => $couponExists->discount_amount,
-            'use_limit'       => $couponExists->use_limit
-        ];
-
-        session()->put('cart', $cart);
-        return response()->json([
-            'success' => true,
-            'cart'    => $cart,
-            'message' => 'Coupon code applied'
-        ]);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'Coupon code does not exist or is not valid'
-        ]);
     }
-}
-
 }

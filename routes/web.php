@@ -31,9 +31,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     ]);
 
     /************** Wishlist*****************/
-    Route::get('wishlist/{id}', [WishlistController::class, 'wishlistAddRemove'])->name('wishlist');
-
 });
+Route::post('wishlist', [WishlistController::class, 'wishlistAddRemove'])->name('wishlist');
 
 Route::resources([
     'products'  => ProductController::class,
@@ -58,5 +57,10 @@ Route::post('update-cart', [CartController::class, 'update'])->name('update-cart
 Route::post('remove-from-cart', [CartController::class, 'remove'])->name('remove-from-cart'); 
 Route::post('clear-cart', [CartController::class, 'clearCart'])->name('clear-cart');
 Route::post('coupon-code', [CartController::class, 'couponCode'])->name('coupon-code');
+
+Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('order', [CartController::class, 'order'])->name('order');
+
+// Route::post('wishlist', [WishlistController::class, 'wishlistAddRemove'])->name('wishlist');  // product add and remove
 
 

@@ -190,7 +190,7 @@
                 </div>
                 <p class="copyright__content"><span class="text__secondary">© 2022</span> Powered by <a class="copyright__content--link" target="_blank" href="https://themeforest.net/search/hooktheme">Hooktheme</a> .  All Rights Reserved.</p>
                 <div class="footer__payment">
-                    <img src="assets/img/icon/payment-img.webp" alt="payment-img">
+                    <img src="{{ asset('assets/images/icon/payment-img.webp') }}" alt="payment-img">
                 </div>
             </div>
         </div>

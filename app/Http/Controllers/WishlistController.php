@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
+use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
@@ -12,7 +15,14 @@ class WishlistController extends Controller
      */
     public function index()
     {
-        return view('wishlists.index');
+        $wishlists = Wishlist::with('product')->latest()->get();
+        foreach($wishlists as $key => $wishlist) {
+            $productImage = ProductImage::where('product_id', $wishlist->product->id)->first();
+            $wishlists[$key]['product_image'] =  $productImage->images;
+        }
+
+        $products = Product::with('productImages', 'wishlist')->latest()->take(5)->get();
+        return view('wishlists.index', compact('wishlists', 'products'));
     }
 
     /**
@@ -63,17 +73,33 @@ class WishlistController extends Controller
         //
     }
 
-    public function wishlistAddRemove($productId)
+    public function wishlistAddRemove(Request $request)
     {
-        if(Auth::user()) {
-            Wishlist::create([
-                'user_id' => Auth::id(),
-                'product_id' => $productId
-            ]);
-            return redirect()->back();
+        if(auth()->check()) {
+            $wishlist = Wishlist::where('product_id', $request->product_id)
+                                ->where('user_id', auth()->id())
+                                ->first();
+            if($wishlist) {
+                $wishlist->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product removed from wishlist successfully',
+                    'data'    => 0,
+                ]);
+            } else {
+                $newWishlistProduct = Wishlist::create([
+                    'user_id' => auth()->id(),
+                    'product_id' => $request->product_id
+                ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product added to wishlist successfully',
+                    'data'    => 1,
+                    'wishlist' => $newWishlistProduct
+                ]);
+            }
         } else {
             return redirect()->route('login');
         }
-
     }
 }
