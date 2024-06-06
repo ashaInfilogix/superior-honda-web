@@ -81,21 +81,24 @@ class WishlistController extends Controller
                                 ->first();
             if($wishlist) {
                 $wishlist->delete();
+                $wishlistCount = Wishlist::where('user_id', auth()->id())->count();
                 return response()->json([
                     'success' => true,
                     'message' => 'Product removed from wishlist successfully',
                     'data'    => 0,
+                    'count'   => $wishlistCount
                 ]);
             } else {
                 $newWishlistProduct = Wishlist::create([
                     'user_id' => auth()->id(),
                     'product_id' => $request->product_id
                 ]);
+                $wishlistCount = Wishlist::where('user_id', auth()->id())->count();
                 return response()->json([
                     'success' => true,
                     'message' => 'Product added to wishlist successfully',
                     'data'    => 1,
-                    'wishlist' => $newWishlistProduct
+                    'count'   => $wishlistCount
                 ]);
             }
         } else {

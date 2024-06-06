@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Coupon;
 use App\Models\Country;
 use App\Models\Order;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -85,7 +86,7 @@ class CartController extends Controller
         }
         
         $cart['count']  = count($cart['products']);
-        session()->put('cart', $cart);     
+        session()->put('cart', $cart);
 
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }

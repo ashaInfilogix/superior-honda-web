@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -32,6 +33,23 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            // $cartData = Cart::where('user_id', Auth::id())->first();
+            // if($cartData) {
+            //     if (session('cart') && Auth::check()) {
+            //         if($cartData) {
+            //             Cart::updateOrCreate([
+            //                 'user_id' => Auth::id(),
+            //             ],[
+            //                 'cart'   => json_encode(session('cart'))]
+            //             );
+            //         }
+            //     }
+
+            //     $cart = json_decode($cartData->cart);
+            //     session()->put('cart', $cart);
+            // }
+
             return redirect()->intended('/');
         }
 

@@ -280,8 +280,10 @@
                    },success: function(response) {
                         if(response.data == 1) {
                             $('#wishlist-btn'+productId).addClass('added');
+                            $('.wishlist').html(response.count);
                         } else{
                             $('#wishlist-btn'+productId).removeClass('added');
+                            $('.wishlist').html(response.count);
                         }
                    }
                });

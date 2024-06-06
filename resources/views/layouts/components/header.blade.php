@@ -43,6 +43,7 @@
 <header class="header__section">
     <div class="main__header header__sticky">
         <div class="container">
+            <?php  $wishlist = App\Models\Wishlist::where('user_id', Auth::id())->count(); ?>
             <div class="main__header--inner position__relative d-flex justify-content-between align-items-center">
                 <div class="offcanvas__header--menu__open ">
                     <a class="offcanvas__header--menu__open--btn" href="javascript:void(0)" data-offcanvas>
@@ -162,7 +163,7 @@
                                         d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                     </path>
                                 </svg>
-                                <span class="items__count">3</span>
+                                <span class="items__count wishlist">{{ $wishlist }}</span>
                             </a>
                         </li>
                         <li class="header__account--items header__minicart--items">
@@ -184,8 +185,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                <span class="items__count">{{ session('cart')['count'] ?? 0 }}</span>
-                              
+                                <span class="items__count"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                                 <span class="minicart__btn--text">My Cart <br> 
                                     @isset(session('cart')['formatted_sub_total'])
                                     <span class="minicart__btn--text__price totalAmount"><b>{{ session('cart')['formatted_sub_total'] }}</b></span>
@@ -243,7 +243,7 @@
                                         d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                     </path>
                                 </svg>
-                                <span class="items__count">3</span>
+                                <span class="items__count wishlist">{{ $wishlist }}</span>
                             </a>
                         </li>
                         <li class="header__account--items header__minicart--items">
@@ -265,7 +265,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                    <span class="items__count">{{ session('cart')['count'] ?? 0 }}</span>
+                                    <span class="items__count">@if(session('cart')) {{ session('cart')['count'] }} @endif</span>
                             </a>
                         </li>
                     </ul>
@@ -1183,7 +1183,7 @@
                         </svg>
                     </span>
                     <span class="offcanvas__stikcy--toolbar__label">Wishlist</span>
-                    <span class="items__count">3</span>
+                    <span class="items__count wishlist">{{ $wishlist }}</span>
                 </a>
             </li>
         </ul>
@@ -1254,7 +1254,7 @@
         @endisset
         <div class="minicart__button d-flex justify-content-center">
             <a class="primary__btn minicart__button--link" href="{{ route('cart')}}">View cart</a>
-            @if (session('cart') && isset(session('cart')['products']))
+            @if (session('cart') && isset(session('cart')->products))
                 <a class="primary__btn minicart__button--link" href="{{ route('checkout') }}">Checkout</a>
             @else
                 <a class="primary__btn minicart__button--link" href="{{ route('index') }}">Checkout</a>

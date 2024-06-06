@@ -536,7 +536,8 @@
                                                             </a>
                                                         </li>
                                                         <li class="product__card--action__list">
-                                                            <a class="product__card--action__btn wishlist-btn{{$product->id}} toggle-Wishlist" title="Wishlist" data-id="{{ $product->id }}"
+
+                                                            <a @class(["wishlist-btn toggle-Wishlist product__card--action__btn", 'added'=> optional($product->wishlist)->product_id]) title="Wishlist" data-id="{{ $product->id }}" id="wishlist-btn{{$product->id}}"
                                                                 data-href="{{ route('wishlist')}}">
                                                                 <svg class="product__card--action__btn--svg"
                                                                     width="18" height="18"
@@ -772,8 +773,10 @@
                         product_id: productId,
                     },success: function(response) {
                         if(response.data == 1) {
+                            $('.wishlist').html(response.count);
                             $('#wishlist-btn'+productId).addClass('added');
                         } else{
+                            $('.wishlist').html(response.count);
                             $('#wishlist-btn'+productId).removeClass('added');
                         }
                     }
