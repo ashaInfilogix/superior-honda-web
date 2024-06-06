@@ -746,7 +746,6 @@
             },
             success: function(response) {
                 if (response.success) {
-                    console.log(response.cart.products);
                     if (quantity > 0) {
                         let cart = response.cart.formatted_sub_total;
                         let amount = '<b>' + cart + '</b>';

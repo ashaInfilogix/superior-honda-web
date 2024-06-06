@@ -265,7 +265,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                    <span class="items__count">@if(session('cart')) {{ session('cart')['count'] }} @endif</span>
+                                    <span class="items__count">@if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                             </a>
                         </li>
                     </ul>
@@ -1168,7 +1168,7 @@
                         </svg>
                     </span>
                     <span class="offcanvas__stikcy--toolbar__label">Cart</span>
-                    <span class="items__count">3</span>
+                    <span class="items__count"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                 </a>
             </li>
             <li class="offcanvas__stikcy--toolbar__list">
@@ -1243,7 +1243,7 @@
             </div>
             <div class="minicart__amount_list d-flex justify-content-between">
                 <span>Total:</span>
-                <span class="totalAmount"><b>{{ session('cart')['formatted_grand_total'] }}</b></span>
+                <span class="grandTotal"><b>{{ session('cart')['formatted_grand_total'] }}</b></span>
             </div>
         </div>
         <div class="minicart__conditions text-center">
@@ -1340,6 +1340,9 @@
                         let cart = response.cart.formatted_sub_total;
                         let amount = '<b>' + cart + '</b>';
                         $('.totalAmount').html(amount);
+
+                        let grandTotal = response.cart.formatted_grand_total;
+                        $('.grandTotal').html(grandTotal);
                     } else {
                         window.location.reload();
                     }

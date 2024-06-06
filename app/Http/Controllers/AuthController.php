@@ -34,21 +34,19 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // $cartData = Cart::where('user_id', Auth::id())->first();
-            // if($cartData) {
-            //     if (session('cart') && Auth::check()) {
-            //         if($cartData) {
-            //             Cart::updateOrCreate([
-            //                 'user_id' => Auth::id(),
-            //             ],[
-            //                 'cart'   => json_encode(session('cart'))]
-            //             );
-            //         }
-            //     }
+            $cart = session('cart');
+            if ($cart && Auth::check()) {
+                Cart::updateOrCreate(
+                    ['user_id' => Auth::id()],
+                    ['cart' => json_encode($cart)]
+                );
+            }
 
-            //     $cart = json_decode($cartData->cart);
-            //     session()->put('cart', $cart);
-            // }
+            $cartData = Cart::where('user_id', Auth::id())->first();
+            if ($cartData) {
+                $cart = json_decode($cartData->cart, true);
+                session()->put('cart', $cart);
+            }
 
             return redirect()->intended('/');
         }
