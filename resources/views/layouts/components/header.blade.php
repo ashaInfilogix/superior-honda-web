@@ -68,7 +68,7 @@ else{
                 </div>
                 <div class="main__logo">
                     <h1 class="main__logo--title"><a class="main__logo--link" href="#"><img
-                        class="main__logo--img" src="@if($logo_url){{env('BASE_IMAGE_PATH'). '/' .$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif"
+                        class="main__logo--img" src="@if($logo_url){{env('BASE_IMAGE_PATH')}}{{$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif"
                                 alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
@@ -1219,7 +1219,7 @@ else{
                 @foreach (session('cart')['products'] as $key => $product)
                     <div class="minicart__product--items d-flex">
                         <div class="minicart__thumb">
-                            <a href="#"><img src="{{ env('BASE_IMAGE_PATH') . '/' . $product['image'] }}" alt="product-img"></a>
+                            <a href="#"><img src="{{ env('BASE_IMAGE_PATH')}}{{$product['image'] }}" alt="product-img"></a>
                         </div>
                         <div class="minicart__text">
                             <h4 class="minicart__subtitle"><a href="#">{{ $product['name'] }}</a></h4>

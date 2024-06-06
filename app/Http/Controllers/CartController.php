@@ -258,40 +258,55 @@ class CartController extends Controller
 
         if($couponExists) {
             $cart = session()->get('cart');
+            if(session('cart')['products']) {
+                $discountAmount = 0;
+                if ($couponExists->discount_type === 'percentage') {
+                    $discountAmount = ($couponExists->discount_amount / 100) * $cart['sub_total'];
+                } else if ($couponExists->discount_type === 'fixed') {
+                    $discountAmount = $couponExists->discount_amount;
+                }
 
-            $discountAmount = 0;
-            if ($couponExists->discount_type === 'percentage') {
-                $discountAmount = ($couponExists->discount_amount / 100) * $cart['sub_total'];
-            } else if ($couponExists->discount_type === 'fixed') {
-                $discountAmount = $couponExists->discount_amount;
+                $cart['grand_total'] -= $discountAmount;
+                $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
+                $cart['discount_amount'] = $discountAmount;
+
+                if($request->type == 'applied') {
+                    $cart['applied_coupons'] = [
+                        'id'              => $couponExists->id,
+                        'coupon_code'     => $couponExists->coupon_code,
+                        'discount_type'   => $couponExists->discount_type,
+                        'discount_amount' => $couponExists->discount_amount,
+                        'use_limit'       => $couponExists->use_limit
+                    ];
+                } else {
+                    unset($cart['applied_coupons']);
+
+                    $applied_coupons = $cart['applied_coupons'] ?? [];
+                    $cart['applied_coupons'] = $applied_coupons;
+                    $cart['grand_total'] = $cart['sub_total'];
+                    $cart['formatted_grand_total'] = '$'. Number_Format( $cart['sub_total'] , 2);
+                    $cart['discount_amount'] = '$'. 0.00;
+                }
+
+                session()->put('cart', $cart);
+                if (Auth::check()) {
+                    Cart::updateOrCreate(
+                        ['user_id' => Auth::id()],
+                        ['cart' => json_encode($cart)]
+                    );
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'cart'    => $cart,
+                    'message' => 'Coupon code applied'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'cart item is empty.'
+                ]);
             }
-
-            $cart['grand_total'] -= $discountAmount;
-            $cart['formatted_grand_total'] = '$'. Number_Format( $cart['grand_total'] , 2);
-            $cart['discount_amount'] = $discountAmount;
-
-            $cart['applied_coupons'][] = [
-                'id'              => $couponExists->id,
-                'coupon_code'     => $couponExists->coupon_code,
-                'discount_type'   => $couponExists->discount_type,
-                'discount_amount' => $couponExists->discount_amount,
-                'use_limit'       => $couponExists->use_limit
-            ];
-
-            session()->put('cart', $cart);
-
-            if (Auth::check()) {
-                Cart::updateOrCreate(
-                    ['user_id' => Auth::id()],
-                    ['cart' => json_encode($cart)]
-                );
-            }
-
-            return response()->json([
-                'success' => true,
-                'cart'    => $cart,
-                'message' => 'Coupon code applied'
-            ]);
         } else {
             return response()->json([
                 'success' => false,

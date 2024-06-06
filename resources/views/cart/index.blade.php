@@ -52,7 +52,7 @@
                                                                 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
                                                             </button>
                                                             <div class="cart__thumbnail">
-                                                                <a href="#"><img class="border-radius-5" src="{{ env('BASE_IMAGE_PATH') . '/' . $product['image'] }}" alt="cart-product"></a>
+                                                                <a href="#"><img class="border-radius-5" src="{{ env('BASE_IMAGE_PATH') }}{{$product['image'] }}" alt="cart-product"></a>
                                                             </div>
                                                             <div class="cart__content">
                                                                 <h3 class="cart__content--title h4"><a href="#">{{ $product['name'] }}</a></h3>
@@ -99,10 +99,16 @@
                                             <p class="coupon__code--desc">Enter your coupon code if you have one.</p>
                                             <div class="coupon__code--field d-flex">
                                                 <label>
-                                                    <input class="coupon__code--field__input border-radius-5" name="coupon-code" id="coupon-code" placeholder="Coupon code" type="text" @isset(session('cart')['applied_coupons'][0]['coupon_code']) value=" {{ session('cart')['applied_coupons'][0]['coupon_code'] }}"  @endisset>
+                                                    <input class="coupon__code--field__input border-radius-5" name="coupon-code" id="coupon-code" placeholder="Coupon code" type="text" @isset(session('cart')['applied_coupons']['coupon_code']) value=" {{ session('cart')['applied_coupons']['coupon_code'] }}"  @endisset>
                                                 <div class="error-message text-danger"></div>
                                                 </label>
-                                                    <button class="coupon__code--field__btn primary__btn coupon-code" type="button">Apply Coupon</button>
+                                                @isset(session('cart')['applied_coupons']['coupon_code'])
+                                                    <button class="coupon__code--field__btn primary__btn remove-code" data-type="remove" type="button" >Remove Coupon</button>
+                                                    <button class="coupon__code--field__btn primary__btn coupon-code" data-type="applied" type="button" hidden>Apply Coupon</button>
+                                                @else
+                                                    <button class="coupon__code--field__btn primary__btn remove-code" data-type="remove" type="button" hidden>Remove Coupon</button>
+                                                    <button class="coupon__code--field__btn primary__btn coupon-code" data-type="applied" type="button">Apply Coupon</button>
+                                                @endif
                                             </div>
                                         </form>
                                     </div>
@@ -703,8 +709,7 @@
         </section>
         <!-- End shipping section -->
 
-        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script>
     $(".remove-from-cart").click(function(e) {
         e.preventDefault();
@@ -806,6 +811,7 @@
 
     $('.coupon-code').click(function() {
         var couponCode = $('#coupon-code').val();
+        var type = $(this).attr("data-type");
         if(!couponCode) {
            $('.error-message').html('Please enter a coupon code.');
            return false;
@@ -816,18 +822,52 @@
             type: 'POST',
             data: { 
                 _token: '{{ csrf_token() }}',
-                coupon_code: couponCode 
+                coupon_code: couponCode,
+                type: type
             },
             success: function(response) {
-                if(response.success) {
+                if(response.success == true) {
                     let grandTotal = response.cart.formatted_grand_total;
                     let discountAmount = response.cart.discount_amount;
                     $('.discountAmount').html(discountAmount);
                     $('.grandTotal').html(grandTotal);
+                    
+                    $('.coupon-code').attr('hidden', 'hidden');
+                    $('.remove-code').removeAttr('hidden');
+                } else {
+                    $('.error-message').html(response.message);
                 }
             },
         });
         }
+    });
+
+    $('.remove-code').click(function() {
+        var couponCode = $('#coupon-code').val();
+        var type = $(this).attr("data-type");
+
+        $.ajax({
+            url: '{{ route('coupon-code') }}',
+            type: 'POST',
+            data: { 
+                _token: '{{ csrf_token() }}',
+                coupon_code: couponCode,
+                type: type
+            },
+            success: function(response) {
+                if(response.success == true) {
+                    let grandTotal = response.cart.formatted_grand_total;
+                    let discountAmount = response.cart.discount_amount;
+                    $('.discountAmount').html(discountAmount);
+                    $('.grandTotal').html(grandTotal);
+                    $('#coupon-code').val('');
+                    $('.coupon-code').removeAttr('hidden');
+                    $('.remove-code').attr('hidden', 'hidden');
+                } else {
+                    $('.error-message').html(response.message);
+                }
+            },
+        });
     });
 </script>
  @endsection

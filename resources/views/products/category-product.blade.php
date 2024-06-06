@@ -80,9 +80,9 @@
                                                                 <a class="product__card--thumbnail__link display-block" href="{{ route('products.show', $product->id) }}">
                                                                     @foreach($product->productImages as $key => $productImage)
                                                                     @if ($key==0)
-                                                                    <img class="product__card--thumbnail__img product__primary--img" src="{{  env('BASE_IMAGE_PATH').'/'.$productImage->images }}" alt="product-img">
+                                                                    <img class="product__card--thumbnail__img product__primary--img" src="{{  env('BASE_IMAGE_PATH')}}{{$productImage->images }}" alt="product-img">
                                                                     @else 
-                                                                    <img class="product__card--thumbnail__img product__secondary--img" src="{{  env('BASE_IMAGE_PATH').'/'.$productImage->images }}" alt="product-img">
+                                                                    <img class="product__card--thumbnail__img product__secondary--img" src="{{  env('BASE_IMAGE_PATH')}}{{$productImage->images }}" alt="product-img">
                                                                     @endif
                                                                     @endforeach
                                                                 </a>
@@ -177,9 +177,9 @@
                                                                 <a class="product__card--thumbnail__link display-block" href="{{ route('products.show', $product->id) }}">
                                                                     @foreach($product->productImages as $key => $productImage)
                                                                         @if ($key==0)
-                                                                        <img class="product__card--thumbnail__img product__primary--img" src="{{  env('BASE_IMAGE_PATH').'/'.$productImage->images }}" alt="product-img">
+                                                                        <img class="product__card--thumbnail__img product__primary--img" src="{{  env('BASE_IMAGE_PATH')}}{{$productImage->images }}" alt="product-img">
                                                                         @else
-                                                                        <img class="product__card--thumbnail__img product__secondary--img" src="{{  env('BASE_IMAGE_PATH').'/'.$productImage->images }}" alt="product-img">
+                                                                        <img class="product__card--thumbnail__img product__secondary--img" src="{{  env('BASE_IMAGE_PATH')}}{{$productImage->images }}" alt="product-img">
                                                                         @endif
                                                                     @endforeach
                                                                 </a>

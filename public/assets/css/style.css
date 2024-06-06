@@ -11461,6 +11461,8 @@ img.product__card--thumbnail__img.product__secondary--img {
 }
 
 img.main__logo--img {
-    width: 100px;
-    height: 55px;
+  width: 200px;
+  border-radius: 25px;
+  height: 51px;
+
 }

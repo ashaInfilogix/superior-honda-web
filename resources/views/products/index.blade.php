@@ -13,7 +13,7 @@
                 @foreach ($productCategories as $key => $productCategory)
                 <li class="widget__categories--menu__list">
                     <label class="widget__categories--menu__label d-flex align-items-center">
-                        <img class="widget__categories--menu__img" src="{{ env('BASE_IMAGE_PATH') . '/' . $productCategory->category_image }}" alt="categories-img">
+                        <img class="widget__categories--menu__img" src="{{ env('BASE_IMAGE_PATH')}}{{$productCategory->category_image }}" alt="categories-img">
                         <span class="widget__categories--menu__text">{{ ucwords($productCategory->name) }}</span>
                         <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
                             <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
@@ -23,7 +23,7 @@
                         @foreach ($productCategory->products as $product)
                         <li class="widget__categories--sub__menu--list">
                             <a class="widget__categories--sub__menu--link d-flex align-items-center" href="{{ route('products.show', $product->id)}}">
-                                <img class="widget__categories--sub__menu--img" src="{{ env('BASE_IMAGE_PATH') . '/' . $productCategory->productImages->images }}" alt="categories-img">
+                                <img class="widget__categories--sub__menu--img" src="{{ env('BASE_IMAGE_PATH') }}{{ $productCategory->productImages->images }}" alt="categories-img">
                                 <span class="widget__categories--sub__menu--text">{{ $product->product_name }}</span>
                             </a>
                         </li>
@@ -356,11 +356,11 @@
                                                         @foreach ($product->productImages as $key => $productImage)
                                                             @if ($key == 0)
                                                                 <img class="product__card--thumbnail__img product__primary--img"
-                                                                    src="{{ env('BASE_IMAGE_PATH') . '/' . $productImage->images }}"
+                                                                    src="{{ env('BASE_IMAGE_PATH')}}{{$productImage->images }}"
                                                                     alt="product-img">
                                                             @else
                                                                 <img class="product__card--thumbnail__img product__secondary--img"
-                                                                    src="{{ env('BASE_IMAGE_PATH') . '/' . $productImage->images }}"
+                                                                    src="{{ env('BASE_IMAGE_PATH')}}{{$productImage->images }}"
                                                                     alt="product-img">
                                                             @endif
                                                         @endforeach
@@ -509,11 +509,11 @@
                                                             @foreach ($product->productImages as $key => $productImage)
                                                                 @if ($key == 0)
                                                                     <img class="product__card--thumbnail__img product__primary--img"
-                                                                        src="{{ env('BASE_IMAGE_PATH') . '/' . $productImage->images }}"
+                                                                        src="{{ env('BASE_IMAGE_PATH')}}{{$productImage->images }}"
                                                                         alt="product-img">
                                                                 @else
                                                                     <img class="product__card--thumbnail__img product__secondary--img"
-                                                                        src="{{ env('BASE_IMAGE_PATH') . '/' . $productImage->images }}"
+                                                                        src="{{ env('BASE_IMAGE_PATH')}}{{$productImage->images }}"
                                                                         alt="product-img">
                                                                 @endif
                                                             @endforeach

@@ -119,7 +119,7 @@ class AuthController extends Controller
             'last_name'  => $request->last_name,
             'email'      => $request->email,
             'phone_number' => $request->phone_number,
-            'password'    => Hash::make('password')
+            'password'    => Hash::make($request->password)
         ])->assignRole('Customer');
 
         return redirect('/login')->with('success', 'Registration successful! Please login.');
