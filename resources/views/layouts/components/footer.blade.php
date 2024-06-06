@@ -197,7 +197,7 @@ else{
         <div class="container">
             <div class="footer__bottom--inenr d-flex justify-content-between align-items-center">
                 <div class="footer__logo">
-                    <a class="footer__logo--link" href="{{ route('index')}}"><img class="main__logo--img" src="@if($logo_url){{env('BASE_IMAGE_PATH')}}{{$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif" alt="logo-img"></a>
+                    <a class="footer__logo--link" href="{{ route('index')}}"><img class="main__logo--img" src="@if($logo_url){{env('BASE_IMAGE_PATH'). '/' .$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif" alt="logo-img"></a>
                 </div>
                 {{-- <p class="copyright__content"><span class="text__secondary">© 2022</span> Powered by <a class="copyright__content--link" target="_blank" href="https://themeforest.net/search/hooktheme">Hooktheme</a> .  All Rights Reserved.</p> --}}
                 <div class="footer__payment">

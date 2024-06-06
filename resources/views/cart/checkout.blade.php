@@ -275,7 +275,7 @@
                                                     <td class="cart__table--body__list">
                                                         <div class="product__image two  d-flex align-items-center">
                                                             <div class="product__thumbnail border-radius-5">
-                                                                <a class="display-block" href="product-details.html"><img
+                                                                <a class="display-block" href="#"><img
                                                                         class="display-block border-radius-5"
                                                                         src="{{ env('BASE_IMAGE_PATH') . '/' . $product['image'] }}"
                                                                         alt="cart-product"></a>
@@ -284,7 +284,7 @@
                                                             </div>
                                                             <div class="product__description">
                                                                 <h4 class="product__description--name"><a
-                                                                        href="product-details.html">{{ $product['name'] }}</a>
+                                                                        href="#">{{ $product['name'] }}</a>
                                                                 </h4>
                                                                 <span class="product__description--variant">Product Code:
                                                                     {{ $product['product_code'] }}</span>
