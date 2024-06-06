@@ -1,3 +1,14 @@
+<?php 
+$logo_url= DB::table('settings')->where('key','logo')->first();
+
+if($logo_url)
+{
+    $logo_url = $logo_url->value;}
+else{
+    $logo_url = '';
+}
+?>
+
 <div id="preloader">
     <div id="ctn-preloader" class="ctn-preloader">
         <div class="animation-preloader">
@@ -57,7 +68,7 @@
                 </div>
                 <div class="main__logo">
                     <h1 class="main__logo--title"><a class="main__logo--link" href="#"><img
-                                class="main__logo--img" src="{{ asset('assets/images/logo/nav-log.webp') }}"
+                        class="main__logo--img" src="@if($logo_url){{env('BASE_IMAGE_PATH')}}{{$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif"
                                 alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
@@ -1254,7 +1265,7 @@
         @endisset
         <div class="minicart__button d-flex justify-content-center">
             <a class="primary__btn minicart__button--link" href="{{ route('cart')}}">View cart</a>
-            @if (session('cart') && isset(session('cart')->products))
+            @if (session('cart') && isset(session('cart')['products']))
                 <a class="primary__btn minicart__button--link" href="{{ route('checkout') }}">Checkout</a>
             @else
                 <a class="primary__btn minicart__button--link" href="{{ route('index') }}">Checkout</a>
