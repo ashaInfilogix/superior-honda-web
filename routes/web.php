@@ -16,6 +16,9 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('verify-otp');
+Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change-password');
 
 Route::get('/', function (){
     return view('index');
@@ -23,7 +26,6 @@ Route::get('/', function (){
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::resources([
-        'wishlists' => WishlistController::class,
         'dashboard' => DashboardController::class,
         'profile'   => ProfileController::class,
         'addresses' => AddressController::class,
@@ -32,13 +34,14 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
     /************** Wishlist*****************/
 });
-Route::post('wishlist', [WishlistController::class, 'wishlistAddRemove'])->name('wishlist');
 
 Route::resources([
+    'wishlists' => WishlistController::class,
     'products'  => ProductController::class,
     'services'  => ServiceController::class,
     'inquiries' => InquiryController::class,
-]);
+    ]);
+Route::post('wishlists.add-and-remove', [WishlistController::class, 'wishlistAddRemove'])->name('wishlists.add-and-remove');
 
 Route::get('/category-products/{category_id}', [ProductController::class, 'categoryProduct'])->name('products.category-products');
 

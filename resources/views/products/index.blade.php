@@ -347,7 +347,7 @@
                                 <div class="row mb--n30">
                                     @foreach($products as $key => $product)
                                     <div class="col-lg-3 col-md-4 col-sm-6 col-6 custom-col mb-30">
-                                        <form action="{{ route('add-to-cart') }}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('add-to-cart') }}" class="cart-submit" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <article class="product__card">
                                                 <div class="product__card--thumbnail">
@@ -386,7 +386,7 @@
                                                         </li>
                                                         <li class="product__card--action__list">
                                                             <a @class(["wishlist-btn toggle-Wishlist product__card--action__btn", 'added'=> optional($product->wishlist)->product_id]) title="Wishlist" data-id="{{ $product->id }}" id="wishlist-btn{{$product->id}}"
-                                                                data-href="{{ route('wishlist')}}">
+                                                            data-href="{{ route('wishlists.add-and-remove') }}">
                                                                 <svg class="product__card--action__btn--svg"
                                                                     width="18" height="18"
                                                                     viewBox="0 0 16 13" fill="none"
@@ -500,7 +500,7 @@
                                 <div class="row row-cols-1 mb--n30">
                                     @foreach ($products as $key => $product)
                                         <div class="col mb-30">
-                                            <form action="{{ route('add-to-cart') }}" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ route('add-to-cart') }}" class="cart-submit" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="product__card product__list d-flex align-items-center">
                                                     <div class="product__card--thumbnail product__list--thumbnail">
@@ -540,7 +540,7 @@
                                                             <li class="product__card--action__list">
 
                                                                 <a @class(["wishlist-btn toggle-Wishlist product__card--action__btn", 'added'=> optional($product->wishlist)->product_id]) title="Wishlist" data-id="{{ $product->id }}" id="wishlist-btn{{$product->id}}"
-                                                                    data-href="{{ route('wishlist')}}">
+                                                                data-href="{{ route('wishlists.add-and-remove') }}">
                                                                     <svg class="product__card--action__btn--svg"
                                                                         width="18" height="18"
                                                                         viewBox="0 0 16 13" fill="none"
@@ -778,16 +778,55 @@
                         '_token': '{{ csrf_token() }}',
                         product_id: productId,
                     },success: function(response) {
-                        if(response.data == 1) {
+                        /* if(response.data == 1) {
                             $('.wishlist').html(response.count);
                             $('#wishlist-btn'+productId).addClass('added');
                         } else{
                             $('.wishlist').html(response.count);
                             $('#wishlist-btn'+productId).removeClass('added');
+                        }*/
+                        if(response.success) {
+                            $('.wishlist').html(response.wishlist.count);
                         }
                     }
                 });
             });
-        })
+            $('.cart-submit').on('submit', function(event){
+                event.preventDefault(); // Prevent the default form submission
+                var formData = new FormData(this); // Create a FormData object
+                $.ajax({
+                    url: $(this).attr('action'), // Form action URL
+                    method: $(this).attr('method'), // Form method
+                    data: formData,
+                    contentType: false, // Needed for FormData
+                    processData: false, // Needed for FormData
+                    success: function(response){
+                        // Handle the success response here
+                        
+                        if(response.success== true)
+                        {
+                            $(document).find('.offCanvas__minicart').html(response.data);
+                            $(document).find('.item-count-cart').html(response.count);
+                        }
+                        else{
+                            alert('Error');
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        // Handle the error response here
+                        alert('Something went wrong. Please try again.');
+                        // Optionally, display the error message, etc.
+                    }
+                });
+                return false;
+            });
+            $(document).on('click','.close-cart',function(){
+                if($('body').hasClass('offCanvas__minicart_active'))
+                {
+                    $('body').removeClass('offCanvas__minicart_active');
+                }
+                $('.offCanvas__minicart').removeClass('active');
+            });
+        });
     </script>
 @endsection

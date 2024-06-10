@@ -54,7 +54,14 @@ else{
 <header class="header__section">
     <div class="main__header header__sticky">
         <div class="container">
-            <?php  $wishlist = App\Models\Wishlist::where('user_id', Auth::id())->count(); ?>
+        <?php
+            $wishlist = 0;
+            $sessionProduct = session('wishlist');
+            if($sessionProduct) {
+                $product_ids = array_column($sessionProduct['wishlist-products'], 'product_id');
+                $wishlist = count($product_ids);
+            }    
+            ?>
             <div class="main__header--inner position__relative d-flex justify-content-between align-items-center">
                 <div class="offcanvas__header--menu__open ">
                     <a class="offcanvas__header--menu__open--btn" href="javascript:void(0)" data-offcanvas>
@@ -67,8 +74,7 @@ else{
                     </a>
                 </div>
                 <div class="main__logo">
-                    <h1 class="main__logo--title"><a class="main__logo--link" href="#"><img
-                        class="main__logo--img" src="@if($logo_url){{env('BASE_IMAGE_PATH')}}{{$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif"
+                    <h1 class="main__logo--title"><a class="main__logo--link" href="{{env('APP_URL')}}"><img style="width: 200px;border-radius:10px;height: 51px;" src="@if($logo_url){{env('BASE_IMAGE_PATH')}}{{$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif"
                                 alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
@@ -196,7 +202,7 @@ else{
                                         </g>
                                     </g>
                                 </svg>
-                                <span class="items__count"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
+                                <span class="items__count  item-count-cart"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                                 <span class="minicart__btn--text">My Cart <br> 
                                     @isset(session('cart')['formatted_sub_total'])
                                     <span class="minicart__btn--text__price totalAmount"><b>{{ session('cart')['formatted_sub_total'] }}</b></span>
@@ -276,7 +282,7 @@ else{
                                         </g>
                                     </g>
                                 </svg>
-                                    <span class="items__count">@if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
+                                    <span class="items__count item-count-cart">@if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                             </a>
                         </li>
                     </ul>
@@ -1201,7 +1207,7 @@ else{
     </div>
     <!-- End Offcanvas stikcy toolbar -->
 
-    <div class="offCanvas__minicart">
+    <div class="offCanvas__minicart cart-data-reflection">
         <div class="minicart__header ">
             <div class="minicart__header--top d-flex justify-content-between align-items-center">
                 <h3 class="minicart__title"> Shopping Cart</h3>
@@ -1230,11 +1236,11 @@ else{
                             </div>
                             <div class="minicart__text--footer d-flex align-items-center">
                                 <div class="quantity__box minicart__quantity">
-                                    <button type="button" class="quantity__value decrease" data-id = {{ $product['id'] }} aria-label="quantity value" value="Decrease Value">-</button>
+                                    <button type="button" class="quantity__value decrease" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Decrease Value">-</button>
                                     <label>
                                         <input type="number" class="quantity__number" value="{{ $product['quantity'] }}" data-counter />
                                     </label>
-                                    <button type="button" class="quantity__value increase" data-id = {{ $product['id'] }} aria-label="quantity value" value="Increase Value">+</button>
+                                    <button type="button" class="quantity__value increase" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Increase Value">+</button>
                                 </div>
                                 <button class="minicart__product--remove remove-from-cart" type="button" data-id="{{ $product['id'] }}">Remove</button>
                             </div>
@@ -1362,7 +1368,7 @@ else{
         });
     }
 
-    $('.increase').click(function() {
+    $(document).on('click','.increase',function() {
         var productId = $(this).attr("data-id");
         var quantityInput = $(this).parent().find('.quantity__number');
         var currentValue = parseInt(quantityInput.val());
@@ -1370,7 +1376,7 @@ else{
         updateQuantity(productId, qty);
     });
 
-    $('.decrease').click(function() {
+    $$(document).on('click','.decrease',function() {
         var productId = $(this).attr("data-id");
         console.log(productId);
         var quantityInput = $(this).parent().find('.quantity__number');
