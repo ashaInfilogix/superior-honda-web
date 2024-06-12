@@ -51,8 +51,7 @@ class AuthController extends Controller
                 $cart = json_decode($cartData->cart, true);
                 session()->put('cart', $cart);
             }
-
-            $wishlist = session('wishlist');
+        $wishlist = session('wishlist');
             if ($wishlist && Auth::check()) {
                 $oldProducts = Wishlist::where('user_id', Auth::id())->delete();
                 foreach($wishlist['wishlist-products'] as $key => $value) {
@@ -74,7 +73,6 @@ class AuthController extends Controller
 
             return redirect()->intended('/');
         }
-
         return back()->with('message','The provided credentials do not match our records.');
     }
 
@@ -148,7 +146,6 @@ class AuthController extends Controller
 
         return redirect('/login')->with('success', 'Registration successful! Please login.');
     }
-
     public function forgotPassword(Request $request)
     {
         $request->validate([

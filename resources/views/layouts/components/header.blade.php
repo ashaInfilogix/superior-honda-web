@@ -1,6 +1,7 @@
 <?php 
 $logo_url= DB::table('settings')->where('key','logo')->first();
-
+$categoryData = DB::table('product_categories')->get();
+// dd($categoryData);
 if($logo_url)
 {
     $logo_url = $logo_url->value;}
@@ -318,9 +319,10 @@ else{
                         'show active' => Route::is('index'),
                     ]) id="categoriesAccordion">
                         <ul class="d-none d-lg-block">
+                            @foreach($categoryData as $category)
                             <li class="categories__menu--items">
                                 <a class="categories__menu--link" href="#">
-                                    <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
+                                    <!-- <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -328,11 +330,12 @@ else{
                                             ry="2"></rect>
                                         <line x1="8" y1="21" x2="16" y2="21"></line>
                                         <line x1="12" y1="17" x2="12" y2="21"></line>
-                                    </svg>
-                                    Lighting
+                                    </svg> -->
+                                    {{$category->name}}
                                 </a>
                             </li>
-                            <li class="categories__menu--items">
+                            @endforeach
+                            <!-- <li class="categories__menu--items">
                                 <a class="categories__menu--link" href="#">
                                     <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -654,7 +657,7 @@ else{
                                         <path d="M13 13l6 6"></path>
                                     </svg> Car & Motorbike Care
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -1312,7 +1315,7 @@ else{
 <!-- End header area -->
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 
-<script>
+<!-- <script>
     $(".remove-from-cart").click(function(e) {
         e.preventDefault();
         var id = $(this).attr("data-id");
@@ -1376,7 +1379,7 @@ else{
         updateQuantity(productId, qty);
     });
 
-    $$(document).on('click','.decrease',function() {
+    $(document).on('click','.decrease',function() {
         var productId = $(this).attr("data-id");
         console.log(productId);
         var quantityInput = $(this).parent().find('.quantity__number');
@@ -1384,4 +1387,4 @@ else{
         var qty = currentValue - 1;
         updateQuantity(productId, qty);
     });
-</script>
+</script> -->
