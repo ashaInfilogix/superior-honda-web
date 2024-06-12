@@ -436,9 +436,19 @@ class CartController extends Controller
                 $phone = $request->email_or_phone;
             }
 
+            $order = Order::orderByDesc('order_id')->first();
+            if (!$order) {
+                $odrId =  'ODR0001';
+            } else {
+                $numericPart = (int)substr($order->order_id, 3);
+                $nextNumericPart = str_pad($numericPart + 1, 4, '0', STR_PAD_LEFT);
+                $odrId = 'ODR' . $nextNumericPart;
+            }
+
             Order::create([
+                'order_id'        => $odrId,
                 'user_id'         => Auth::id() ?? NULL,
-                'email'           =>  $email,
+                'email'           => $email,
                 'phone_number'    => $phone,
                 'billing_address' => json_encode($order['billing_address']),
                 'shipping_address'=> json_encode($order['shipping_address']) ?? json_encode($order['billing_address']),
@@ -447,7 +457,7 @@ class CartController extends Controller
                 'payment_details' => Null
             ]);
 
-            $request->session()->flush();
+            $request->session()->forget('cart');
 
             return redirect()->back();
         } else {

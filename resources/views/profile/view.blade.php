@@ -1,35 +1,29 @@
 @extends('layouts.my-account')
 
 @section('my-account')
-    <h2 class="account__content--title h3 mb-20">Orders History</h2>
+    <h2 class="account__content--title h3 mb-20">Order Detail</h2>
     <div class="account__table--area">
+        <?php
+            $cartProducts = json_decode($order->cart_items);
+        ?>
         <table class="account__table">
             <thead class="account__table--header">
                 <tr class="account__table--header__child">
-                    <th class="account__table--header__child--items">Order</th>
-                    <th class="account__table--header__child--items">Date</th>
-                    <th class="account__table--header__child--items">Payment Status</th>
-                    <th class="account__table--header__child--items">Order Status</th>
-                    <th class="account__table--header__child--items">Total</th>
-                    <th class="account__table--header__child--items">Action</th>	 	 	 	
+                    <th class="account__table--header__child--items">#</th>
+                    <th class="account__table--header__child--items">Product Name</th>
+                    <th class="account__table--header__child--items">Product Code</th>
+                    <th class="account__table--header__child--items">Quantity</th>
+                    <th class="account__table--header__child--items">Price</th>	 	 	 	
                 </tr>
             </thead>
             <tbody class="account__table--body mobile__none">
-                @foreach($orders as $key => $order)
-                @php
-                    $cart = json_decode($order->cart_items);
-                    $grandTotal = $cart->formatted_grand_total;
-                @endphp
+                @foreach ($cartProducts->products as $key => $cart)
                 <tr class="account__table--body__child">
-                    <td class="account__table--body__child--items">{{ $order->order_id }}</td>
-                    <td class="account__table--body__child--items">{{ $order->created_at }}</td>
-                    <td class="account__table--body__child--items">N/A</td>
-                    <td class="account__table--body__child--items">{{ $order->status }}</td>
-                    <td class="account__table--body__child--items">{{ $grandTotal }}</td>
-                    <td class="account__table--body__child--items"><a href="{{ route('dashboard.show', $order->id) }}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="-eye">
-                        <path d="M12 2a10 10 0 0 0-7 16c1.18-2.32 3.45-4 6-4s4.82 1.68 6 4a10 10 0 0 0-7-16zm0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm0 2c-2.67 0-5 2.33-5 5 0 1.1.45 2.1 1.17 2.83A5.992 5.992 0 0 0 12 17a5.992 5.992 0 0 0 3.83-1.17C17.55 15.1 18 14.1 18 13c0-2.67-2.33-5-5-5z"/>
-                      </svg>
-                      </a></td>
+                    <td class="account__table--body__child--items">{{ $key + 1 }}</td>
+                    <td class="account__table--body__child--items">{{ $cart->name }}</td>
+                    <td class="account__table--body__child--items">{{ $cart->product_code }}</td>
+                    <td class="account__table--body__child--items">{{ $cart->quantity }}</td>
+                    <td class="account__table--body__child--items">{{ '$'.number_format($cart->price, 2) }}</td>
                 </tr>
                 @endforeach
                 {{-- <tr class="account__table--body__child">
@@ -69,38 +63,27 @@
                 </tr> --}}
             </tbody>
             <tbody class="account__table--body mobile__block">
-                @foreach($orders as $key => $order)
-                @php
-                    $cart = json_decode($order->cart_items);
-                    $grandTotal = $cart->formatted_grand_total;
-                @endphp
+                @foreach ($cartProducts->products as $key => $cart)
                 <tr class="account__table--body__child">
                     <td class="account__table--body__child--items">
-                        <strong>Order</strong>
-                        <span>{{ $order->order_id }}</span>
+                        <strong>#</strong>
+                        <span>{{ $key + 1 }}</span>
                     </td>
                     <td class="account__table--body__child--items">
-                        <strong>Date</strong>
-                        <span>{{ $order->created_at }}</span>
+                        <strong>Product Name</strong>
+                        <span>{{ $cart->name }}</span>
                     </td>
                     <td class="account__table--body__child--items">
-                        <strong>Payment Status</strong>
-                        <span>Paid</span>
+                        <strong>Product Code</strong>
+                        <span>{{ $cart->product_code }}</span>
                     </td>
                     <td class="account__table--body__child--items">
-                        <strong>Order Status</strong>
-                        <span>{{ $order->status }}</span>
+                        <strong>Quantity</strong>
+                        <span>{{ $cart->quantity }}</span>
                     </td>
                     <td class="account__table--body__child--items">
-                        <strong>Total</strong>
-                        <span>{{ $grandTotal }}</span>
-                    </td>
-                    <td class="account__table--body__child--items">
-                        <strong>Action</strong>
-                        <span><a href="{{ route('dashboard.show', $order->id) }}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="-eye">
-                                <path d="M12 2a10 10 0 0 0-7 16c1.18-2.32 3.45-4 6-4s4.82 1.68 6 4a10 10 0 0 0-7-16zm0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm0 2c-2.67 0-5 2.33-5 5 0 1.1.45 2.1 1.17 2.83A5.992 5.992 0 0 0 12 17a5.992 5.992 0 0 0 3.83-1.17C17.55 15.1 18 14.1 18 13c0-2.67-2.33-5-5-5z"/></svg>
-                            </a>
-                        </span>
+                        <strong>Price</strong>
+                        <span>{{ '$'.number_format($cart->price, 2) }}</span>
                     </td>
                 </tr>
                 @endforeach
