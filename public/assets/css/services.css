@@ -183,3 +183,25 @@
 .slick-dots{
     background-color: #020202;
 }
+
+.contact-section{
+    background-color: #131313;
+    color: #FFF;
+}
+
+.contact-section-detail{
+    padding-top: 100px;
+    padding: 80px;
+}
+
+.contact-section .contact-details i{
+    color:#F03B3B;
+}
+
+.contact-section .contact-details a{
+    color: #FFF;
+}
+
+.contact-section .contact-details a:hover{
+    color: #F03B3B;
+}
