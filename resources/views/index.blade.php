@@ -227,7 +227,7 @@
                                                 href="javascript:void(0)">{{ $product->manufacture_name }}
                                                 {{ $product->product_name }}</a></h3>
                                         <div class="product__card--price">
-                                            <span class="current__price">${{ $product->cost_price }}</span>
+                                            <span class="current__price">${{ number_format($product->cost_price, 2) }}</span>
                                             <!-- <span class="old__price"> $362.00</span> -->
                                         </div>
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -350,7 +350,7 @@
                                             <span class="category__banner--subtitle text__secondary">New arrival</span>
                                             <h2 class="category__banner--title">Car Tayre</h2>
                                             <p class="category__banner--desc">India’s no1 Cm Tyare</p>
-                                            <span class="category__banner--price text__secondary">$22.99</span>
+                                            <span class="category__banner--price text__secondary">$00.00</span>
                                         </div>
                                     </a>
                                 </div>
@@ -434,7 +434,7 @@
                                                                         {{ $product->product_name }}</a></h3>
                                                                 <div class="product__card--price">
                                                                     <span
-                                                                        class="current__price">${{ $product->cost_price }}</span>
+                                                                        class="current__price">${{ number_format($product->cost_price, 2) }}</span>
                                                                     <!-- <span class="old__price"> $362.00</span> -->
                                                                 </div>
                                                                 <input type="hidden" name="product_id"
@@ -604,7 +604,7 @@
                                                     <input type="hidden" name="quantity" value="1">
                                                     <h3 class="product__card--title"><a href="#">{{ $saleProduct->product->product_name }} </a></h3>
                                                     <div class="product__card--price">
-                                                        <span class="current__price">${{ $saleProduct->product->cost_price }}</span>
+                                                        <span class="current__price">${{ number_Format($saleProduct->product->cost_price, 2) }}</span>
                                                         <!-- <span class="old__price"> $362.00</span> -->
                                                     </div>
                                                     <div class="product__card--footer">
