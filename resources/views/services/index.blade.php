@@ -270,6 +270,34 @@
             </div>
         </div>
     </section>
+
+    <section class="contact-section">
+        <div class="row">
+            <div class="col-md-8">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.946702185918!2d115.13579731432107!3d-8.701739193675793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd2396dc8aee259%3A0xf3a5f74e1e4c9d6a!2sJl.%20Raya%20Semat%20No.20%2C%20Kerobokan%2C%20Kec.%20Kuta%20Utara%2C%20Kabupaten%20Badung%2C%20Bali%2080311%2C%20Indonesia!5e0!3m2!1sen!2s!4v1627135248452!5m2!1sen!2s" 
+                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="col-md-4 contact-section-detail">
+                <h2>Get In Touch</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+
+                <div class="contact-details">
+                    <div class="d-flex gap-3 align-items-center">
+                        <i class="fa fa-map-marker"></i>
+                        <p>Jl. Raya Semat No.20 , Bali</p>
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <i class="fa fa-envelope"></i>
+                        <a href="mailto:#">support@domain.com</a>
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <i class="fa fa-phone"></i>
+                        <a href="tel#">(+021) 582 198</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
 
 @section('script')
