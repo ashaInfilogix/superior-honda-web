@@ -1,25 +1,9 @@
 <!-- Start footer section -->
 <footer class="footer__section footer__bg">
     <div class="container">
-        <div class="newsletter__area">
-            <div class="newsletter__inner d-flex justify-content-between align-items-center">
-                <div class="newsletter__content">
-                    <h2 class="newsletter__title">Subscribe <span class="text__secondary">Newsletter</span></h2>
-                    <p class="newsletter__desc">Don’t wait make a smart & logical quote here. Its pretty easy.</p>
-                </div>
-                <div class="newsletter__subscribe">
-                    <form class="newsletter__subscribe--form" action="#">
-                        <label>
-                            <input class="newsletter__subscribe--input" placeholder=" Enter Your Email" type="text">
-                        </label>
-                        <button class="newsletter__subscribe--button" type="submit">Subscribe Now</button>
-                    </form>   
-                </div> 
-            </div>
-        </div>
         <div class="main__footer">
             <div class="row ">
-                <div class="col-lg-4 col-md-10">
+                <div class="col-lg-6 col-md-10">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title">About Us <button class="footer__widget--button" aria-label="footer widget button"></button>
                             <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -68,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4">
+                <div class="col-lg-3 col-md-6">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title ">My Account <button class="footer__widget--button" aria-label="footer widget button"></button>
                             <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -85,7 +69,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4">
+                <div class="col-lg-3 col-md-6">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title ">Resources <button class="footer__widget--button" aria-label="footer widget button"></button>
                             <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -98,25 +82,6 @@
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Wishlist</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Privacy Policy</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Frequently</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <div class="footer__widget">
-                        <h2 class="footer__widget--title ">FIND IT FAST <button class="footer__widget--button" aria-label="footer widget button"></button>
-                            <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
-                                <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
-                            </svg>
-                        </h2>
-                        <ul class="footer__widget--menu footer__widget--inner">
-                            <?php
-                               $categories = App\Models\ProductCategory::latest()->take(3)->get();
-                            ?>
-                            @foreach($categories as $key => $category)
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">{{ $category->name }}</a></li>
-                            @endforeach
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('accesories') }}">Accessories</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('products.index') }}">Products</a></li>
                         </ul>
                     </div>
                 </div>

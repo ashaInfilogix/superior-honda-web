@@ -166,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 highlight-service">
                     <div class="card">
                         <div class="card-body">
                             <i class="fa fa-cogs"></i>
@@ -191,21 +191,82 @@
 
         <div class="testimonials-container">
             <div class="text-center mb-35">
-                <h3 class="heading-with-underline">Testimonials</h3>
+                <h3 class="heading-with-underline text-white">Testimonials</h3>
             </div>
-            <h1>What Our Client Says</h1>
+            <h2 class="text-white text-center">What Our Client Says</h2>
 
-            <div class="slider">
+            <div class="slider mt-5">
                 <div class="testimonial">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo                    </p>
-                    <p class="user-name">Alannah Humphrey</p>
-                    <p class="user-role">Businessman</p>
+                    <div class="row flex justify-content-center">
+                        <div class="col-md-8">
+                            <img src="{{ asset('assets/images/default-user.png') }}" alt=""
+                                class="avatar-img mb-4">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua. Enim ad minim veniam, quis nostrud exercitation ullamco
+                                laboris
+                                nisi ut aliquip ex ea commodo </p>
+                            <p class="user-name">Alannah Humphrey</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="testimonial">
-                    <p>Testimonial 2 content goes here.</p>
-                    <p class="user-name">Alannah Humphrey</p>
-                    <p class="user-role">Businessman</p>
+                    <div class="row flex justify-content-center">
+                        <div class="col-md-8">
+                            <img src="{{ asset('assets/images/default-user.png') }}" alt="" class="avatar-img">
+                            <p>Testimonial 2 content goes here.</p>
+                            <p class="user-name">Alannah Humphrey</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product__section container section--padding">
+        <div class="text-center">
+            <div class="mb-30">
+                <h2 class="heading-with-underline">WORK PROCESS</h2>
+            </div>
+            <h1 class="large-heading">We Complete Every Step Carefully</h1>
+        </div>
+
+        <div class="work-process row mt-5">
+            <div class="col-md-4 mt-5">
+                <div class="d-flex justify-content-center">
+                    <div class="process-icon">
+                        <img src="{{ asset('assets/icons/search-document.png') }}" alt="">
+                    </div>
+                </div>
+                <div class="text-center process-detail">
+                    <h3>Problem Consultation</h3>
+                    <p>Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod dolore magna</p>
+                </div>
+            </div>
+            <div class="col-md-4 position-relative">
+                <div class="d-flex justify-content-center">
+                    <div class="process-icon">
+                        <img src="{{ asset('assets/icons/maintenance.png') }}" alt="">
+                    </div>
+                </div>
+                <div class="text-center process-detail">
+                    <h3>Repairing Process</h3>
+                    <p>Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod dolore magna</p>
+                </div>
+
+                <img src="{{ asset('assets/images/arrow-to-top.png') }}" alt="" style="top: 32px" class="position-arrow">
+            </div>
+            <div class="col-md-4 position-relative mt-5">
+                <div class="d-flex justify-content-center">
+                    <div class="process-icon">
+                        <img src="{{ asset('assets/icons/happy-customer.png') }}" alt="">
+                    </div>
+                </div>
+                <div class="text-center process-detail">
+                    <h3>Happy Customer</h3>
+                    <p>Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod dolore magna</p>
+                </div>
+
+                <img src="{{ asset('assets/images/arrow-to-bottom.png') }}" alt="" style="top: 0" class="position-arrow">
             </div>
         </div>
     </section>

@@ -48,8 +48,24 @@
     text-align: center;
 }
 
-.testimonial-services .card-body{
+.testimonial-services .card{
+    text-align: left;
+    background-color: #FFFFFF;
     padding: 50px 40px 50px 40px;
+    box-shadow: 0px 0px 20px 0px rgba(5.9999999999999964, 31.000000000000032, 74, 0.07);
+    border-style: solid;
+    border-width: 0px 0px 0px 0px;
+    border-color: #F03B3B;
+    border-radius: 0px 0px 0px 0px;
+}
+
+.testimonial-services .highlight-service .card{
+    background-color: #F03B3B;
+    box-shadow: 0px 0px 20px 0px rgba(6.000004511294164, 31.000002852730187, 74.00000000000006, 0.07);
+}
+
+.testimonial-services i{
+    color: #F03B3B;
 }
 
 .testimonial-services .card-body h2{
@@ -59,6 +75,16 @@
     font-size: 24px;
     margin-top: .5rem;
     margin-bottom: 1rem;
+}
+
+.testimonial-services .highlight-service i, .testimonial-services .highlight-service h2, .testimonial-services .highlight-service .card-text{
+    color: #fff
+}
+
+.testimonial-services .card-text{
+    color: #7A7A7A;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .testimonial-section{
@@ -85,14 +111,23 @@
     background-color: #020202;
     width: 100%;
 }
-.testimonials-container h1, h2, h3{
+/* .testimonials-container h1, h2, h3{
     color: #fff;
     text-align: center;
-}
+} */
 
 .testimonials-container .heading-with-underline{
     font-size: 18px;
 }
+
+.avatar-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
 
 .testimonial-slider {
     margin: 20px auto;
@@ -103,6 +138,46 @@
     color: #fff;
     padding: 20px;
     text-align: center;
+}
+
+.large-heading{
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.testimonial .user-name{
+    color: #F03B3B;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.work-process .process-icon{
+    background-color: #F03B3B;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.work-process .process-icon img{
+    width: 58px;
+    height: 58px;
+    position: relative;
+    display: block;
+}
+
+.work-process .process-detail h3{
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.position-arrow{
+    position: absolute;
+    left: -52px;
+}
+
+.work-process .process-detail p{
+    color: #7A7A7A;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .slick-dots{
