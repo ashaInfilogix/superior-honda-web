@@ -68,8 +68,8 @@
                                     <span class="slider__subtitle text__secondary">2022 Collections</span>
                                     <h2 class="slider__maintitle h1">Wheelss <br> <span
                                             class="slider__maintitle--inner__text">Body Part</span></h2>
-                                    <span class="slider__price--text text__secondary">415.00/$</span>
-                                    <a class="primary__btn slider__btn" href="#">
+                                    <span class="slider__price--text text__secondary">00.00/$</span>
+                                    <!-- <a class="primary__btn slider__btn" href="#">
                                         Shop now
                                         <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +77,7 @@
                                                 d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58745 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178V3.6178Z"
                                                 fill="currentColor" />
                                         </svg>
-                                    </a>
+                                    </a> -->
                                 </div>
                                 <div class="hero__slider--layer">
                                     <img class="slider__layer--img "
@@ -91,8 +91,8 @@
                                     <span class="slider__subtitle text__secondary">2022 Collections</span>
                                     <h2 class="slider__maintitle h1">Wheelss <br> <span
                                             class="slider__maintitle--inner__text">Body Part</span></h2>
-                                    <span class="slider__price--text text__secondary">415.00/$</span>
-                                    <a class="primary__btn slider__btn" href="#">
+                                    <span class="slider__price--text text__secondary">00.00/$</span>
+                                    <!-- <a class="primary__btn slider__btn" href="#">
                                         Shop now
                                         <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +100,7 @@
                                                 d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58745 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178V3.6178Z"
                                                 fill="currentColor" />
                                         </svg>
-                                    </a>
+                                    </a> -->
                                 </div>
                                 <div class="hero__slider--layer">
                                     <img class="slider__layer--img "
@@ -114,8 +114,8 @@
                                     <span class="slider__subtitle text__secondary">2022 Collections</span>
                                     <h2 class="slider__maintitle h1">Wheelss <br> <span
                                             class="slider__maintitle--inner__text">Body Part</span></h2>
-                                    <span class="slider__price--text text__secondary">415.00/$</span>
-                                    <a class="primary__btn slider__btn" href="#">
+                                    <span class="slider__price--text text__secondary">00.00/$</span>
+                                    <!-- <a class="primary__btn slider__btn" href="#">
                                         Shop now
                                         <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +123,7 @@
                                                 d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58745 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178V3.6178Z"
                                                 fill="currentColor" />
                                         </svg>
-                                    </a>
+                                    </a> -->
                                 </div>
                                 <div class="hero__slider--layer">
                                     <img class="slider__layer--img "
@@ -626,7 +626,7 @@
                           
                         </div>
                     </div>
-                    @foreach ($leftBanners as $key => $banner)
+                    @foreach ($rightBanners as $key => $banner)
                         <div class="col-lg-3 col-md-4">
                             <div class="banner__sidebar position__relative">
                                 <a class="banner__thumbnail display-block" href="#"><img
@@ -637,16 +637,16 @@
                                             class="banner__content--subtitle text__secondary">{{ $banner->submenu }}</span>
                                         <h2 class="banner__content--title">{{ $banner->product_name }} <br> <span
                                                 class="banner__content--title__inner">{{ $banner->menu }}</span></h2>
-                                        <span class="banner__content--price">418.00/$</span>
-                                        <span class="banner__content--btn">Shop now
+                                        <span class="banner__content--price">${{ number_format($banner->product->cost_price, 2) }}/$</span>
+                                        <a href="{{ route('products.show', $banner->product_id) }}" class="banner__content--btn">Shop now
                                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58746 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178Z"
                                                     fill="currentColor" />
                                             </svg>
-                                        </span>
-                                        <span class="banner__badge banner__sidebar--badge">29% <br> off</span>
+                                        </a>
+                                        <!-- <span class="banner__badge banner__sidebar--badge">29% <br> off</span> -->
                                     </div>
                                 </a>
                             </div>
@@ -656,75 +656,126 @@
 
                 <div class="row">
                     {{-- Left side banner --}}
-                    <div class="col-lg-4 col-md-4 mb-30">
-                        <h2>Left Banner</h2>
-                    </div>
+                    @if (count($leftBanners) > 0)
+                        <div class="col-lg-4 col-md-4 mb-30">
+                                <div class="banner-slider slick-slider">
+                                    @foreach ($leftBanners as $banner)
+                                        <div class="banner__items position__relative">
+                                            <a class="banner__thumbnail display-block" href="#"><img
+                                                    class="banner__thumbnail--img banner__max--height"
+                                                    src="{{ env('BASE_IMAGE_PATH') }}{{ $banner->banner_image }}"
+                                                    alt="banner-img">
+                                                <div class="banner__content style__right">
+                                                    <span
+                                                        class="banner__content--subtitle text-white">{{ $banner->product_name }}</span>
+                                                    <h2 class="banner__content--title"><span
+                                                            class="banner__content--title__inner">PREMIUM</span>
+                                                        {{ $banner->menu }}</h2>
+
+                                                    @isset($banner->product)
+                                                        <span
+                                                            class="banner__content--price">${{ number_format($banner->product->cost_price, 2) }}</span>
+                                                    
+                                                        <a href="{{ route('products.show', $banner->product_id) }}"
+                                                            class="banner__content--btn">Buy now
+                                                            <svg width="12" height="8" viewBox="0 0 12 8"
+                                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                    d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58746 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178Z"
+                                                                    fill="currentColor" />
+                                                            </svg>
+                                                        </a>
+                                                    @endisset
+                                                </div>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                        </div>
+                    @else
+                        <div class="col-lg-4 col-md-4 mb-30">
+                            <div class="banner__items position__relative">
+                                <a class="banner__thumbnail display-block" href="#"><img
+                                        class="banner__thumbnail--img banner__max--height"
+                                        src="{{ asset('assets/images/banner/banner5.webp') }}"
+                                        alt="banner-img">
+                                    <div class="banner__content style__right">
+                                        <span class="banner__content--subtitle text-white">Engine Items
+                                            For</span>
+                                        <h2 class="banner__content--title"><span
+                                                class="banner__content--title__inner">PREMIUM</span> CLASS</h2>
+                                        <span class="banner__content--price">$22.99</span>
+                                        <span class="banner__content--btn">Buy now
+                                            <svg width="12" height="8" viewBox="0 0 12 8"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58746 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
 
                     {{-- Center Banner --}}
-                    @if (count($banners) > 0)
-                    <div class="col-lg-4 col-md-4 mb-30">
-                            <div class="banner-slider slick-slider">
-                                @foreach ($banners as $banner)
-                                    <div class="banner__items position__relative">
-                                        <a class="banner__thumbnail display-block" href="#"><img
-                                                class="banner__thumbnail--img banner__max--height"
-                                                src="{{ env('BASE_IMAGE_PATH') }}{{ $banner->banner_image }}"
-                                                alt="banner-img">
-                                            <div class="banner__content style__right">
-                                                <span
-                                                    class="banner__content--subtitle text-white">{{ $banner->product_name }}</span>
-                                                <h2 class="banner__content--title"><span
-                                                        class="banner__content--title__inner">PREMIUM</span>
-                                                    {{ $banner->menu }}</h2>
-
-                                                @isset($banner->product)
+                    @if (count($centerBanners) > 0)
+                        <div class="col-lg-4 col-md-4 mb-30">
+                                <div class="banner-slider slick-slider">
+                                    @foreach ($centerBanners as $banner)
+                                        <div class="banner__items position__relative">
+                                            <a class="banner__thumbnail display-block" href="#"><img
+                                                    class="banner__thumbnail--img banner__max--height"
+                                                    src="{{ env('BASE_IMAGE_PATH') }}{{ $banner->banner_image }}"
+                                                    alt="banner-img">
+                                                <div class="banner__content style__right">
                                                     <span
-                                                        class="banner__content--price">${{ number_format($banner->product->cost_price, 2) }}</span>
-                                                
-                                                    <a href="{{ route('products.show', $banner->product_id) }}"
-                                                        class="banner__content--btn">Buy now
-                                                        <svg width="12" height="8" viewBox="0 0 12 8"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58746 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178Z"
-                                                                fill="currentColor" />
-                                                        </svg>
-                                                    </a>
-                                                @endisset
-                                            </div>
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
-                    </div>
-                        @else
-                            <div class="col-lg-4 col-md-4 mb-30">
-                                <div class="banner__items position__relative">
-                                    <a class="banner__thumbnail display-block" href="#"><img
-                                            class="banner__thumbnail--img banner__max--height"
-                                            src="{{ asset('assets/images/banner/banner5.webp') }}"
-                                            alt="banner-img">
-                                        <div class="banner__content style__right">
-                                            <span class="banner__content--subtitle text-white">Engine Items
-                                                For</span>
-                                            <h2 class="banner__content--title"><span
-                                                    class="banner__content--title__inner">PREMIUM</span> CLASS</h2>
-                                            <span class="banner__content--price">$22.99</span>
-                                            <span class="banner__content--btn">Buy now
-                                                <svg width="12" height="8" viewBox="0 0 12 8"
-                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58746 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178Z"
-                                                        fill="currentColor" />
-                                                </svg>
-                                            </span>
+                                                        class="banner__content--subtitle text-white">{{ $banner->product_name }}</span>
+                                                    <h2 class="banner__content--title"><span
+                                                            class="banner__content--title__inner">PREMIUM</span>
+                                                        {{ $banner->menu }}</h2>
+
+                                                    @isset($banner->product)
+                                                        <span
+                                                            class="banner__content--price">${{ number_format($banner->product->cost_price, 2) }}</span>
+                                                    
+                                                        <a href="{{ route('products.show', $banner->product_id) }}"
+                                                            class="banner__content--btn">Buy now
+                                                            <svg width="12" height="8" viewBox="0 0 12 8"
+                                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                    d="M11.8335 3.6178L8.26381 0.157332C8.21395 0.107774 8.1532 0.0681771 8.08544 0.0410843C8.01768 0.0139915 7.94441 0 7.87032 0C7.79624 0 7.72297 0.0139915 7.65521 0.0410843C7.58746 0.0681771 7.5267 0.107774 7.47684 0.157332C7.37199 0.262044 7.31393 0.39827 7.31393 0.539537C7.31393 0.680805 7.37199 0.817024 7.47684 0.921736L10.0943 3.45837H0.55625C0.405122 3.46829 0.26375 3.52959 0.160556 3.62994C0.057363 3.73029 0 3.86225 0 3.99929C0 4.13633 0.057363 4.26829 0.160556 4.36864C0.26375 4.46899 0.405122 4.53029 0.55625 4.54021H10.0927L7.47527 7.07826C7.37042 7.18298 7.31235 7.3192 7.31235 7.46047C7.31235 7.60174 7.37042 7.73796 7.47527 7.84267C7.52513 7.89223 7.58588 7.93182 7.65364 7.95892C7.7214 7.98601 7.79467 8 7.86875 8C7.94284 8 8.0161 7.98601 8.08386 7.95892C8.15162 7.93182 8.21238 7.89223 8.26223 7.84267L11.8335 4.38932C11.9406 4.28419 12 4.14649 12 4.00356C12 3.86063 11.9406 3.72293 11.8335 3.6178Z"
+                                                                    fill="currentColor" />
+                                                            </svg>
+                                                        </a>
+                                                    @endisset
+                                                </div>
+                                            </a>
                                         </div>
-                                    </a>
+                                    @endforeach
                                 </div>
+                        </div>
+                    @else
+                        <div class="col-lg-4 col-md-4 mb-30">
+                            <div class="banner__items position__relative">
+                                <a class="banner__thumbnail display-block" href="#"><img
+                                        class="banner__thumbnail--img banner__max--height"
+                                        src="{{ asset('assets/images/banner/banner5.webp') }}"
+                                        alt="banner-img">
+                                    <div class="banner__content style__right">
+                                        <span class="banner__content--subtitle text-white">Engine Items
+                                            For</span>
+                                        <h2 class="banner__content--title"><span
+                                                class="banner__content--title__inner">PREMIUM</span> CLASS</h2>
+                                        <span class="banner__content--price">$00.00</span>
+                                    </div>
+                                </a>
                             </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
+                <!-- </div> -->
             </div>
         </div>
     </section>

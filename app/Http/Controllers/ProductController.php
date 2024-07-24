@@ -37,15 +37,12 @@ class ProductController extends Controller
     public function accesories()
     {
         $products = Product::with('productImages','wishlist')->where('access_series', 1)->latest()->paginate(9);
-<<<<<<< Updated upstream
-=======
         foreach($products as $key => $product) {
             $averageRating = $product->ratingCalculation();
             $products[$key]['reviewCount'] = $averageRating['reviewCount'] ?? 0;
             $products[$key]['starRating'] = $averageRating['starRating'] ?? 0;
             $products[$key]['averageRating'] = $averageRating['averageRating'] ?? 0;
         }
->>>>>>> Stashed changes
         $productCategories = ProductCategory::with('products')->latest()->limit(8)->get();
         $brands = VehicleBrand::latest()->limit(8)->get();
         foreach($productCategories as $key=>$product)
