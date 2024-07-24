@@ -1,3 +1,15 @@
+<?php 
+$logo_url= DB::table('settings')->where('key','logo')->first();
+$categoryData = DB::table('product_categories')->get();
+// dd($categoryData);
+if($logo_url)
+{
+    $logo_url = $logo_url->value;}
+else{
+    $logo_url = '';
+}
+?>
+
 <div id="preloader">
     <div id="ctn-preloader" class="ctn-preloader">
         <div class="animation-preloader">
@@ -43,6 +55,14 @@
 <header class="header__section">
     <div class="main__header header__sticky">
         <div class="container">
+        <?php
+            $wishlist = 0;
+            $sessionProduct = session('wishlist');
+            if($sessionProduct) {
+                $product_ids = array_column($sessionProduct['wishlist-products'], 'product_id');
+                $wishlist = count($product_ids);
+            }    
+            ?>
             <div class="main__header--inner position__relative d-flex justify-content-between align-items-center">
                 <div class="offcanvas__header--menu__open ">
                     <a class="offcanvas__header--menu__open--btn" href="javascript:void(0)" data-offcanvas>
@@ -55,8 +75,7 @@
                     </a>
                 </div>
                 <div class="main__logo">
-                    <h1 class="main__logo--title"><a class="main__logo--link" href="#"><img
-                                class="main__logo--img" src="{{ asset('assets/images/logo/nav-log.webp') }}"
+                    <h1 class="main__logo--title"><a class="main__logo--link" href="{{env('APP_URL')}}"><img style="width: 200px;border-radius:10px;height: 51px;" src="@if($logo_url){{env('BASE_IMAGE_PATH')}}{{$logo_url}}@else{{ asset('assets/images/logo/nav-log.webp') }}@endif"
                                 alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
@@ -162,7 +181,7 @@
                                         d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                     </path>
                                 </svg>
-                                <span class="items__count">3</span>
+                                <span class="items__count wishlist">{{ $wishlist }}</span>
                             </a>
                         </li>
                         <li class="header__account--items header__minicart--items">
@@ -184,8 +203,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                <span class="items__count">{{ session('cart')['count'] ?? 0 }}</span>
-                              
+                                <span class="items__count  item-count-cart"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                                 <span class="minicart__btn--text">My Cart <br> 
                                     @isset(session('cart')['formatted_sub_total'])
                                     <span class="minicart__btn--text__price totalAmount"><b>{{ session('cart')['formatted_sub_total'] }}</b></span>
@@ -243,7 +261,7 @@
                                         d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                     </path>
                                 </svg>
-                                <span class="items__count">3</span>
+                                <span class="items__count wishlist">{{ $wishlist }}</span>
                             </a>
                         </li>
                         <li class="header__account--items header__minicart--items">
@@ -265,7 +283,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                    <span class="items__count">{{ session('cart')['count'] ?? 0 }}</span>
+                                    <span class="items__count item-count-cart">@if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                             </a>
                         </li>
                     </ul>
@@ -301,9 +319,10 @@
                         'show active' => Route::is('index'),
                     ]) id="categoriesAccordion">
                         <ul class="d-none d-lg-block">
+                            @foreach($categoryData as $category)
                             <li class="categories__menu--items">
                                 <a class="categories__menu--link" href="#">
-                                    <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
+                                    <!-- <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -311,11 +330,12 @@
                                             ry="2"></rect>
                                         <line x1="8" y1="21" x2="16" y2="21"></line>
                                         <line x1="12" y1="17" x2="12" y2="21"></line>
-                                    </svg>
-                                    Lighting
+                                    </svg> -->
+                                    {{$category->name}}
                                 </a>
                             </li>
-                            <li class="categories__menu--items">
+                            @endforeach
+                            <!-- <li class="categories__menu--items">
                                 <a class="categories__menu--link" href="#">
                                     <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -637,7 +657,7 @@
                                         <path d="M13 13l6 6"></path>
                                     </svg> Car & Motorbike Care
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -1168,7 +1188,7 @@
                         </svg>
                     </span>
                     <span class="offcanvas__stikcy--toolbar__label">Cart</span>
-                    <span class="items__count">3</span>
+                    <span class="items__count"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
                 </a>
             </li>
             <li class="offcanvas__stikcy--toolbar__list">
@@ -1183,14 +1203,14 @@
                         </svg>
                     </span>
                     <span class="offcanvas__stikcy--toolbar__label">Wishlist</span>
-                    <span class="items__count">3</span>
+                    <span class="items__count wishlist">{{ $wishlist }}</span>
                 </a>
             </li>
         </ul>
     </div>
     <!-- End Offcanvas stikcy toolbar -->
 
-    <div class="offCanvas__minicart">
+    <div class="offCanvas__minicart cart-data-reflection">
         <div class="minicart__header ">
             <div class="minicart__header--top d-flex justify-content-between align-items-center">
                 <h3 class="minicart__title"> Shopping Cart</h3>
@@ -1208,7 +1228,7 @@
                 @foreach (session('cart')['products'] as $key => $product)
                     <div class="minicart__product--items d-flex">
                         <div class="minicart__thumb">
-                            <a href="#"><img src="{{ env('BASE_IMAGE_PATH') . '/' . $product['image'] }}" alt="product-img"></a>
+                            <a href="#"><img src="{{ env('BASE_IMAGE_PATH')}}{{$product['image'] }}" alt="product-img"></a>
                         </div>
                         <div class="minicart__text">
                             <h4 class="minicart__subtitle"><a href="#">{{ $product['name'] }}</a></h4>
@@ -1219,11 +1239,11 @@
                             </div>
                             <div class="minicart__text--footer d-flex align-items-center">
                                 <div class="quantity__box minicart__quantity">
-                                    <button type="button" class="quantity__value decrease" data-id = {{ $product['id'] }} aria-label="quantity value" value="Decrease Value">-</button>
+                                    <button type="button" class="quantity__value decrease" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Decrease Value">-</button>
                                     <label>
                                         <input type="number" class="quantity__number" value="{{ $product['quantity'] }}" data-counter />
                                     </label>
-                                    <button type="button" class="quantity__value increase" data-id = {{ $product['id'] }} aria-label="quantity value" value="Increase Value">+</button>
+                                    <button type="button" class="quantity__value increase" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Increase Value">+</button>
                                 </div>
                                 <button class="minicart__product--remove remove-from-cart" type="button" data-id="{{ $product['id'] }}">Remove</button>
                             </div>
@@ -1243,7 +1263,7 @@
             </div>
             <div class="minicart__amount_list d-flex justify-content-between">
                 <span>Total:</span>
-                <span class="totalAmount"><b>{{ session('cart')['formatted_grand_total'] }}</b></span>
+                <span class="grandTotal"><b>{{ session('cart')['formatted_grand_total'] }}</b></span>
             </div>
         </div>
         <div class="minicart__conditions text-center">
@@ -1295,7 +1315,7 @@
 <!-- End header area -->
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 
-<script>
+<!-- <script>
     $(".remove-from-cart").click(function(e) {
         e.preventDefault();
         var id = $(this).attr("data-id");
@@ -1340,6 +1360,9 @@
                         let cart = response.cart.formatted_sub_total;
                         let amount = '<b>' + cart + '</b>';
                         $('.totalAmount').html(amount);
+
+                        let grandTotal = response.cart.formatted_grand_total;
+                        $('.grandTotal').html(grandTotal);
                     } else {
                         window.location.reload();
                     }
@@ -1348,7 +1371,7 @@
         });
     }
 
-    $('.increase').click(function() {
+    $(document).on('click','.increase',function() {
         var productId = $(this).attr("data-id");
         var quantityInput = $(this).parent().find('.quantity__number');
         var currentValue = parseInt(quantityInput.val());
@@ -1356,7 +1379,7 @@
         updateQuantity(productId, qty);
     });
 
-    $('.decrease').click(function() {
+    $(document).on('click','.decrease',function() {
         var productId = $(this).attr("data-id");
         console.log(productId);
         var quantityInput = $(this).parent().find('.quantity__number');
@@ -1364,4 +1387,4 @@
         var qty = currentValue - 1;
         updateQuantity(productId, qty);
     });
-</script>
+</script> -->

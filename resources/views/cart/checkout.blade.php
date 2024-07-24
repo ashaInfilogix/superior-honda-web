@@ -275,16 +275,16 @@
                                                     <td class="cart__table--body__list">
                                                         <div class="product__image two  d-flex align-items-center">
                                                             <div class="product__thumbnail border-radius-5">
-                                                                <a class="display-block" href="product-details.html"><img
+                                                                <a class="display-block" href="#"><img
                                                                         class="display-block border-radius-5"
-                                                                        src="{{ env('BASE_IMAGE_PATH') . '/' . $product['image'] }}"
+                                                                        src="{{ env('BASE_IMAGE_PATH')}}{{$product['image'] }}"
                                                                         alt="cart-product"></a>
                                                                 <span
                                                                     class="product__thumbnail--quantity">{{ $product['quantity'] }}</span>
                                                             </div>
                                                             <div class="product__description">
                                                                 <h4 class="product__description--name"><a
-                                                                        href="product-details.html">{{ $product['name'] }}</a>
+                                                                        href="#">{{ $product['name'] }}</a>
                                                                 </h4>
                                                                 <span class="product__description--variant">Product Code:
                                                                     {{ $product['product_code'] }}</span>
@@ -309,12 +309,17 @@
                                     <label>
                                         <input class="checkout__discount--code__input--field border-radius-5"
                                             name="coupon-code" id="coupon-code"
-                                            @isset(session('cart')['applied_coupons'][0]['coupon_code']) value=" {{ session('cart')['applied_coupons'][0]['coupon_code'] }}"  @endisset
+                                            @isset(session('cart')['applied_coupons']['coupon_code']) value=" {{ session('cart')['applied_coupons']['coupon_code'] }}"  @endisset
                                             placeholder="Gift card or discount code" type="text">
                                         <div class="error-message text-danger"></div>
                                     </label>
-                                    <button class="checkout__discount--code__btn primary__btn border-radius-5 coupon-code"
-                                        type="button">Apply</button>
+                                    @isset(session('cart')['applied_coupons']['coupon_code'])
+                                    <button class="checkout__discount--code__btn primary__btn border-radius-5 remove-code" data-type="remove" type="button" >Remove Coupon</button>
+                                    <button class="checkout__discount--code__btn primary__btn border-radius-5 coupon-code" data-type="applied" type="button" hidden>Apply Coupon</button>
+                                @else
+                                    <button class="checkout__discount--code__btn primary__btn border-radius-5 remove-code" data-type="remove" type="button" hidden>Remove Coupon</button>
+                                    <button class="checkout__discount--code__btn primary__btn border-radius-5 coupon-code" data-type="applied" type="button">Apply Coupon</button>
+                                @endif
                                 </form>
                             </div>
                             <div class="checkout__total">
@@ -532,6 +537,7 @@
         });
         $('.coupon-code').click(function() {
             var couponCode = $('#coupon-code').val();
+            var type = $(this).attr("data-type");
             if (!couponCode) {
                 $('.error-message').html('Please enter a coupon code.');
                 return false;
@@ -542,20 +548,51 @@
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
-                        coupon_code: couponCode
+                        coupon_code: couponCode,
+                        type: type
                     },
                     success: function(response) {
-                        if (response.success) {
+                        if (response.success == true) {
                             let grandTotal = response.cart.formatted_grand_total;
                             let discountAmount = response.cart.discount_amount;
                             $('.discountAmount').html(discountAmount);
                             $('.grandTotal').html(grandTotal);
+                            $('.coupon-code').attr('hidden', 'hidden');
+                            $('.remove-code').removeAttr('hidden');
+                        } else {
+                            $('.error-message').html(response.message);
                         }
                     },
                 });
             }
         });
+        $('.remove-code').click(function() {
+        var couponCode = $('#coupon-code').val();
+        var type = $(this).attr("data-type");
 
+        $.ajax({
+            url: '{{ route('coupon-code') }}',
+            type: 'POST',
+            data: { 
+                _token: '{{ csrf_token() }}',
+                coupon_code: couponCode,
+                type: type
+            },
+            success: function(response) {
+                if(response.success == true) {
+                    let grandTotal = response.cart.formatted_grand_total;
+                    let discountAmount = response.cart.discount_amount;
+                    $('.discountAmount').html(discountAmount);
+                    $('.grandTotal').html(grandTotal);
+                    $('#coupon-code').val('');
+                    $('.coupon-code').removeAttr('hidden');
+                    $('.remove-code').attr('hidden', 'hidden');
+                } else {
+                    $('.error-message').html(response.message);
+                }
+            },
+        });
+    });
         
     </script>
 @endsection

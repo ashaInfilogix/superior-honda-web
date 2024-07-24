@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Cart;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
+use App\Mail\VerifyOtp;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -32,9 +37,42 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            $cart = session('cart');
+            if ($cart && Auth::check()) {
+                Cart::updateOrCreate(
+                    ['user_id' => Auth::id()],
+                    ['cart' => json_encode($cart)]
+                );
+            }
+
+            $cartData = Cart::where('user_id', Auth::id())->first();
+            if ($cartData) {
+                $cart = json_decode($cartData->cart, true);
+                session()->put('cart', $cart);
+            }
+        $wishlist = session('wishlist');
+            if ($wishlist && Auth::check()) {
+                $oldProducts = Wishlist::where('user_id', Auth::id())->delete();
+                foreach($wishlist['wishlist-products'] as $key => $value) {
+                    Wishlist::create([
+                        'user_id' => Auth::id(),
+                        'product_id' => $value['product_id']
+                    ]);
+                }
+            }
+
+            $wishlistData = Wishlist::where('user_id', Auth::id())->get();
+            $wishlist['wishlist-products'] = [];
+            if ($wishlistData) {
+                foreach($wishlistData as $key => $wishlistValue) {
+                     $wishlist['wishlist-products'][] =  ['product_id' => $wishlistValue->product_id];
+                }
+                session()->put('wishlist', $wishlist);
+            }
+
             return redirect()->intended('/');
         }
-
         return back()->with('message','The provided credentials do not match our records.');
     }
 
@@ -103,9 +141,96 @@ class AuthController extends Controller
             'last_name'  => $request->last_name,
             'email'      => $request->email,
             'phone_number' => $request->phone_number,
-            'password'    => Hash::make('password')
+            'password'    => Hash::make($request->password)
         ])->assignRole('Customer');
 
         return redirect('/login')->with('success', 'Registration successful! Please login.');
+    }
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        $user = User::where('email', $request->email)->first();
+        if ($user){
+            $otp = rand(1000, 9999);
+            $data = [
+                'otp' => $otp,
+                'name' => $request->name,
+                'email' => $request->email
+            ];
+
+            Mail::to($request->email)->send(new VerifyOtp($data));
+
+            $user->update([
+                'otp' => $otp
+            ]);
+
+            return response()->json([
+                'success'  => true,
+                'message'  => 'OTP sent successfully to your email address.',
+                'email'     => $request->email
+            ]);
+        } else {
+            return response()->json([
+                'success'  => false,
+                'message'  => 'User not found',
+            ]);
+
+        }
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp'   => 'required|max:4',
+            'email' => 'required'
+        ]);
+
+        $otp = User::where('email', $request->email)->first();
+
+        if ($otp && $otp->otp == $request->otp) {
+            $otp->update([
+                'otp' => NULL
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP verified successfully.',
+                'email'   => $request->email
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'This OTP is not valid please enter valid OTP.',
+            ]);
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'email'     => 'required',
+            'new_password'  => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if($user) {
+            if (Hash::check($request->new_password, $user->password)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your old password has been detected. Please select a new and unique password for your account.'
+                ]);
+            } else {
+                $user->update([
+                    'password' => Hash::make($request->new_password)
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Password changed successfully.'
+                ]);
+            }
+        }
     }
 }

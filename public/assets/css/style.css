@@ -11459,3 +11459,10 @@ img.product__card--thumbnail__img.product__secondary--img {
   a.added {
     color: #ed1d24;
 }
+
+img.main__logo--img {
+  width: 200px;
+  border-radius: 25px;
+  height: 51px;
+
+}

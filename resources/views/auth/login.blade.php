@@ -24,16 +24,20 @@
                 <div class="login__section--inner">
                     <div class="row row-cols-md-2 row-cols-1">
                         <div class="col">
+                            <div id="success-message" class="text-success f-12" style="display: none;"></div>
+                            <div id="error-container" class="text-danger f-12"  style="display: none;"></div>
                             <div class="account__login">
                                 <div class="account__login--header mb-25">
                                     <h2 class="account__login--header__title mb-10">Login</h2>
                                     <p class="account__login--header__desc">Login if you area a returning customer.</p>
                                 </div>
+
                                 @if (session('message'))
                                     <div class="alert alert-danger">
                                         {{ session('message') }}
                                     </div>
                                 @endif
+
                                 <div class="account__login--inner">
                                     <form method="post" action="{{ route('authenticate') }}" name="login" class="md-float-material form-material">
                                         @csrf
@@ -60,7 +64,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="account__login register">
+                            <div class="account__login register" id="registerBlock">
                                 @if (session('success'))
                                     <div class="alert alert-success">
                                         {{ session('success') }}
@@ -107,6 +111,51 @@
                                 </form>
                                 </div>
                             </div>
+                            <div class="account__login forgot-password" id="forgotPasswordBlock" style="display: none;">
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                <div class="account__login--header mb-25">
+                                    <h2 class="account__login--header__title mb-10">Forgot Password</h2>
+                                </div>
+                                <div class="account__login--inner send-otp">
+                                    <form method="post" action="{{ route('forgot-password') }}" class="md-float-material form-material" name="forgot">
+                                        @csrf
+                                        <label>
+                                            <input class="account__login--input" placeholder="Email Addres" type="email" name="email">
+                                        </label>
+                                        <button class="account__login--btn primary__btn mb-10" type="submit">Submit</button>
+                                    </form>
+                                </div>
+
+                                <div class="otp-section" style="display: none;">
+                                    <form method="post" action="{{ route('verify-otp') }}" class="md-float-material form-material" name="otpForm">
+                                        @csrf
+                                        <label>
+                                            <input type="hidden" name="email" id="forgot-email" value="">
+                                            <input class="account__login--input" placeholder="Enter OTP" type="text" name="otp">
+                                        </label>
+                                        <button class="account__login--btn primary__btn mb-10" type="submit">Verify OTP</button>
+                                    </form>
+                                </div>
+
+                                <div class="change-password" style="display: none;">
+                                    <form method="post" action="#" class="md-float-material form-material" name="change-password">
+                                        @csrf
+                                        <input type="hidden" name="email" id="change-email" value="">
+                                        <label>
+                                            <input class="account__login--input" placeholder="New Password" type="password" name="new_password" id="new_password">
+                                        </label>
+                                        <label>
+                                            <input class="account__login--input" placeholder="Confirm Password" type="password"  name="new_confirm_password">
+                                        </label>
+                                        <button class="account__login--btn primary__btn mb-10" type="submit">Change Password </button>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -163,9 +212,20 @@
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script>
         $(function() {
+            $(".account__login--forgot").click(function(){
+                $("#registerBlock").hide();
+                $("#forgotPasswordBlock").show();
+            });
+
+            $(".account__login--signup__text").click(function(){
+                $("#registerBlock").show();
+                $("#forgotPasswordBlock").hide();
+            });
+
             $('[name="register"]').validate({
                 rules: {
                     first_name: "required",
+                    email: "required",
                     phone_number: "required",
                     password: "required",
                     confirm_password: {
@@ -174,6 +234,7 @@
                 },
                 messages: {
                     first_name: "Please enter first name",
+                    email: "Please enter email",
                     phone_number: "Please enter phone_number",
                     password: "Please enter password",
                     confirm_password: {
@@ -213,6 +274,132 @@
                 },
                 submitHandler: function(form) {
                     form.submit();
+                }
+            });
+
+            $('[name="forgot"]').validate({
+                rules: {
+                    email: "required"
+                },
+                messages: {
+                    email: "Please enter email",
+                },
+                errorClass: "text-danger f-12",
+                errorElement: "span",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass("is-invalid");
+                },
+                submitHandler: function(form) {
+                    $.ajax({
+                        url: "{{ route('forgot-password')}}",
+                        type: "POST",
+                        data: $(form).serialize(), // Serialize form data
+                        success: function(response) {
+                            if(response.success) {
+                                $('#forgot-email').val(response.email);
+                                // $("#forgotPasswordBlock").show();
+                                $('.send-otp').hide();
+                                $('.otp-section').show();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+            $('[name="otpForm"]').validate({
+                rules: {
+                    email: "required",
+                    otp: "required",
+                },
+                messages: {
+                    email: "Please enter email",
+                    otp: "Please enter Otp."
+                },
+                errorClass: "text-danger f-12",
+                errorElement: "span",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass("is-invalid");
+                },
+                submitHandler: function(form) {
+                    $.ajax({
+                        url: "{{ route('verify-otp')}}",
+                        type: "POST",
+                        data: $(form).serialize(), // Serialize form data
+                        success: function(response) {
+                            if(response.success) {
+                                $('#change-email').val(response.email);
+                                $('.send-otp').hide();
+                                $('.otp-section').hide();
+                                $('.change-password').show();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+            $('[name="change-password"]').validate({
+                rules: {
+                    email: "required",
+                    new_password: "required",
+                    new_confirm_password: {
+                        equalTo: "#new_password"
+                    }
+                },
+                messages: {
+                    email: "Please enter email",
+                    new_password: "Please enter password",
+                    new_confirm_password: {
+                        required: 'Please enter confirm password.',
+                        equalTo: 'Confirm Password do not match with password.',
+                    }
+                },
+                errorClass: "text-danger f-12",
+                errorElement: "span",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass("is-invalid");
+                },
+                submitHandler: function(form) {
+                    $.ajax({
+                        url: "{{ route('change-password')}}",
+                        type: "POST",
+                        data: $(form).serialize(), // Serialize form data
+                        success: function(response) {
+                            if(response.success == true) {
+                                $('#success-message').html(response.message);
+                                $('#success-message').show();
+                                setTimeout(function() {
+                                    $('#success-message').fadeOut('slow');
+                                }, 3000);
+                                $("#registerBlock").show();
+                                $('.send-otp').hide();
+                                $('.otp-section').hide();
+                                $('.change-password').hide();
+                            } else {
+                                $('#error-container').html(response.message);
+                                $('#error-container').show();
+                                setTimeout(function() {
+                                    $('#error-container').fadeOut('slow');
+                                }, 3000);
+
+                            }
+                        },
+                    });
                 }
             });
         });

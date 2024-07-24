@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -11,7 +13,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('profile.dashboard');
+        $orders = Order::where('user_id', Auth::id())->get();
+
+        return view('profile.dashboard', compact('orders'));
     }
 
     /**
@@ -35,7 +39,9 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::where('id', $id)->first();
+
+        return view('profile.view', compact('order'));
     }
 
     /**
