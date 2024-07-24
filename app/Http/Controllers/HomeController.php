@@ -21,9 +21,9 @@ class HomeController extends Controller
     	$productCategory = ProductCategory::get();
         $mainBanners = Banner::with('product')->where('type', 'main_banner')->where('status', 'active')->get();
         $sideBanners = Banner::with('product')->where('type', 'side_banner')->where('size', '250*165 px')->where('status', 'active')->get();
-        $banners = Banner::with('product')->where('type', 'side_banner')->where('size', '435*202 px')->where('status', 'active')->get();
+        $leftBanners = Banner::with('product')->where('type', 'side_banner')->where('size', '435*202 px')->where('status', 'active')->get();
         $centerBanners = Banner::with('product')->where('type', 'center_banner')->where('size', '435*202 px')->where('status', 'active')->get();
-        $leftBanners = Banner::with('product')->where('type', 'side_banner')->where('size', '280*547 px')->where('status', 'active')->get();
+        $rightBanners = Banner::with('product')->where('type', 'side_banner')->where('size', '280*547 px')->where('status', 'active')->get();
         $salesProducts = SalesProduct::with('product')->where('status', 0)->whereDate('start_date', '<=', $today)->whereDate('end_date', '>=', $today)->get();
 
         foreach( $salesProducts as $salesKey => $salesProduct) {
@@ -42,8 +42,8 @@ class HomeController extends Controller
         }
         $productData = [];
     	$propularData = [];
-    	foreach ($productCategory as $key => $value) {
-    		# code...
+    	foreach ($productCategory as $key => $value)
+        {
     		$productData[$value->name] = [
     			'productData' => $this->getProductsDetailsWithImages($value->id),
     			'id'=>$value->id,
@@ -52,18 +52,16 @@ class HomeController extends Controller
 
     	}
 
-    	return view('index')->with(
-    								[
-                                        'mainBanners' => $mainBanners,
-                                        'sideBanners' => $sideBanners,
-                                        'banners'     => $banners,
-                                        'centerBanners' => $centerBanners,
-                                        'leftBanners'   => $leftBanners,
-    									'productData' => $productData,
-                                        'salesProducts' => $salesProducts,
-                                        'popularProductData' => $this->getPopularProductsDetailsWithImages()
-    								]
-    							  );
+    	return view('index')->with([
+                                'mainBanners'   => $mainBanners,
+                                'sideBanners'   => $sideBanners,
+                                'centerBanners' => $centerBanners,
+                                'rightBanners'  => $rightBanners,
+                                'leftBanners'   => $leftBanners,
+                                'productData'   => $productData,
+                                'salesProducts' => $salesProducts,
+                                'popularProductData' => $this->getPopularProductsDetailsWithImages()
+                            ]);
     }
 
     private function getProductsDetailsWithImages($category_id)
