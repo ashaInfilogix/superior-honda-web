@@ -60,12 +60,15 @@
                             </svg>
                         </h2>
                         <ul class="footer__widget--menu footer__widget--inner">
-                            
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">My Account</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Shopping Cart</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Login</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Register</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Checkout</a></li>
+                            @if (Auth::user())
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('dashboard.index') }}">My Account</a></li>
+                            @else
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('login') }}">My Account</a></li>
+                            @endif
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('cart')}}">Shopping Cart</a></li>
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('login') }}">Login</a></li>
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('login') }}">Register</a></li>
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('checkout') }}">Checkout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -77,11 +80,11 @@
                             </svg>
                         </h2>
                         <ul class="footer__widget--menu footer__widget--inner">
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Contact Us</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">About Us</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Wishlist</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Privacy Policy</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Frequently</a></li>
+                            <!-- <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Contact Us</a></li> -->
+                            <!-- <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">About Us</a></li> -->
+                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('wishlists.index') }}">Wishlist</a></li>
+                            <!-- <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Privacy Policy</a></li> -->
+                            <!-- <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="#">Frequently</a></li> -->
                         </ul>
                     </div>
                 </div>
