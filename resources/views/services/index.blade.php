@@ -8,6 +8,14 @@
 @section('content')
     <div class="banner-container">
         <img class="banner-image" src="{{ asset('assets/images/banner/banner-service.webp') }}" alt="slider-img">
+        <div class="banner-content">
+            <div class="page-breadcrumb">
+                <a href="{{ route('index') }}">Home</a>
+                <a href="#" class="active-page">/ Services</a>
+            </div>
+    
+            <h2>Services</h2>
+        </div>
     </div>
 
     <section class="product__section section--padding">

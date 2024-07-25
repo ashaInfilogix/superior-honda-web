@@ -6,10 +6,6 @@
 @endsection
 
 @section('content')
-    <div class="banner-container">
-        <img class="banner-image" src="{{ asset('assets/images/banner/banner-service.webp') }}" alt="slider-img">
-    </div>
-
     <section class="product__section section--padding">
         <div class="container">
             <div class="row">
