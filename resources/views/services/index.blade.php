@@ -22,17 +22,18 @@
             </div>
 
             <div class="row services-list">
+                @foreach($services as $service)
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="{{ asset('assets/images/cards/card1.jpg') }}" class="card-img-top" alt="...">
+                        <img src="{{ env('BASE_IMAGE_PATH') }}{{ $service->image }}" class="card-img-top" alt="..." height="50">
                         <div class="card-body">
                             <div class="icon">
-                                <i class="fa fa-brush"></i>
+                                <img src="{{ env('BASE_IMAGE_PATH') }}{{ $service->service_icon }}" width="50" height="25">
+                                <!-- <i class="fa fa-brush"></i> -->
                             </div>
-                            <h2 class="card-title">Maintenance</h2>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                the card's content.</p>
-                            <a href="#">Read more
+                            <h2 class="card-title">{{ $service->name}}</h2>
+                            <p class="card-text">{{   Str::limit($service->short_description, 100) }}</p>
+                            <a href="{{route('services.show', $service->id)}}">Read more
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -43,7 +44,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                @endforeach
+                <!-- <div class="col-md-4">
                     <div class="card">
                         <img src="{{ asset('assets/images/cards/card2.jpg') }}" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -148,7 +150,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -196,20 +198,19 @@
             <h2 class="text-white text-center">What Our Client Says</h2>
 
             <div class="slider mt-5">
+                @foreach($reviews as $review)
                 <div class="testimonial">
                     <div class="row flex justify-content-center">
                         <div class="col-md-8">
                             <img src="{{ asset('assets/images/default-user.png') }}" alt=""
                                 class="avatar-img mb-4">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Enim ad minim veniam, quis nostrud exercitation ullamco
-                                laboris
-                                nisi ut aliquip ex ea commodo </p>
-                            <p class="user-name">Alannah Humphrey</p>
+                            <p>{{ $review->comments }} </p>
+                            <p class="user-name">{{ $review->user->first_name. ' '.  $review->user->last_name}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial">
+                @endforeach
+                <!-- <div class="testimonial">
                     <div class="row flex justify-content-center">
                         <div class="col-md-8">
                             <img src="{{ asset('assets/images/default-user.png') }}" alt="" class="avatar-img">
@@ -217,7 +218,7 @@
                             <p class="user-name">Alannah Humphrey</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -280,7 +281,6 @@
             <div class="col-md-4 contact-section-detail">
                 <h2>Get In Touch</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
-
                 <div class="contact-details">
                     <div class="d-flex gap-3 align-items-center">
                         <i class="fa fa-map-marker"></i>
@@ -288,11 +288,11 @@
                     </div>
                     <div class="d-flex gap-3 align-items-center">
                         <i class="fa fa-envelope"></i>
-                        <a href="mailto:#">support@domain.com</a>
+                        <a href="mailto:#">{{ $settingEmail->value }}</a>
                     </div>
                     <div class="d-flex gap-3 align-items-center">
                         <i class="fa fa-phone"></i>
-                        <a href="tel#">(+021) 582 198</a>
+                        <a href="tel#">{{ $settingContact->value }}</a>
                     </div>
                 </div>
             </div>

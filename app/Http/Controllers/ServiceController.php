@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Review;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -12,7 +14,12 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('services.index');
+        $services = Service::latest()->get();
+        $reviews = Review::with('user')->latest()->take(5)->get();
+        $settingEmail   = Setting::where('key','email')->first();
+        $settingContact = Setting::where('key','contact')->first();
+
+        return view('services.index', compact('services','reviews', 'settingEmail', 'settingContact'));
     }
 
     /**
@@ -36,7 +43,10 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+        $settingEmail   = Setting::where('key','email')->first();
+        $settingContact = Setting::where('key','contact')->first();
+
+        return view('services.view', compact('service', 'settingEmail', 'settingContact'));
     }
 
     /**
