@@ -34,7 +34,7 @@
                                     <th class="cart__table--header__list">Product</th>
                                     <th class="cart__table--header__list">Price</th>
                                     <th class="cart__table--header__list text-center">STOCK STATUS</th>
-                                    <th class="cart__table--header__list text-right">ADD TO CART</th>
+                                    <!-- <th class="cart__table--header__list text-right">ADD TO CART</th> -->
                                 </tr>
                             </thead>
                             <tbody class="cart__table--body">
@@ -61,9 +61,9 @@
                                         <td class="cart__table--body__list text-center">
                                             <span class="in__stock text__secondary">@if($wishlist->out_of_stock == 0) in stock @else out stock @endif</span>
                                         </td>
-                                        <td class="cart__table--body__list text-right">
+                                        <!-- <td class="cart__table--body__list text-right">
                                             <a class="wishlist__cart--btn primary__btn" href="#">Add To Cart</a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -73,7 +73,7 @@
                         @endif
                         <div class="continue__shopping d-flex justify-content-between">
                             <a class="continue__shopping--link" href="{{route('index')}}">Continue shopping</a>
-                            <a class="continue__shopping--clear" href="#">View All Products</a>
+                            <!-- <a class="continue__shopping--clear" href="#">View All Products</a> -->
                         </div>
                     </div> 
                 </form> 

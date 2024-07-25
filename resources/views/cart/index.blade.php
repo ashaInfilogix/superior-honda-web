@@ -159,7 +159,7 @@
         <!-- cart section end -->
 
         <!-- Start product section -->
-        <section class="product__section section--padding  pt-0">
+        <!-- <section class="product__section section--padding  pt-0">
             <div class="container">
                 <div class="section__heading border-bottom mb-30">
                     <h2 class="section__heading--maintitle">New <span>Products</span></h2>
@@ -637,11 +637,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
         <!-- End product section -->
 
         <!-- Start brand section -->
-        <div class="brand__section section--padding pt-0">
+        <!-- <div class="brand__section section--padding pt-0">
             <div class="container">
                 <div class="brand__section--inner d-flex justify-content-between align-items-center">
                     <div class="brang__logo--items">
@@ -661,7 +661,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- End brand section -->
 
         <!-- Start shipping section -->
