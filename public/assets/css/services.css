@@ -1,3 +1,42 @@
+.banner-container {
+    max-width: 100%;
+    overflow: hidden;
+    height: 500px;
+    background-color: #000;
+    position: relative;
+}
+
+
+.banner-image {
+    display: block;
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.banner-content{
+    position: absolute;
+    top: 0;
+    background-color: #000;
+    color: #FFF;
+    left: 10%;
+    padding: 28px 62px;
+}
+
+.banner-container .page-breadcrumb{
+    background-color: #1D1B1B;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+.banner-container .page-breadcrumb a{
+    color: #FFF;
+}
+
+.banner-container .page-breadcrumb .active-page{
+    color: #F03B3B;
+}
+
 .heading-with-underline {
     display: inline-block;
     position: relative;
