@@ -16,7 +16,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('productImages','wishlist')->latest()->paginate(9);
+        $products = Product::with('ProductCategory','productImages','wishlist')->whereHas('productCategory', function ($query) {
+                        $query->whereNull('deleted_at');
+                    })->latest()->paginate(9);
         foreach($products as $key => $product) {
             $averageRating = $product->ratingCalculation();
             $products[$key]['reviewCount'] = $averageRating['reviewCount'] ?? 0;
@@ -36,7 +38,9 @@ class ProductController extends Controller
 
     public function accesories()
     {
-        $products = Product::with('productImages','wishlist')->where('access_series', 1)->latest()->paginate(9);
+        $products = Product::with('ProductCategory','productImages','wishlist')->whereHas('productCategory', function ($query) {
+                            $query->whereNull('deleted_at');
+                        })->where('access_series', 1)->latest()->paginate(9);
         foreach($products as $key => $product) {
             $averageRating = $product->ratingCalculation();
             $products[$key]['reviewCount'] = $averageRating['reviewCount'] ?? 0;
