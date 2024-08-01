@@ -1,6 +1,6 @@
 <?php 
 $logo_url= DB::table('settings')->where('key','logo')->first();
-$categoryData = DB::table('product_categories')->get();
+$categoryData = DB::table('product_categories')->whereNull('deleted_at')->get();
 // dd($categoryData);
 if($logo_url)
 {
