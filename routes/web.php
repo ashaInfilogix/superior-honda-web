@@ -39,7 +39,7 @@ Route::middleware('cors_middleware')->group(function () {
         ]);
     });
 
-    Route::post('wishlists.add-and-remove', [WishlistController::class, 'wishlistAddRemove'])->name('wishlists.add-and-remove');
+    Route::post('wishlists/add-and-remove', [WishlistController::class, 'wishlistAddRemove'])->name('wishlists.add-and-remove');
 
     Route::resources([
         'wishlists' => WishlistController::class,
