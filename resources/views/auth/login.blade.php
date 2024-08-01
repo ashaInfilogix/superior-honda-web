@@ -92,6 +92,9 @@
                                     <label>
                                         <input class="account__login--input" placeholder="Email Addres" type="email" name="email">
                                     </label>
+                                    @error('email')
+                                        <div class="error-message text-danger">{{ $message }}</div>
+                                    @enderror
                                     <label>
                                         <input class="account__login--input" placeholder="Phone Number" type="number" name="phone_number">
                                     </label>

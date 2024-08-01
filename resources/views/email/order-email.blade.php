@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    {{ $content }}
+    {!! $content !!}
     <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; line-height: 1.5em; margin-top: 0; color: #aeaeae; font-size: 12px; text-align: center;">
         @php $date = date('Y'); @endphp
         © {{ $date }} Superior Honda. All rights reserved.

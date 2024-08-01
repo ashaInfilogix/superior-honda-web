@@ -83,11 +83,13 @@
                                 </div>
                                 <div class="customer__information">
                                     <div class="checkout__email--phone mb-12">
-                                        <label>
-                                            <input class="checkout__input--field border-radius-5"
-                                                placeholder="Email or mobile phone mumber" type="text"
-                                                name="email_or_phone">
-                                        </label>
+                                        <div class="col-12 mb-20">
+                                            <input class="checkout__input--field border-radius-5" placeholder="Email" type="text" name="email">
+                                        </div>
+
+                                        <div class="col-12 mb-20">
+                                            <input class="checkout__input--field border-radius-5" placeholder="Phone number" type="text" name="phone_number">
+                                        </div>
                                     </div>
                                     {{-- <div class="checkout__checkbox">
                                         <input class="checkout__checkbox--input" id="check1" type="checkbox">
@@ -527,7 +529,8 @@
                 rules: {
                     first_name: "required",
                     last_name: "required",
-                    email_or_phone: "required",
+                    email: "required",
+                    phone_number: "required",
                     address: "required",
                     apartment: "required",
                     city: "required",
@@ -568,7 +571,8 @@
                     }
                 },
                 messages: {
-                    email_or_phone: "Please enter your email or phone number.",
+                    email: "Please enter your email.",
+                    phone_number: "Please enter your phone number.",
                     address: "Please enter address",
                     apartment: "Please enter apartment name etc.",
                     city: "Please enter city",

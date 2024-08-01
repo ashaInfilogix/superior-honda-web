@@ -192,6 +192,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'first_name' => 'required',
+            'email'      => 'required|unique:users'
         ]);
         User::create([
             'first_name' => $request->first_name,

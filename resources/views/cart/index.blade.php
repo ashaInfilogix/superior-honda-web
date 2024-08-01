@@ -827,11 +827,10 @@
             },
             success: function(response) {
                 if(response.success == true) {
-                    let grandTotal = response.cart.formatted_grand_total;
                     let discountAmount = response.cart.discount_amount;
                     $('.discountAmount').html(discountAmount);
+                    let grandTotal = response.cart.formatted_grand_total;
                     $('.grandTotal').html(grandTotal);
-                    
                     $('.coupon-code').attr('hidden', 'hidden');
                     $('.remove-code').removeAttr('hidden');
                 } else {

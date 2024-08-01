@@ -314,66 +314,67 @@
 
         
     $(document).on('click', '.remove-from-cart', function(e) {
-    var buttonevent = $(this);
-    var id = $(this).attr("data-id");
-    var minicartProduct = buttonevent.closest('.minicart__product--items');
-    var price = parseFloat(minicartProduct.find('.minicart__current--price').text().replace('$', ''));
-    var quantity = parseInt(minicartProduct.find('.quantity__number').val());
-    var itemTotal = price * quantity;
+            var buttonevent = $(this);
+            var id = $(this).attr("data-id");
+            var minicartProduct = buttonevent.closest('.minicart__product--items');
+            var price = parseFloat(minicartProduct.find('.minicart__current--price').text().replace('$', ''));
+            var quantity = parseInt(minicartProduct.find('.quantity__number').val());
+            var itemTotal = price * quantity;
+            console.log(price);
+            console.log(itemTotal);
 
-    // var totalAmountElem = $(this).closest('.totalAmount');
-    // var grandTotalElem = $(this).closest('.grandTotal');
+            // var totalAmountElem = $(this).closest('.totalAmount');
+            // var grandTotalElem = $(this).closest('.grandTotal');
 
-    var totalAmountElem = buttonevent.closest('.offCanvas__minicart').find('.totalAmount b');
-    var grandTotalElem = buttonevent.closest('.offCanvas__minicart').find('.grandTotal b');
+            var totalAmountElem = buttonevent.closest('.offCanvas__minicart').find('.totalAmount b');
+            var grandTotalElem = buttonevent.closest('.offCanvas__minicart').find('.grandTotal b');
 
-    var totalAmount = parseFloat(totalAmountElem.text().replace('$', ''));
+            var totalAmount = parseFloat(totalAmountElem.text().replace('$', '').replace(/,/g, '').replace('.00', ''));
+            var grandTotal = parseFloat(grandTotalElem.text().replace('$', '').replace(/,/g, '').replace('.00', ''));
 
-    var grandTotal = parseFloat(grandTotalElem.text().replace('$', ''));
+            console.log('before removal Price: ' + price);
+            console.log('Quantity: ' + quantity);
+            console.log('Item Total: ' + itemTotal);
+            console.log('Total Amount Before: ' + totalAmount);
+            console.log('Grand Total Before: ' + grandTotal);
 
-    console.log('before removal Price: ' + price);
-    console.log('Quantity: ' + quantity);
-    console.log('Item Total: ' + itemTotal);
-    console.log('Total Amount Before: ' + totalAmount);
-    console.log('Grand Total Before: ' + grandTotal);
+            e.preventDefault();
+            if (confirm("Are you sure want to remove?")) {
+                $.ajax({
+                    url: '{{ route('remove-from-cart') }}',
+                    method: "post",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        product_id: id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.success) {
+                            buttonevent.closest('.minicart__product--items').remove();
+                            
+                            // Subtract the itemTotal from totalAmount and grandTotal
+                            totalAmount -= itemTotal;
+                            grandTotal -= itemTotal;
 
-    e.preventDefault();
-    if (confirm("Are you sure want to remove?")) {
-        $.ajax({
-            url: '{{ route('remove-from-cart') }}',
-            method: "post",
-            data: {
-                _token: '{{ csrf_token() }}',
-                product_id: id
-            },
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    buttonevent.closest('.minicart__product--items').remove();
-                    
-                    // Subtract the itemTotal from totalAmount and grandTotal
-                    totalAmount -= itemTotal;
-                    grandTotal -= itemTotal;
+                            console.log('Total Amount After: ' + totalAmount);
+                            console.log('Grand Total After: ' + grandTotal);
 
-                    console.log('Total Amount After: ' + totalAmount);
-                    console.log('Grand Total After: ' + grandTotal);
+                            // Update the total amount and grand total in the DOM
+                            totalAmountElem.text('$' + (totalAmount >= 0 ? totalAmount.toFixed(2) : '0.00'));
+                            grandTotalElem.text('$' + (grandTotal >= 0 ? grandTotal.toFixed(2) : '0.00'));
 
-                    // Update the total amount and grand total in the DOM
-                    totalAmountElem.text('$' + (totalAmount >= 0 ? totalAmount.toFixed(2) : '0.00'));
-                    grandTotalElem.text('$' + (grandTotal >= 0 ? grandTotal.toFixed(2) : '0.00'));
-
-                    var cartCount = $('body').find('.item-count-cart').first().text();
-                    console.log('Cart Count Before: ' + cartCount);
-                    if (!isNaN(cartCount) && cartCount > 0) {
-                        cartCount--; // Decrement the cart count by one
-                        $(document).find('.item-count-cart').html(cartCount);
-                        console.log('Cart Count After: ' + cartCount);
+                            var cartCount = $('body').find('.item-count-cart').first().text();
+                            console.log('Cart Count Before: ' + cartCount);
+                            if (!isNaN(cartCount) && cartCount > 0) {
+                                cartCount--; // Decrement the cart count by one
+                                $(document).find('.item-count-cart').html(cartCount);
+                                console.log('Cart Count After: ' + cartCount);
+                            }
+                        }
                     }
-                }
+                });
             }
         });
-    }
-});
 
 
         function updateQuantity(productId, quantity, quantityInput) {

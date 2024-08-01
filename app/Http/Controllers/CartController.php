@@ -347,7 +347,7 @@ class CartController extends Controller
 
     public function clearCart(Request $request)
     {
-        $request->session()->flush();
+        $request->session()->forget('cart');
 
         if (Auth::check()) {
             Cart::where('user_id', Auth::id())->delete();
@@ -359,10 +359,8 @@ class CartController extends Controller
     public function couponCode(Request $request)
     {
         $couponExists = Coupon::where('coupon_code', $request->coupon_code)
-        ->whereDate('start_date', '<=', now())
-        ->whereDate('end_date', '>=', now())
-        ->where('status', 'Active')
-        ->first();
+                    ->whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->where('status', 'Active')
+                    ->first();
 
         if (!$couponExists) {
             return response()->json([
@@ -411,7 +409,6 @@ class CartController extends Controller
         } else if ($couponExists->discount_type === 'fixed') {
             $discountAmount = $couponExists->discount_amount;
         }
-
         $cart['grand_total'] -= $discountAmount;
         $cart['formatted_grand_total'] = '$' . number_format($cart['grand_total'], 2);
         $cart['discount_amount'] = $discountAmount;
@@ -457,15 +454,15 @@ class CartController extends Controller
     public function order(Request $request)
     {
         if (session('cart') && isset(session('cart')['products'])) {
-            $phone = NULL;
-            $email = NULL;
+            // $phone = NULL;
+            // $email = NULL;
 
-            $field = filter_var($request->input('email_or_phone'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
-            if($field == 'email' ) {
-                $email = $request->email_or_phone;
-            } else {
-                $phone = $request->email_or_phone;
-            }
+            // $field = filter_var($request->input('email_or_phone'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
+            // if($field == 'email' ) {
+            //     $email = $request->email_or_phone;
+            // } else {
+            //     $phone = $request->email_or_phone;
+            // }
 
             $order['billing_address'] = [
                 'first_name' => $request->first_name,
@@ -504,8 +501,8 @@ class CartController extends Controller
             $orderData = Order::create([
                 'order_id'        => $odrId, 
                 'user_id'         => Auth::id() ?? NULL,
-                'email'           => $email,
-                'phone_number'    => $phone,
+                'email'           => $request->email,
+                'phone_number'    => $request->phone_number,
                 'billing_address' => json_encode($order['billing_address']),
                 'shipping_address'=> json_encode($order['shipping_address']),
                 'cart_items'      => json_encode(session('cart')),

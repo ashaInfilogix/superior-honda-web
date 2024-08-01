@@ -1226,7 +1226,7 @@ else{
         <div class="minicart__product">
             @if (session('cart') && isset(session('cart')['products']))
                 @foreach (session('cart')['products'] as $key => $product)
-                    <div class="minicart__product--items d-flex">
+                    <div class="minicart__product--items d-flex remove-{{ $product['id'] }}">
                         <div class="minicart__thumb">
                             <a href="#"><img src="{{ env('BASE_IMAGE_PATH')}}{{$product['image'] }}" alt="product-img"></a>
                         </div>
@@ -1237,7 +1237,7 @@ else{
                                 <span class="minicart__current--price">${{ $product['price'] }}</span> <!-- Assuming $product['price'] contains the price -->
                                 {{-- <span class="minicart__old--price">${{ $product['old_price'] }}</span> <!-- Assuming $product['old_price'] contains the old price --> --}}
                             </div>
-                            <div class="minicart__text--footer d-flex align-items-center">
+                            <div class="minicart__text--footer d-flex align-items-center remove-{{ $product['id'] }}">
                                 <div class="quantity__box minicart__quantity">
                                     <button type="button" class="quantity__value decrease" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Decrease Value">-</button>
                                     <label>
