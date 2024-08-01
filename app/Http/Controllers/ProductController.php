@@ -79,6 +79,11 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product = Product::with('productImages')->where('id', $product->id)->first();
+        $averageRating = $product->ratingCalculation();
+        $product['reviewCount'] = $averageRating['reviewCount'] ?? 0;
+        $product['starRating'] = $averageRating['starRating'] ?? 0;
+        $product['averageRating'] = $averageRating['averageRating'] ?? 0;
+
         $reviews = Review::where('product_id', $product->id)->latest()->get();
 
         return view('products.view', compact('product', 'reviews'));

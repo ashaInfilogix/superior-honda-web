@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Email Address</label>
-                        <input type="email" name="email" class="account__login--input" value="{{ Auth::user()->email }}">
+                        <input type="email" name="email" class="account__login--input" value="{{ Auth::user()->email }}" readonly>
                     </div>
                 </div>
                 <div class="row">
@@ -41,7 +41,7 @@
                         <input type="text" name="date_of_birth" id="datepicker" class="account__login--input datepicker" value="{{ Auth::user()->date_of_birth }}" placeholder="YYYY-MM-DD">
                     </div>
                     <div class="col-md-6 form-group">
-                        <x-input-text name="lic_no" label="Lic No" value="{{ Auth::user()->lic_no }}" ></x-input-text>
+                        <x-input-text name="lic_no" label="Licence No" value="{{ Auth::user()->licence_no }}" ></x-input-text>
                     </div>
                 </div>
                 <div class="row">
