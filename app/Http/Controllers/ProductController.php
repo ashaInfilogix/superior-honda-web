@@ -8,17 +8,32 @@ use App\Models\VehicleBrand;
 use App\Models\ProductImage;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->perPage ?? 10;
+
         $products = Product::with('ProductCategory','productImages','wishlist')->whereHas('productCategory', function ($query) {
                         $query->whereNull('deleted_at');
-                    })->latest()->paginate(9);
+                    });
+        if($request->search) {
+            $products = $products->where('product_name', 'like', '%' . $request->search . '%' );
+        }
+        if($request->brandId) {
+            $products  = $products->where('brand_id', $request->brandId);
+        }
+        $products = $products->latest()->paginate($perPage);
+
+        if($request->page > $products->lastPage()){
+            return redirect()->to('/products?perPage='.$perPage.'&page='.$products->lastPage());
+        }
+
         foreach($products as $key => $product) {
             $averageRating = $product->ratingCalculation();
             $products[$key]['reviewCount'] = $averageRating['reviewCount'] ?? 0;
@@ -26,27 +41,70 @@ class ProductController extends Controller
             $products[$key]['averageRating'] = $averageRating['averageRating'] ?? 0;
         }
 
-        $productCategories = ProductCategory::with('products')->latest()->limit(8)->get();
+        $topRatedProducts = Product::with(['productImages', 'ProductCategory'])
+                            ->select('products.id', 'products.product_name', 'products.cost_price')
+                            ->join('reviews', 'products.id', '=', 'reviews.product_id')
+                            ->selectRaw('AVG(reviews.star_rating) as averageRating')
+                            ->selectRaw('SUM(reviews.star_rating) as totalStarRating')
+                            ->selectRaw('COUNT(reviews.product_id) as reviewCount')
+                            ->whereHas('ProductCategory', function ($query) {
+                                $query->whereNull('deleted_at');
+                            })
+                            ->groupBy('products.id', 'products.product_name', 'products.cost_price')
+                            ->orderBy('averageRating', 'desc')->limit(3)->get();
+
         $brands = VehicleBrand::latest()->limit(8)->get();
-        foreach($productCategories as $key=>$product)
+
+        $productCategories = ProductCategory::with('products')->latest()->limit(8)->get();
+        foreach($productCategories as $key=> $product)
         {
             $productCategories[$key]['items'] = Product::where('category_id', $product->id)->count();
             $productCategories[$key]['productImages'] = ProductImage::where('product_id', $product->id)->first();
         }
-        return view('products.index', compact('products', 'productCategories','brands'));
+
+        if ($request->ajax()) {
+            $productsHtml = view('products.partisal.products', compact('products'))->render();
+            $paginationHtml = $products->appends(['perPage' => $perPage])->links()->render();
+            return response()->json([
+                'success'   => true,
+                'productsHtml' => $productsHtml,
+            ]);
+        }
+
+        return view('products.index', compact('products', 'productCategories','brands', 'topRatedProducts','perPage'));
     }
 
-    public function accesories()
+    public function accesories(Request $request)
     {
         $products = Product::with('ProductCategory','productImages','wishlist')->whereHas('productCategory', function ($query) {
                             $query->whereNull('deleted_at');
-                        })->where('access_series', 1)->latest()->paginate(9);
+                        })->where('access_series', 1);
+
+        if($request->brandId) {
+            $products  = $products->where('brand_id', $request->brandId);
+        }
+                        
+        $products  = $products->latest()->paginate(9);
+
         foreach($products as $key => $product) {
             $averageRating = $product->ratingCalculation();
             $products[$key]['reviewCount'] = $averageRating['reviewCount'] ?? 0;
             $products[$key]['starRating'] = $averageRating['starRating'] ?? 0;
             $products[$key]['averageRating'] = $averageRating['averageRating'] ?? 0;
         }
+
+        $topRatedProducts = Product::with(['productImages', 'ProductCategory'])
+                                ->select('products.id', 'products.product_name', 'products.cost_price')
+                                ->join('reviews', 'products.id', '=', 'reviews.product_id')
+                                ->selectRaw('AVG(reviews.star_rating) as averageRating')
+                                ->selectRaw('SUM(reviews.star_rating) as totalStarRating')
+                                ->selectRaw('COUNT(reviews.product_id) as reviewCount')
+                                ->whereHas('ProductCategory', function ($query) {
+                                    $query->whereNull('deleted_at');
+                                })
+                                ->groupBy('products.id', 'products.product_name', 'products.cost_price')
+                                ->orderBy('averageRating', 'desc')->where('access_series', 1)->limit(3)->get();
+
         $productCategories = ProductCategory::with('products')->latest()->limit(8)->get();
         $brands = VehicleBrand::latest()->limit(8)->get();
         foreach($productCategories as $key=>$product)
@@ -54,7 +112,16 @@ class ProductController extends Controller
             $productCategories[$key]['items'] = Product::where('category_id', $product->id)->count();
             $productCategories[$key]['productImages'] = ProductImage::where('product_id', $product->id)->first();
         }
-        return view('accesories.index', compact('products', 'productCategories','brands'));
+
+        if ($request->ajax()) {
+            $productsHtml = view('products.partisal.products', compact('products'))->render();
+            return response()->json([
+                'success'   => true,
+                'productsHtml' => $productsHtml,
+            ]);
+        }
+
+        return view('accesories.index', compact('products', 'productCategories','brands','topRatedProducts'));
     }
 
     /**

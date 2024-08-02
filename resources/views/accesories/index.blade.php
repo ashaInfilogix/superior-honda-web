@@ -33,36 +33,7 @@
                 @endforeach
             </ul>
         </div>
-        <div class="single__widget widget__bg">
-            <h2 class="widget__title h3">Dietary Needs</h2>
-            <ul class="widget__form--check">
-                <li class="widget__form--check__list">
-                    <label class="widget__form--check__label" for="check6">Body Parts</label>
-                    <input class="widget__form--check__input" id="check6" type="checkbox">
-                    <span class="widget__form--checkmark"></span>
-                </li>
-                <li class="widget__form--check__list">
-                    <label class="widget__form--check__label" for="check7">Oiles Fluids</label>
-                    <input class="widget__form--check__input" id="check7" type="checkbox">
-                    <span class="widget__form--checkmark"></span>
-                </li>
-                <li class="widget__form--check__list">
-                    <label class="widget__form--check__label" for="check8">Car care kits</label>
-                    <input class="widget__form--check__input" id="check8" type="checkbox">
-                    <span class="widget__form--checkmark"></span>
-                </li>
-                <li class="widget__form--check__list">
-                    <label class="widget__form--check__label" for="check9">Brake disks</label>
-                    <input class="widget__form--check__input" id="check9" type="checkbox">
-                    <span class="widget__form--checkmark"></span>
-                </li>
-                <li class="widget__form--check__list">
-                    <label class="widget__form--check__label" for="check10">Repair Parts</label>
-                    <input class="widget__form--check__input" id="check10" type="checkbox">
-                    <span class="widget__form--checkmark"></span>
-                </li>
-            </ul>
-        </div>
+
         <div class="single__widget price__filter widget__bg">
             <h2 class="widget__title h3">Filter By Price</h2>
             <form class="price__filter--form" action="#"> 
@@ -91,150 +62,88 @@
         <div class="single__widget widget__bg">
             <h2 class="widget__title h3">Top Rated Product</h2>
             <div class="shop__sidebar--product">
-                <div class="small__product--card d-flex">
-                    <div class="small__product--thumbnail">
-                        <a class="display-block" href="#"><img src="{{ asset('assets/images/product/small-product/product6.webp') }}" alt="product-img"></a>
-                    </div>
-                    <div class="small__product--content">
-                        <h3 class="small__product--card__title"><a href="#">Black Air Pods </a></h3>
-                        <div class="small__product--card__price">
-                            <span class="current__price">$239.52</span>
+                @if($topRatedProducts->isNotEmpty())
+                    @foreach($topRatedProducts as $topProduct)
+                    <div class="small__product--card d-flex">
+                        <div class="small__product--thumbnail">
+                            <a class="display-block" href="{{ route('products.show', $topProduct->id) }}">
+                                @if ($topProduct->productImages->isNotEmpty())
+                                    <img src="{{ env('BASE_IMAGE_PATH') }}{{ $topProduct->productImages->first()->images }}" alt="product-img">
+                                @else 
+                                    <img src="{{ asset('assets/images/product/small-product/product6.webp') }}" alt="product-img">
+                                @endif
+                            </a>
                         </div>
-                        <ul class="rating small__product--rating d-flex">
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon"> 
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z" fill="currentColor"/>
-                                     </svg>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="small__product--card d-flex">
-                    <div class="small__product--thumbnail">
-                        <a class="display-block" href="#"><img src="{{ asset('assets/images/product/small-product/product7.webp') }}" alt="product-img"></a>
-                    </div>
-                    <div class="small__product--content">
-                        <h3 class="small__product--card__title"><a href="#">Amazon Cloud  </a></h3>
-                        <div class="small__product--card__price">
-                            <span class="current__price">$178.52</span>
+                        <div class="small__product--content">
+                            <h3 class="small__product--card__title"><a href="{{ route('products.show', $topProduct->id) }}">{{ $topProduct->product_name }} </a></h3>
+                            <div class="small__product--card__price">
+                                <span class="current__price">$ {{ number_format($topProduct->cost_price, 2) }}</span>
+                            </div>
+                            @php
+                                $rating = $topProduct->averageRating;
+                                $reviewCount = $topProduct->reviewCount;
+                                $maxRating = 5; // Maximum rating value (e.g., 4.5 stars)
+                                $filledStars = floor($rating); // Whole number of filled stars
+                                $halfStar = $rating - $filledStars; // Check if there's a half star
+                                $emptyStars = $maxRating - $filledStars - ($halfStar > 0 ? 1 : 0); // Calculate empty stars
+
+                                $filledStars = max(0, min($maxRating, $filledStars));
+                                $emptyStars = max(0, min($maxRating, $emptyStars));
+                            @endphp
+                            <ul class="rating small__product--rating d-flex">
+                                @for ($i = 0; $i < $filledStars; $i++)
+                                    @if($i >= 4)
+                                        
+                                        <li class="rating__list">
+                                            <span class="rating__icon">
+                                                <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </li>
+                                    @else 
+                                    <li class="rating__list">
+                                            <span class="rating__icon">
+                                                <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </li>
+                                    @endif
+                                @endfor
+
+                                @if ($halfStar > 0)
+                                    <li class="rating__list">
+                                        <span class="rating__icon">
+                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <mask id="half-star-mask">
+                                                    <rect x="0" y="0" width="7" height="13" fill="white" />
+                                                </mask>
+                                                <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z"
+                                                    fill="currentColor" />
+                                                <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z"
+                                                    fill="red" mask="url(#half-star-mask)" />
+                                            </svg> 
+                                        </span>
+                                    </li>
+                                @endif
+
+                                @for ($i = 0; $i < $emptyStars; $i++)
+                                    <li class="rating__list">
+                                        <span class="rating__icon">
+                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </li>
+                                @endfor
+                            </ul>
                         </div>
-                        <ul class="rating small__product--rating d-flex">
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon"> 
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z" fill="currentColor"/>
-                                     </svg>
-                                </span>
-                            </li>
-                        </ul>
                     </div>
-                </div>
-                <div class="small__product--card d-flex">
-                    <div class="small__product--thumbnail">
-                        <a class="display-block" href="#"><img src="{{ asset('assets/images/product/small-product/product8.webp') }}" alt="product-img"></a>
-                    </div>
-                    <div class="small__product--content">
-                        <h3 class="small__product--card__title"><a href="#">Lorem ipsum sit. </a></h3>
-                        <div class="small__product--card__price">
-                            <span class="current__price">$276.52</span>
-                        </div>
-                        <ul class="rating small__product--rating d-flex">
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon">
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-                            </li>
-                            <li class="rating__list">
-                                <span class="rating__icon"> 
-                                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12.4141 4.53125L8.99219 4.03906L7.44531 0.921875C7.1875 0.382812 6.39062 0.359375 6.10938 0.921875L4.58594 4.03906L1.14062 4.53125C0.53125 4.625 0.296875 5.375 0.742188 5.82031L3.20312 8.23438L2.61719 11.6328C2.52344 12.2422 3.17969 12.7109 3.71875 12.4297L6.78906 10.8125L9.83594 12.4297C10.375 12.7109 11.0312 12.2422 10.9375 11.6328L10.3516 8.23438L12.8125 5.82031C13.2578 5.375 13.0234 4.625 12.4141 4.53125ZM9.53125 7.95312L10.1875 11.75L6.78906 9.96875L3.36719 11.75L4.02344 7.95312L1.25781 5.28125L5.07812 4.71875L6.78906 1.25L8.47656 4.71875L12.2969 5.28125L9.53125 7.95312Z" fill="currentColor"/>
-                                     </svg>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                    @endforeach
+                @else 
+                    <h3 class="font-bold text-center mt-5">{{__('Top Product is empty')}}</h3>
+                @endif
             </div>
         </div>
         {{-- ----Brand Name ------}}
@@ -242,7 +151,7 @@
             <h2 class="widget__title h3">Brands</h2>
             <ul class="widget__tagcloud">
                 @foreach ($brands as $brand)
-                <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="#"> {{ $brand->brand_name }}</a></li>
+                <li class="widget__tagcloud--list"><button class="widget__tagcloud--link brandProducts" data-id="{{ $brand->id}}"> {{ $brand->brand_name }}</button></li>
                 @endforeach
             </ul>
         </div>
@@ -340,6 +249,7 @@
                         </div>
                         {{-- <p class="product__showing--count">Showing 1–9 of 21 results</p> --}}
                     </div>
+                    <div class="all-products">
                     <div class="tab_content">
                         {{--===================== Product Grid ===============--}}
                         <div id="product_grid" class="tab_pane active show">
@@ -772,6 +682,7 @@
                         </nav>
                     </div>
                      {{--===================== End Pagination ===============--}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -820,6 +731,25 @@
                 </div>
             </div>
         </section>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.brandProducts', function() {
+            let brandId = $(this).data('id');
+            $.ajax({
+                url: '{{ route('accesories') }}?brandId='+ encodeURIComponent(brandId),
+                method: 'GET',
+                success: function(response) {
+                    if(response.success == true) {
+            console.log(response);
+
+                        $('.all-products').html(response.productsHtml);
+                    }
+                },
+            });
+        });
+    });
+</script>
         <!-- End shipping section -->
 <!-- <script>
    $(function() {

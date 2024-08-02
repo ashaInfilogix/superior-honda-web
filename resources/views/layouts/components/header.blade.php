@@ -79,20 +79,18 @@ else{
                                 alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
-                    <form class="d-flex header__search--form border-radius-5" action="#">
-                        <div class="header__select--categories select">
+                    <form class="d-flex header__search--form border-radius-5" action="{{ route('products.index') }}">
+                        <!-- <div class="header__select--categories select">
                             <select class="header__select--inner">
-                                <option selected value="1"> All categories</option>
-                                <option value="2">Accessories</option>
-                                <option value="3">Accessories & More</option>
-                                <option value="4">Camera & Video </option>
-                                <option value="5">Butters & Eggs </option>
+                                <option selected value="0"> All categories</option>
+                                @foreach($categoryData as $key =>  $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
-                        </div>
+                        </div> -->
                         <div class="header__search--box">
                             <label>
-                                <input class="header__search--input" placeholder="Search For Products..."
-                                    type="text">
+                                <input name="search" class="header__search--input product_name" placeholder="Search For Products..." type="text">
                             </label>
                             <button class="header__search--button bg__primary text-white" aria-label="search button"
                                 type="submit">
