@@ -1230,7 +1230,7 @@ else{
                         </div>
                         <div class="minicart__text">
                             <h4 class="minicart__subtitle"><a href="#">{{ $product['name'] }}</a></h4>
-                            <span class="color__variant"><b>Color:</b> Beige</span>
+                            {{-- <span class="color__variant"><b>Color:</b> Beige</span> --}}
                             <div class="minicart__price">
                                 <span class="minicart__current--price">${{ $product['price'] }}</span> <!-- Assuming $product['price'] contains the price -->
                                 {{-- <span class="minicart__old--price">${{ $product['old_price'] }}</span> <!-- Assuming $product['old_price'] contains the old price --> --}}
