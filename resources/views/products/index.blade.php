@@ -35,13 +35,13 @@
         </div>
         <div class="single__widget price__filter widget__bg">
             <h2 class="widget__title h3">Filter By Price</h2>
-            <form class="price__filter--form" action="#"> 
+            <!-- <form class="price__filter--form" action="#">  -->
                 <div class="price__filter--form__inner mb-15 d-flex align-items-center">
                     <div class="price__filter--group">
                         <label class="price__filter--label" for="Filter-Price-GTE">From</label>
                         <div class="price__filter--input">
                             <span class="price__filter--currency">$</span>
-                            <input class="price__filter--input__field border-0" name="filter.v.price.gte" id="Filter-Price-GTE" type="number" placeholder="0" min="0" max="250.00">
+                            <input class="price__filter--input__field border-0" name="min_price" id="minPrice" type="number" placeholder="" min="0">
                         </div>
                     </div>
                     <div class="price__divider">
@@ -51,12 +51,12 @@
                         <label class="price__filter--label" for="Filter-Price-LTE">To</label>
                         <div class="price__filter--input">
                             <span class="price__filter--currency">$</span>
-                            <input class="price__filter--input__field border-0" name="filter.v.price.lte" id="Filter-Price-LTE" type="number" min="0" placeholder="250.00" max="250.00"> 
+                            <input class="price__filter--input__field border-0" name="max_price" id="maxPrice" type="number" min="0" placeholder=""> 
                         </div>	
                     </div>
                 </div>
-                <button class="primary__btn price__filter--btn" type="submit">Filter</button>
-            </form>
+                <button class="primary__btn price__filter--btn priceButton">Filter</button>
+            <!-- </form>  -->
         </div>
         <div class="single__widget widget__bg">
             <h2 class="widget__title h3">Top Rated Product</h2>
@@ -191,12 +191,7 @@
                             <div class="product__view--mode__list product__short--by align-items-center d-flex">
                                 <label class="product__view--label">Prev Page :</label>
                                 <div class="select shop__header--select">
-                                    <select class="product__view--select" id="itemsPerPage">
-                                        <!-- <option selected value="10">10</option>
-                                        <option value="4">4</option>
-                                        <option value="15">15</option>
-                                        <option value="40">40</option>
-                                        <option value="100">100 </option> -->
+                                    <select class="product__view--select" id="itemsPerPage"> 
                                         <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
                                         <option value="15" {{ $perPage == 15 ? 'selected' : '' }}>15</option>
                                         <option value="40" {{ $perPage == 40 ? 'selected' : '' }}>40</option>
@@ -207,14 +202,11 @@
                             <div class="product__view--mode__list product__short--by align-items-center d-flex">
                                 <label class="product__view--label">Sort By :</label>
                                 <div class="select shop__header--select">
-                                    <select class="product__view--select">
-                                        <option selected value="1">Sort by latest</option>
-                                        <option value="2">Sort by popularity</option>
-                                        <option value="3">Sort by newness</option>
-                                        <option value="4">Sort by  rating </option>
+                                    <select class="product__view--select" name="sort_by" id="sortBy">
+                                        <option selected value="sort_by_latest">Sort by latest</option>
+                                        <option value="sort_by_rating">Sort by rating </option>
                                     </select>
                                 </div>
-                                 
                             </div>
                             <div class="product__view--mode__list">
                                 <div class="product__tab--one product__grid--column__buttons d-flex justify-content-center">
@@ -682,6 +674,23 @@
                 },
             });
         });
+        
+        $(document).on('click','.priceButton', function() {
+            var minPrice = $('#minPrice').val();
+            console.log(minPrice);
+            var maxPrice = $('#maxPrice').val();
+            console.log(maxPrice);
+
+            $.ajax({
+                url: '{{ route('products.index') }}?min_price=' + minPrice + '&max_price=' + maxPrice,
+                method: 'GET',
+                success: function(response) {
+                    if(response.success == true) {
+                        $('.all-products').html(response.productsHtml);
+                    }
+                },
+            });
+        });
 
         $('#itemsPerPage').on('change', function() {
             var selectedValue = $(this).val();
@@ -695,6 +704,20 @@
 
             $.ajax({
                 url: '{{ route('products.index') }}?perPage='+ selectedValue,
+                method: 'GET',
+                success: function(response) {
+                    if(response.success == true) {
+                        $('.all-products').html(response.productsHtml);
+                    }
+                },
+            });
+        });
+
+        $('#sortBy').on('change', function() {
+            var selectedValue = $(this).val();
+            console.log(selectedValue);
+            $.ajax({
+                url: '{{ route('products.index') }}?sort_by='+ selectedValue,
                 method: 'GET',
                 success: function(response) {
                     if(response.success == true) {
