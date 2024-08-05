@@ -1286,9 +1286,9 @@ else{
     <div class="predictive__search--box ">
         <div class="predictive__search--box__inner">
             <h2 class="predictive__search--title">Search Products</h2>
-            <form class="predictive__search--form" action="#">
+            <form class="predictive__search--form" action="{{ route('products.index') }}">
                 <label>
-                    <input class="predictive__search--input" placeholder="Search Here" type="text">
+                    <input name="search" class="predictive__search--input" placeholder="Search Here" type="text">
                 </label>
                 <button class="predictive__search--button text-white" aria-label="search button"><svg
                         class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="30.51"
