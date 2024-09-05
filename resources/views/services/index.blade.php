@@ -296,11 +296,11 @@
                     </div>
                     <div class="d-flex gap-3 align-items-center">
                         <i class="fa fa-envelope"></i>
-                        <a href="mailto:#">{{ $settingEmail->value }}</a>
+                        <a href="mailto:#">{{ $settingEmail->value ?? '' }}</a>
                     </div>
                     <div class="d-flex gap-3 align-items-center">
                         <i class="fa fa-phone"></i>
-                        <a href="tel#">{{ $settingContact->value }}</a>
+                        <a href="tel#">{{ $settingContact->value ?? '' }}</a>
                     </div>
                 </div>
             </div>
