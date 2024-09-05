@@ -533,7 +533,7 @@
     <!-- End product details tab section -->
     
     <!-- Start product section -->
-    <section class="product__section section--padding ">
+    {{-- <section class="product__section section--padding ">
         <div class="container">
             <div class="section__heading border-bottom mb-30">
                 <h2 class="section__heading--maintitle">You <span>may also like</span></h2>
@@ -971,7 +971,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- End product section -->
 
     <!-- Start shipping section -->
