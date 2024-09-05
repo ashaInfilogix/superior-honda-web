@@ -23,11 +23,11 @@
                             <p class="short-description">{{ $service->short_description }}</p>
                             <div class="d-flex gap-3 align-items-center">
                                 <i class="fa fa-envelope"></i>
-                                <a href="mailto:#" class="email text-color">{{ $settingEmail->value }}</a>
+                                <a href="mailto:#" class="email text-color">{{ $settingEmail->value ?? ''}}</a>
                             </div>
                             <div class="d-flex gap-3 align-items-center">
                                 <i class="fa fa-phone"></i>
-                                <a href="tel#" class="contact text-color">{{ $settingContact->value }}</a>
+                                <a href="tel#" class="contact text-color">{{ $settingContact->value ?? ''}}</a>
                             </div>
                         </div>
                     </div>
