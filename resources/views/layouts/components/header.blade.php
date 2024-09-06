@@ -1239,7 +1239,7 @@ else{
                                 <div class="quantity__box minicart__quantity">
                                     <button type="button" class="quantity__value decrease" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Decrease Value">-</button>
                                     <label>
-                                        <input type="number" class="quantity__number" value="{{ $product['quantity'] }}" data-counter />
+                                        <input type="number" class="quantity__number-{{ $product['id'] }} quantity__number" value="{{ $product['quantity'] }}" data-counter />
                                     </label>
                                     <button type="button" class="quantity__value increase" data-id = "{{ $product['id'] }}" aria-label="quantity value" value="Increase Value">+</button>
                                 </div>

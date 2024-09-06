@@ -68,7 +68,7 @@
                                                         <div class="quantity__box">
                                                             <button type="button" class="quantity__value quickview__value--quantity decrease" data-id = {{ $product['id'] }} aria-label="quantity value" value="Decrease Value">-</button>
                                                             <label>
-                                                                <input type="number" class="quantity__number quickview__value--number quantity__number" value="{{ $product['quantity'] }}" data-counter />
+                                                                <input type="number" class="quantity__number-{{ $product['id'] }} quickview__value--number quantity__number" value="{{ $product['quantity'] }}" data-counter />
                                                             </label>
                                                             <button type="button" class="quantity__value quickview__value--quantity increase" data-id = {{ $product['id'] }} aria-label="quantity value" value="Increase Value">+</button>
                                                         </div>
@@ -776,22 +776,22 @@
         });
     }
 
-    $('.increase').click(function() {
-        var productId = $(this).attr("data-id");
-        var quantityInput = $(this).parent().find('.quantity__number');
-        var currentValue = parseInt(quantityInput.val());
-        var qty = currentValue + 1;
-        updateQuantity(productId, qty);
-    });
+    // $('.increase').click(function() {
+    //     var productId = $(this).attr("data-id");
+    //     var quantityInput = $(this).parent().find('.quantity__number');
+    //     var currentValue = parseInt(quantityInput.val());
+    //     var qty = currentValue + 1;
+    //     updateQuantity(productId, qty);
+    // });
 
-    $('.decrease').click(function() {
-        var productId = $(this).attr("data-id");
-        console.log(productId);
-        var quantityInput = $(this).parent().find('.quantity__number');
-        var currentValue = parseInt(quantityInput.val());
-        var qty = currentValue - 1;
-        updateQuantity(productId, qty);
-    });
+    // $('.decrease').click(function() {
+    //     var productId = $(this).attr("data-id");
+    //     console.log(productId);
+    //     var quantityInput = $(this).parent().find('.quantity__number');
+    //     var currentValue = parseInt(quantityInput.val());
+    //     var qty = currentValue - 1;
+    //     updateQuantity(productId, qty);
+    // });
 
     $('.clear_cart').click(function() {
         $.ajax({

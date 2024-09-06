@@ -263,10 +263,9 @@
             $(document).on('click', '.increase', function() {
                 console.log('Increase button clicked');
                 var productId = $(this).attr("data-id");
-                console.log('Product ID: ' + productId);
                 var quantityInput = $(this).parent().find('.quantity__number');
+                console.log(quantityInput);
                 var currentValue = parseInt(quantityInput.val());
-
                 var qty = currentValue;
                 updateQuantity(productId, qty, quantityInput);
             });
@@ -275,8 +274,8 @@
             $(document).on('click', '.decrease', function() {
                 console.log('Decrease button clicked');
                 var productId = $(this).attr("data-id");
-                console.log('Product ID: ' + productId);
                 var quantityInput = $(this).parent().find('.quantity__number');
+                console.log(quantityInput);
                 var currentValue = parseInt(quantityInput.val());
                 var qty = currentValue;
                 if (qty > 0) { // Prevent quantity from going below 1
@@ -287,7 +286,6 @@
         $(document).on('click', '.increase', function() {
                 console.log('Increase button clicked');
                 var productId = $(this).attr("data-id");
-                console.log('Product ID: ' + productId);
                 var quantityInput = $(this).parent().find('.quantity__number');
                 var currentValue = parseInt(quantityInput.val());
                 var qty = currentValue;
@@ -298,7 +296,6 @@
             $(document).on('click', '.decrease', function() {
                 console.log('Decrease button clicked');
                 var productId = $(this).attr("data-id");
-                console.log('Product ID: ' + productId);
                 var quantityInput = $(this).parent().find('.quantity__number');
                 var currentValue = parseInt(quantityInput.val());
                 var qty = currentValue;
@@ -403,6 +400,7 @@
 
                             // Update the quantity input value
                             quantityInput.val(quantity);
+                            $('.quantity__number-' + productId).val(quantity);
                         } else {
                             // window.location.reload();
                         }

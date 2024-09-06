@@ -209,7 +209,7 @@
                                     <div class="quantity__box">
                                         <button type="button" class="quantity__value quickview__value--quantity decrease" data-id = {{ $product->id }} aria-label="quantity value" value="Decrease Value">-</button>
                                         <label>
-                                            <input type="number" class="quantityNumber quickview__value--number quantity__number" value="{{ $quantity }}" data-counter />
+                                            <input type="number" class="quantity__number-{{ $product->id }} quantityNumber quickview__value--number quantity__number" value="{{ $quantity }}" data-counter />
                                         </label>
                                         <button type="button" class="quantity__value quickview__value--quantity increase" data-id = {{ $product->id }} aria-label="quantity value" value="Increase Value">+</button>
                                     </div>
