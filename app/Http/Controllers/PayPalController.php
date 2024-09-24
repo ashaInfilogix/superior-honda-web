@@ -147,13 +147,32 @@ class PayPalController extends Controller
 			}
 
 			$emailTemplate = EmailTemplate::where('email_template', 'order')->first();
-			if($emailTemplate) {
-				$orderSummary = '';
-				foreach (session('cart')['products'] as $key =>  $item) {
-					$orderSummary .= "Item " . ($key + 1) . " : $item[name], Quantity: $item[quantity], Price: $item[price]";
-					$orderSummary .= "<br>";
-				}
+			if($emailTemplate && $emailTemplate->content) {
+				// $orderSummary = '';
+				// foreach (session('cart')['products'] as $key =>  $item) {
+				// 	$orderSummary .= "Item " . ($key + 1) . " : $item[name], Quantity: $item[quantity], Price: $item[price]";
+				// 	$orderSummary .= "<br>";
+				// }
 
+					$orderSummary = '<table style="width: 100%; border-collapse: collapse;">';
+					$orderSummary .= '<tr>
+										<th style="border: 1px solid #ddd; padding: 8px;">Item</th>
+										<th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+										<th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
+										<th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+									</tr>';
+				
+					foreach (session('cart')['products'] as $key => $item) {
+						$orderSummary .= '<tr>
+											<td style="border: 1px solid #ddd; padding: 8px;">' . ($key + 1) . '</td>
+											<td style="border: 1px solid #ddd; padding: 8px;">' . htmlspecialchars($item['name']) . '</td>
+											<td style="border: 1px solid #ddd; padding: 8px;">' . htmlspecialchars($item['quantity']) . '</td>
+											<td style="border: 1px solid #ddd; padding: 8px;">' . htmlspecialchars($item['price']) . '</td>
+										</tr>';
+					}
+				
+					$orderSummary .= '</table>';
+			
 					$replacements = [
 						'{{user_name}}' => $billingAddress['first_name'].' '.$billingAddress['last_name'],
 						'{{order_id}}'  => $order_id,
@@ -165,7 +184,7 @@ class PayPalController extends Controller
 					];
 
 				$content = str_replace(array_keys($replacements), array_values($replacements), $emailTemplate->content);
-				Mail::to($email)->send(new OrderEmail($content));
+				Mail::to($email)->send(new OrderEmail($content,['type' => 'order_confirmation']));
 			}
 
 			$orderData->update([

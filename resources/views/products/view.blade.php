@@ -203,7 +203,7 @@
                             ?>
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" value="1">
-                            <p class="product__details--info__desc mb-15">{{ $product->description }}</p>
+                            <p class="product__details--info__desc mb-15">{!! $product->description !!}</p>
                             <div class="product__variant minicart__quantity">
                                 <div class="product__variant--list quantity d-flex align-items-center mb-20">
                                     <div class="quantity__box">

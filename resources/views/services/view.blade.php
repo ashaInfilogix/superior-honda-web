@@ -10,8 +10,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <img src="{{ env('BASE_IMAGE_PATH') }}{{ $service->image }}" class="card-img-top mb-40" alt="...">
-                    <h2 class="card-title mb-30">{{ ucwords($service->name) }}</h2>
+                    <img src="{{ env('BASE_IMAGE_PATH') }}{{ $service->productImages }}" class="card-img-top mb-40" alt="...">
+                    <h2 class="card-title mb-30">{{ ucwords($service->product_name) }}</h2>
                     <p class="card-text">{{ $service->short_description }}</p>
                     <p class="card-text">{!! $service->description !!}</p>
 
@@ -19,7 +19,7 @@
                 <div class="col-md-4 service-item">
                     <div class="service-image" style="background-image: url('{{ asset('assets/img/services-banner.jpg') }}');">
                         <div class="overlay">
-                            <h1 class="service-price">${{ number_format($service->price, 2)}}/Service</h1>
+                            <h1 class="service-price">${{ number_format($service->cost_price, 2)}}/Service</h1>
                             <p class="short-description">{{ $service->short_description }}</p>
                             <div class="d-flex gap-3 align-items-center">
                                 <i class="fa fa-envelope"></i>

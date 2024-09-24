@@ -202,11 +202,11 @@ else{
                                     </g>
                                 </svg>
                                 <span class="items__count  item-count-cart"> @if(session('cart')) {{ session('cart')['count'] }} @else 0 @endif</span>
-                                <span class="minicart__btn--text">My Cart <br> 
+                                {{-- <span class="minicart__btn--text">My Cart <br> 
                                     @isset(session('cart')['formatted_sub_total'])
                                     <span class="minicart__btn--text__price totalAmount"><b>{{ session('cart')['formatted_sub_total'] }}</b></span>
                                     @endisset
-                                </span>
+                                </span> --}}
                             </a>
                         </li>
                     </ul>

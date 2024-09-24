@@ -20,13 +20,13 @@ class WishlistController extends Controller
         $sessionProduct = session('wishlist');
         if($sessionProduct) {
             $product_ids = array_column($sessionProduct['wishlist-products'], 'product_id');
-            $wishlists = Product::with('productImages')->wherein('id', $product_ids)->latest()->get();
+            $wishlists = Product::whereNull('deleted_at')->with('productImages')->wherein('id', $product_ids)->latest()->get();
             foreach($wishlists as $key => $wishlist) {
                 $productImage = ProductImage::where('product_id', $wishlist->id)->first();
                 $wishlists[$key]['product_image'] =  optional($productImage)->images;
             }
         }
-        $products = Product::with('productImages', 'wishlist')->latest()->take(5)->get();
+        $products = Product::whereNull('deleted_at')->with('productImages', 'wishlist')->latest()->take(5)->get();
         return view('wishlists.index', compact('wishlists', 'products'));
     }
 

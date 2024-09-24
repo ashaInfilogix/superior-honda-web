@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $perPage = $request->perPage ?? 10;
 
-        $products = Product::with('ProductCategory','productImages','wishlist')->whereHas('productCategory', function ($query) {
+        $products = Product::whereNull('deleted_at')->with('ProductCategory','productImages','wishlist')->whereHas('productCategory', function ($query) {
                         $query->whereNull('deleted_at');
                     });
         if($request->search) {
@@ -59,7 +59,7 @@ class ProductController extends Controller
             $products[$key]['averageRating'] = $averageRating['averageRating'] ?? 0;
         }
 
-        $topRatedProducts = Product::with(['productImages', 'ProductCategory'])
+        $topRatedProducts = Product::whereNull('deleted_at')->with(['productImages', 'ProductCategory'])
                             ->select('products.id', 'products.product_name', 'products.cost_price')
                             ->join('reviews', 'products.id', '=', 'reviews.product_id')
                             ->selectRaw('AVG(reviews.star_rating) as averageRating')
@@ -76,7 +76,7 @@ class ProductController extends Controller
         $productCategories = ProductCategory::with('products')->latest()->limit(8)->get();
         foreach($productCategories as $key=> $product)
         {
-            $productCategories[$key]['items'] = Product::where('category_id', $product->id)->count();
+            $productCategories[$key]['items'] = Product::whereNull('deleted_at')->where('category_id', $product->id)->count();
             $productCategories[$key]['productImages'] = ProductImage::where('product_id', $product->id)->first();
         }
 
@@ -98,7 +98,7 @@ class ProductController extends Controller
         $perPage = $request->perPage ?? 10;
     
         // Initialize query
-        $productsQuery = Product::with('ProductCategory', 'productImages', 'wishlist')
+        $productsQuery = Product::whereNull('deleted_at')->with('ProductCategory', 'productImages', 'wishlist')
             ->where('access_series', 1)
             ->whereHas('productCategory', function ($query) {
                 $query->whereNull('deleted_at');
@@ -151,7 +151,7 @@ class ProductController extends Controller
         }
     
         // Get top-rated products
-        $topRatedProducts = Product::with(['productImages', 'ProductCategory'])
+        $topRatedProducts = Product::whereNull('deleted_at')->with(['productImages', 'ProductCategory'])
             ->leftJoin('reviews', 'products.id', '=', 'reviews.product_id')
             ->select('products.id', 'products.product_name', 'products.cost_price')
             ->selectRaw('AVG(reviews.star_rating) as averageRating')
@@ -168,7 +168,7 @@ class ProductController extends Controller
             ->get();
     
         foreach ($productCategories as $category) {
-            $category->items = Product::where('category_id', $category->id)->count();
+            $category->items = Product::whereNull('deleted_at')->where('category_id', $category->id)->count();
             $category->productImages = ProductImage::where('product_id', $category->id)->first();
         }
     
@@ -248,7 +248,7 @@ class ProductController extends Controller
 
     public function categoryProduct($id)
     {
-        $products = Product::with('productImages')->where('category_id', $id)->latest()->paginate(9);
+        $products = Product::whereNull('deleted_at')->with('productImages')->where('category_id', $id)->latest()->paginate(9);
 
         return view('products.category-product', compact('products'));
     }

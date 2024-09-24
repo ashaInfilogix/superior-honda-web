@@ -41,7 +41,7 @@
                                         <h2 class="slider__maintitle h1">{{ $mainBanner->product_name }} <br> <span
                                                 class="slider__maintitle--inner__text">{{ $mainBanner->menu }}</span></h2>
                                         <span
-                                            class="slider__price--text text__secondary">{{ number_format($mainBanner->product->cost_price, 2) }}/$</span>
+                                            class="slider__price--text text__secondary">{{ number_format(optional($mainBanner->product)->cost_price, 2) }}/$</span>
                                         <a class="primary__btn slider__btn"
                                             href="{{ route('products.show', $mainBanner->product_id) }}">
                                             Shop now

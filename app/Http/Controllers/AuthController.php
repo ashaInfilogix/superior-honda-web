@@ -13,8 +13,9 @@ use App\Models\Inquiry;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\VerifyOtp;
 use Illuminate\Support\Facades\Mail;
+use App\Models\EmailTemplate;
+use App\Mail\OrderEmail;
 
 class AuthController extends Controller
 {
@@ -202,6 +203,21 @@ class AuthController extends Controller
             'password'    => Hash::make($request->password)
         ])->assignRole('Customer');
 
+        $emailTemplate = EmailTemplate::where('email_template', 'registration')->first();
+        if($emailTemplate && $emailTemplate->content) {
+            $replacements = [
+                '{{user_name}}' => $request->first_name.' '.$request->last_name,
+                '{{email}}' => $request->email,
+                '{{created_at}}' => now(),
+                '{{logo}}' => 'your_logo_url',
+                '{{date}}' => date('Y')
+            ];
+
+            $content = str_replace(array_keys($replacements), array_values($replacements), $emailTemplate->content);
+            Mail::to($request->email)->send(new OrderEmail($content, [
+                'type' => 'register_user']));
+        }
+
         return redirect('/login')->with('success', 'Registration successful! Please login.');
     }
     public function forgotPassword(Request $request)
@@ -212,13 +228,27 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user){
             $otp = rand(1000, 9999);
-            $data = [
-                'otp' => $otp,
-                'name' => $request->name,
-                'email' => $request->email
-            ];
+            // $data = [
+            //     'otp' => $otp,
+            //     'name' => $user->first_name.' '.$user->last_name,
+            //     'email' => $request->email
+            // ];
 
-            Mail::to($request->email)->send(new VerifyOtp($data));
+            $emailTemplate = EmailTemplate::where('email_template', 'verify_otp')->first();
+            if($emailTemplate && $emailTemplate->content) {
+                $replacements = [
+                    '{{user_name}}' => $user->first_name.' '.$user->last_name,
+                    '{{email}}' => $request->email,
+                    '{{otp}}'  => $otp,
+                    '{{created_at}}' => now(),
+                    '{{logo}}' => 'your_logo_url',
+                    '{{date}}' => date('Y')
+                ];
+
+                $content = str_replace(array_keys($replacements), array_values($replacements), $emailTemplate->content);
+                Mail::to($request->email)->send(new OrderEmail($content, [
+                    'type' => 'otp_verification']));
+            }
 
             $user->update([
                 'otp' => $otp

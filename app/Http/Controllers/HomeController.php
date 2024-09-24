@@ -67,7 +67,7 @@ class HomeController extends Controller
     private function getProductsDetailsWithImages($category_id)
     {
         $dataToReturn = [];
-        $productsData = Product::where('category_id',$category_id)->limit(8)->get();
+        $productsData = Product::where('category_id',$category_id)->whereNull('deleted_at')->limit(8)->get();
         foreach ($productsData as $key => $value) {
             # code...
             $productImages = ProductImage::where('product_id',$value->id)->get();
@@ -81,7 +81,7 @@ class HomeController extends Controller
     private function getPopularProductsDetailsWithImages()
     {
         $dataToReturn = [];
-        $productsData = Product::where('popular',1)->limit(8)->get();
+        $productsData = Product::where('popular',1)->whereNull('deleted_at')->limit(8)->get();
         foreach ($productsData as $key => $value) {
             # code...
             $productImages = ProductImage::where('product_id',$value->id)->get();

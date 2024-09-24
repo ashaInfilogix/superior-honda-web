@@ -33,13 +33,17 @@
                 @foreach($services as $service)
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="{{ env('BASE_IMAGE_PATH') }}{{ $service->image }}" class="card-img-top" alt="..." height="50">
+                        @foreach ($service->productImages as $key => $productImage)
+                            @if ($key == 0)
+                                <img src="{{ env('BASE_IMAGE_PATH') }}{{ $productImage->images }}" class="card-img-top" alt="..." height="50">
+                            @endif
+                        @endforeach
                         <div class="card-body">
                             <div class="icon">
                                 <img src="{{ env('BASE_IMAGE_PATH') }}{{ $service->service_icon }}" width="50" height="25">
                                 <!-- <i class="fa fa-brush"></i> -->
                             </div>
-                            <h2 class="card-title">{{ $service->name}}</h2>
+                            <h2 class="card-title">{{ $service->product_name}}</h2>
                             <p class="card-text">{{   Str::limit($service->short_description, 100) }}</p>
                             <a href="{{route('services.show', $service->id)}}">Read more
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
