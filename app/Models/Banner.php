@@ -13,4 +13,11 @@ class Banner extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+
+    public function scopeWithActiveProducts($query)
+    {
+        return $query->whereHas('product', function($query) {
+            $query->whereNull('deleted_at'); // Filter for active products
+        });
+    }
 }

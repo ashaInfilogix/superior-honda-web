@@ -46,9 +46,9 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Service $service)
+    public function show($id)
     {
-        $service = Product::where('id', $service->id)->with('ProductCategory')->whereHas('productCategory', function ($query) {
+        $service = Product::where('id', $id)->with('ProductCategory')->whereHas('productCategory', function ($query) {
             $query->whereNull('deleted_at');
         })->where('is_service', 1)->latest()->first();
 

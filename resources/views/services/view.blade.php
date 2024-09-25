@@ -20,14 +20,18 @@
                     <div class="service-image" style="background-image: url('{{ asset('assets/img/services-banner.jpg') }}');">
                         <div class="overlay">
                             <h1 class="service-price">${{ number_format($service->cost_price, 2)}}/Service</h1>
-                            <p class="short-description">{{ $service->short_description }}</p>
+                            <p class="short-description">{{  Str::words($service->short_description, 20) }}</p>
                             <div class="d-flex gap-3 align-items-center">
+                                @if($settingEmail && $settingEmail->value)
                                 <i class="fa fa-envelope"></i>
                                 <a href="mailto:#" class="email text-color">{{ $settingEmail->value ?? ''}}</a>
+                                @endif
                             </div>
                             <div class="d-flex gap-3 align-items-center">
+                                @if($settingContact && $settingContact->value)
                                 <i class="fa fa-phone"></i>
                                 <a href="tel#" class="contact text-color">{{ $settingContact->value ?? ''}}</a>
+                                @endif
                             </div>
                         </div>
                     </div>

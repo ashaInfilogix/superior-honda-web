@@ -531,7 +531,7 @@
                                                                     class="old__price">${{ number_format($product->cost_price, 2) }}</span>
                                                             </div>
                                                             <p class="product__card--content__desc mb-20">
-                                                                {{ $product->description }}</p>
+                                                                {!! $product->description !!}</p>
                                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                             <input type="hidden" name="quantity" value="1">
                                                             <button  type="submit" class="product__card--btn primary__btn">+
